@@ -1,16 +1,14 @@
 package ru.mobiskif.myapplication
 
+import android.os.Build
 import android.os.Bundle
-import android.app.Activity
 import android.view.Menu
-import android.view.WindowManager
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_scrolling.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.app_bar_main2.*
+import kotlinx.android.synthetic.main.app_bar.*
+
+//import kotlinx.android.synthetic.main.app_bar_main2.*
+
 
 class ScrollingActivity : AppCompatActivity() {
 
@@ -18,12 +16,18 @@ class ScrollingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val window = getWindow()
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-        window.setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        if (Build.VERSION.SDK_INT >= 21) {
+            //window.setStatusBarColor(Color.TRANSPARENT)
+            //window.setNavigationBarColor(ContextCompat.getColor(this, R.color.primaryColor))
+        }
 
         setContentView(R.layout.activity_scrolling)
+        //setSupportActionBar(detail_toolbar)
         setSupportActionBar(detail_toolbar)
 
     }
