@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ru.mobiskif.myapplication.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_scrolling">
+        <action
+            android:id="@+id/action_placeholder1_to_secondActivity"
+            app:destination="@id/secondActivity" />
+    </activity>
+    <activity
+        android:id="@+id/secondActivity"
+        android:name="ru.mobiskif.myapplication.SecondActivity"
+        android:label="activity_second"
+        tools:layout="@layout/activity_second" />
+    <fragment
+        android:id="@+id/placeholder2"
+        android:name="androidx.fragment.app.Fragment">
+        <action
+            android:id="@+id/action_placeholder2_to_secondActivity"
+            app:destination="@id/secondActivity" />
+    </fragment>
+</navigation>

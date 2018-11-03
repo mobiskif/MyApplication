@@ -8,6 +8,8 @@ buildscript {
         minSdkVersion = 16
         targetSdkVersion = 28
 
+        lib_version = '1.0.0-alpha07'
+
         // App dependencies
         constraintLayoutVersion = '2.0.0-alpha2'
         coreTestingVersion = '2.0.0'
