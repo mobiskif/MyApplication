@@ -11,6 +11,16 @@
         android:orientation="vertical"
         android:padding="@dimen/fab_margin">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/primaryColor"
+            app:srcCompat="@drawable/ic_menu_share" />
+
         <TextView
             android:id="@+id/plant_watering"
             android:layout_width="match_parent"
@@ -18,7 +28,7 @@
             android:layout_marginStart="@dimen/fab_margin"
             android:layout_marginTop="@dimen/fab_margin"
             android:layout_marginEnd="@dimen/fab_margin"
-            android:text="jopka" />
+            android:text="Fragment Content" />
 
         <TextView
             android:id="@+id/plant_detail"
@@ -31,7 +41,9 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textIsSelectable="true" />
 
+
     </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>
 

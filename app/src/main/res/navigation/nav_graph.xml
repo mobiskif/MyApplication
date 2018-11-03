@@ -7,23 +7,33 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="ru.mobiskif.myapplication.MainActivity"
+        android:name="ru.mobiskif.myapplication.Activity1"
         android:label="activity_main"
-        tools:layout="@layout/activity_scrolling">
+        tools:layout="@layout/activity1">
         <action
             android:id="@+id/action_placeholder1_to_secondActivity"
             app:destination="@id/secondActivity" />
     </activity>
     <activity
         android:id="@+id/secondActivity"
-        android:name="ru.mobiskif.myapplication.SecondActivity"
+        android:name="ru.mobiskif.myapplication.Activity2"
         android:label="activity_second"
-        tools:layout="@layout/activity_second" />
+        tools:layout="@layout/activity2" />
     <fragment
-        android:id="@+id/placeholder2"
-        android:name="androidx.fragment.app.Fragment">
+        android:id="@+id/fragment1"
+        android:name="ru.mobiskif.myapplication.Fragment1"
+        tools:layout="@layout/fragment1">
         <action
             android:id="@+id/action_placeholder2_to_secondActivity"
+            app:destination="@id/secondActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="ru.mobiskif.myapplication.Fragment2"
+        android:label="blank_fragment2_fragment"
+        tools:layout="@layout/fragment2">
+        <action
+            android:id="@+id/action_blankFragment2_to_secondActivity"
             app:destination="@id/secondActivity" />
     </fragment>
 </navigation>

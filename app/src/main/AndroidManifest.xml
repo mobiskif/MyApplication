@@ -11,15 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SecondActivity"
+            android:name=".Activity2"
             android:label="@string/title_activity_second"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".Activity1">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ru.mobiskif.myapplication.MainActivity" />
+                android:value="ru.mobiskif.myapplication.Activity1" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity1"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
