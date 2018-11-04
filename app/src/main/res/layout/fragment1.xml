@@ -1,16 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment1">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/plant_watering"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:text="============= ======================= =========== Fragment Content =============== =========================================" />
 
-    <include layout="@layout/content" />
+</LinearLayout>
 
-</FrameLayout>
