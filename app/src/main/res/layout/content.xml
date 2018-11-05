@@ -12,40 +12,40 @@
         android:orientation="vertical"
         android:padding="@dimen/fab_margin">
 
-        <TextView
-            android:id="@+id/plant_watering"
+        <RadioGroup
+            android:id="@+id/radiogoup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:text="Content" />
+            android:checkedButton="@+id/radioButton1"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </RadioGroup>
 
         <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/nav_garden"
-            app:defaultNavHost="true" />
-
-        <TextView
-            android:id="@+id/plant_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:text="@string/large_text"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textIsSelectable="true" />
-
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_garden" />
 
     </LinearLayout>
 

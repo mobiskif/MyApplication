@@ -15,7 +15,7 @@
             android:id="@+id/plant_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="12341234 1234 1234 1234 1234 1234 145 1345 12345 42352345 2345 3245 " />
+            android:text="@string/large_text" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
