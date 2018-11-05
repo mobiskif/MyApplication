@@ -8,14 +8,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity1draw.*
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.nav_layout.*
 
 class Activity0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.nav_layout)
+        //setContentView(R.layout.nav_layout)
         //actionBar?.setDisplayHomeAsUpEnabled(true)
         //setSupportActionBar(detail_toolbar)
         if (Build.VERSION.SDK_INT >= 21) {

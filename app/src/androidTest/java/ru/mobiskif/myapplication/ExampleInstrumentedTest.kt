@@ -30,7 +30,7 @@ class ExampleInstrumentedTest {
         activityTestRule.activity.apply {
             runOnUiThread {
                 //val bundle = PlantDetailFragmentArgs.Builder(testPlant.plantId).build().toBundle()
-                //findNavController(R.id.nav_layout).navigate(R.id.search_mag_icon, null)
+                //findNavController(R.id.activity1draw).navigate(R.id.search_mag_icon, null)
             }
         }
     }

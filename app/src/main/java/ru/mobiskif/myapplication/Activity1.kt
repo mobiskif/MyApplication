@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity1.*
+import kotlinx.android.synthetic.main.activity1draw.*
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.nav_layout.*
 
 class Activity1 : AppCompatActivity(), BlankFragment1.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
@@ -19,15 +19,15 @@ class Activity1 : AppCompatActivity(), BlankFragment1.OnFragmentInteractionListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.nav_layout)
+        setContentView(R.layout.activity1draw)
 
-/*
+
         if (savedInstanceState == null) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, Fragment1.newInstance())
+                .replace(R.id.nav_host_fragment, BlankFragment1.newInstance("qwe", "asd"))
                 .commitNow()
         }
-*/
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
