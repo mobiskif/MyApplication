@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.navigation.Navigation.findNavController
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.nav_layout.*
@@ -55,8 +54,8 @@ class Activity0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {
-                var navController = findNavController(findViewById(R.id.Activity1))
-                navController.navigateUp()
+                //var navController = findNavController(findViewById(R.id.Activity1))
+                //navController.navigateUp()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
