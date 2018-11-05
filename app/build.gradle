@@ -37,7 +37,7 @@ dependencies {
     //implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     //implementation 'com.android.support:support-v4:28.0.0'
 
-    implementation "androidx.appcompat:appcompat:$lib_version"
+    implementation "androidx.appcompat:appcompat:1.0.0"
     //implementation "android.arch.navigation:navigation-fragment:$lib_version"
     //implementation "android.arch.navigation:navigation-fragment-ktx:$lib_version"
     //implementation "android.arch.navigation:navigation-ui:$lib_version"
