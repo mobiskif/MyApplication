@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.RadioGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
@@ -14,21 +15,30 @@ import kotlinx.android.synthetic.main.activity1draw.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.content.*
 
-class Activity1 : AppCompatActivity() {
+class ActivityMain : AppCompatActivity() {
+
+    private lateinit var mDrawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity1draw)
         //setSupportActionBar(detail_toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    //.setAction("Action", null)
-                    .show()
-        }
+        //mDrawerLayout = drawer_layout
+
+        fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show() }
+
         val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+
+        nav_view.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            drawer_layout.closeDrawers()
+            true
+        }
+
+
 
         radiogoup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             Snackbar.make(radioGroup, "" + i, Snackbar.LENGTH_SHORT).show()
@@ -57,7 +67,6 @@ class Activity1 : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
 }
 
 /*
