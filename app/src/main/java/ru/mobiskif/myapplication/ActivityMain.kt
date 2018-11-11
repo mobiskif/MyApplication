@@ -20,7 +20,6 @@ class ActivityMain : AppCompatActivity() {
         //setSupportActionBar(detail_toolbar)
         //NavHostFragment.findNavController(mynav).navigate(R.id.action_blankFragment0_to_blankFragment1)
         /*
-
         nav_view.setNavigationItemSelectedListener { menuItem ->
             onOptionsItemSelected(menuItem)
             drawer_layout.closeDrawers()
