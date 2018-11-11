@@ -17,13 +17,15 @@
     <fragment
         android:id="@+id/blankFragment0"
         android:name="ru.mobiskif.myapplication.BlankFragment0"
-        android:label="fragment_blank_fragment0"
-        tools:layout="@layout/fragment_blank_fragment0">
+        android:label="fragment_blank_fragment0">
         <action
             android:id="@+id/action_blankFragment0_to_blankFragment1"
             app:destination="@id/blankFragment1" />
         <action
             android:id="@+id/action_blankFragment0_to_blankFragment2"
             app:destination="@id/blankFragment2" />
+        <action
+            android:id="@+id/action_blankFragment0_self"
+            app:destination="@id/blankFragment0" />
     </fragment>
 </navigation>
