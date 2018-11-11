@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
@@ -18,23 +19,6 @@ class ActivityMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activiry)
         //setSupportActionBar(detail_toolbar)
-        //NavHostFragment.findNavController(mynav).navigate(R.id.action_blankFragment0_to_blankFragment1)
-        /*
-        nav_view.setNavigationItemSelectedListener { menuItem ->
-            onOptionsItemSelected(menuItem)
-            drawer_layout.closeDrawers()
-            true
-        }
-
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        radiogoup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
-            Snackbar.make(radioGroup, "" + i, Snackbar.LENGTH_SHORT).show()
-            //NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.action_blankFragment0_to_blankFragment1)
-        }
-*/
         fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show() }
 
         val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -43,7 +27,7 @@ class ActivityMain : AppCompatActivity() {
 
     }
 
-    //override fun onSupportNavigateUp() = Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp()
+    override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)
@@ -65,19 +49,3 @@ class ActivityMain : AppCompatActivity() {
     }
 
 }
-
-/*
-        if (savedInstanceState == null) {
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, BlankFragment0.newInstance("qwe", "asd"))
-                .commitNow()
-        }
-*/
-
-/*
-nav_view.setNavigationItemSelectedListener { menuItem ->
-    menuItem.isChecked = true
-    drawer_layout.closeDrawers()
-    true
-}
-*/
