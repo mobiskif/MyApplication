@@ -17,6 +17,7 @@
     <fragment
         android:id="@+id/blankFragment0"
         android:name="ru.mobiskif.myapplication.BlankFragment0"
+        tools:layout="@layout/fragment_blank_fragment0"
         android:label="fragment_blank_fragment0">
         <action
             android:id="@+id/action_blankFragment0_to_blankFragment1"
