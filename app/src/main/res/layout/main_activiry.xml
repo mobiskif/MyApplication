@@ -15,9 +15,12 @@
 
         <fragment
             android:id="@+id/nav_host_fragment"
-            android:name="ru.mobiskif.myapplication.BlankFragment0"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/mobile_navigation"
+            tools:layout="@layout/fragment_blank_fragment0" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
