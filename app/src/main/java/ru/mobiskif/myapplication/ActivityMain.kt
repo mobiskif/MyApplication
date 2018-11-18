@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
@@ -27,7 +28,7 @@ class ActivityMain : AppCompatActivity() {
 
     }
 
-    override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
+    //override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)
@@ -37,11 +38,11 @@ class ActivityMain : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_slideshow -> {
-                //NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.action_blankFragment0_to_blankFragment1)
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment0)
                 return true
             }
             R.id.nav_manage -> {
-                //NavHostFragment.findNavController(nav_host_fragment).navigateUp()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment1)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
