@@ -5,10 +5,12 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
