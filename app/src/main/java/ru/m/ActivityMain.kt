@@ -1,4 +1,4 @@
-package ru.mobiskif.myapplication
+package ru.m
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
+import ru.m.R
 
 class ActivityMain : AppCompatActivity() {
 
