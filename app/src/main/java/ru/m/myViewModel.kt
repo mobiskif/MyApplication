@@ -1,6 +1,5 @@
 package ru.m
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -18,6 +17,8 @@ class myViewModel : ViewModel() {
     private fun loadUsers() {
         users.setValue(listOf<String>("qwe","asd","zxc"))
     }
+
+
 }
 
 
