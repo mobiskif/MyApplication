@@ -29,6 +29,7 @@ buildscript {
         supportLibraryVersion = '1.0.0'
         uiAutomatorVersion = '2.2.0-alpha4'
         workVersion = '1.0.0-alpha09'
+        lifecycle_version = '2.0.0'
     }
     repositories {
         google()

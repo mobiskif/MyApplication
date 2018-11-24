@@ -1,25 +1,20 @@
 package ru.m
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
-import ru.m.R
 
 class ActivityMain : AppCompatActivity() {
-
-    private lateinit var mDrawerLayout: DrawerLayout
-    var iscreated = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +25,13 @@ class ActivityMain : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        mDrawerLayout = findViewById(R.id.drawer_layout)
-        val navigationView: NavigationView = findViewById(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        nav_view.setNavigationItemSelectedListener { menuItem ->
             //menuItem.isChecked = true
             onOptionsItemSelected(menuItem)
-            mDrawerLayout.closeDrawers()
+            drawer_layout.closeDrawers()
             true
         }
-
         fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show() }
-
     }
 
     override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
