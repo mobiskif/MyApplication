@@ -32,9 +32,11 @@ class ActivityMain : AppCompatActivity() {
             drawer_layout.closeDrawers()
             true
         }
+
         fab.setOnClickListener {
             view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
         }
+
 
     }
 

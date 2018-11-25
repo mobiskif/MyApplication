@@ -23,7 +23,7 @@ class BlankFragment1 : Fragment() {
 
         var users: MutableLiveData<List<String>> = model.getUsers()
         users.observe(this, Observer<List<String>>{ users ->
-            plant_detail.setText(users.get(0))
+            //plant_detail.setText(users.get(0))
             //listview?.adapter=adapter
             //spinner?.adapter=adapter
         })

@@ -1,46 +1,14 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/plant_detail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:entries="@android:array/organizationTypes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plant_detail" />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/plant_detail"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:entries="@android:array/phoneTypes" />
+</LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/listview"
-                android:layout_width="411dp"
-                android:layout_height="500dp"
-                android:entries="@android:array/imProtocols">
-
-            </ListView>
-        </LinearLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
