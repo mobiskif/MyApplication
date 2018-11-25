@@ -9,16 +9,14 @@ class myViewModel : ViewModel() {
     fun getUsers(): MutableLiveData<List<String>> {
         if (!::users.isInitialized) {
             users = MutableLiveData()
-            loadUsers()
+            users.setValue(listOf("qwe", "asd", "zxc"))
         }
         return users
     }
 
-    private fun loadUsers() {
-        users.setValue(listOf<String>("qwe","asd","zxc"))
+    fun getList(): List<String> {
+        return listOf("qwe", "asd", "zxc")
     }
-
-
 }
 
 

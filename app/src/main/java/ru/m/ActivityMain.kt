@@ -3,6 +3,7 @@ package ru.m
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -33,8 +34,8 @@ class ActivityMain : AppCompatActivity() {
         }
         fab.setOnClickListener {
             view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
-
         }
+
     }
 
     override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()

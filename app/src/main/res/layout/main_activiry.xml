@@ -9,7 +9,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <include layout="@layout/app_bar" />
 
@@ -31,7 +31,6 @@
                 app:navGraph="@navigation/mobile_navigation" />
 
         </androidx.core.widget.NestedScrollView>
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
