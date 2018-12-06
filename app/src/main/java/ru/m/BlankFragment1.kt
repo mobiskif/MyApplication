@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
 
 
@@ -24,8 +25,10 @@ class BlankFragment1 : Fragment() {
         mModel = ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
 
         val mObserver = Observer<List<String>> {
-            recycler.layoutManager = LinearLayoutManager(this.context)
+            //recycler.layoutManager = LinearLayoutManager(this.context)
+            recycler.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             recycler.adapter = RecylcerAdapter(mModel.getList().value!!, this.context)
+            focusOnView(recycler)
         }
         mModel.getList().observe(this, mObserver)
 
@@ -43,5 +46,9 @@ class BlankFragment1 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(ru.m.R.layout.fragment_blank_fragment1, container, false)
+    }
+
+    private fun focusOnView(rv: RecyclerView) {
+        rv.post(Runnable { rv.smoothScrollBy(105, 0) })
     }
 }
