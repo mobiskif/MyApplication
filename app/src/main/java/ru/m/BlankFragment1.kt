@@ -4,15 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
 
 
@@ -24,13 +19,18 @@ class BlankFragment1 : Fragment() {
 
         mModel = ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
 
-        val mObserver = Observer<List<String>> {
-            //recycler.layoutManager = LinearLayoutManager(this.context)
-            recycler.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-            recycler.adapter = RecylcerAdapter(mModel.getList().value!!, this.context)
-            focusOnView(recycler)
+        val mObserver1 = Observer<List<String>> {
+            recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+            recycler1.adapter = RecylcerAdapter(mModel.getList1().value!!, this.context)
+            recycler1.post(Runnable { recycler1.smoothScrollBy(105, 0) })
         }
-        mModel.getList().observe(this, mObserver)
+        mModel.getList1().observe(this, mObserver1)
+
+        val mObserver2 = Observer<List<String>> {
+            recycler2.layoutManager = LinearLayoutManager(this.context)
+            recycler2.adapter = RecylcerAdapter(mModel.getList2().value!!, this.context)
+        }
+        mModel.getList2().observe(this, mObserver2)
 
 
     }
@@ -48,7 +48,4 @@ class BlankFragment1 : Fragment() {
         return inflater.inflate(ru.m.R.layout.fragment_blank_fragment1, container, false)
     }
 
-    private fun focusOnView(rv: RecyclerView) {
-        rv.post(Runnable { rv.smoothScrollBy(105, 0) })
-    }
 }
