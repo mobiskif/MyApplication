@@ -26,7 +26,7 @@ class RecylcerAdapter(val items: List<String>, val context: Context?) : Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var tv = holder?.hv.findViewById<TextView>(R.id.text1)
+        var tv = holder.hv.findViewById<TextView>(R.id.text1)
         tv.setText(items.get(position))
         tv.setOnClickListener {
             Log.d("jop","click $position click ${items.get(position)}")
