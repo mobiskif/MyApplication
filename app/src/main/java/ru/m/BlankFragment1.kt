@@ -1,6 +1,8 @@
 package ru.m
 
+import android.database.DataSetObserver
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
-
 
 class BlankFragment1 : Fragment() {
     private lateinit var mModel: RecyclerViewModel
@@ -17,7 +20,11 @@ class BlankFragment1 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mModel = ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
+        //mModel = ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
+
+        mModel = activity?.run {
+            ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         val mObserver1 = Observer<List<String>> {
             recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -27,12 +34,22 @@ class BlankFragment1 : Fragment() {
         mModel.getList1().observe(this, mObserver1)
 
         val mObserver2 = Observer<List<String>> {
-            recycler2.layoutManager = LinearLayoutManager(this.context)
-            recycler2.adapter = RecylcerAdapter(mModel.getList2().value!!, this.context)
+            recycler2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+            recycler2.adapter = RecylcerAdapter(mModel.getList2().value!!, this.activity)
+            recycler2.post(Runnable { recycler2.smoothScrollBy(75, 0) })
+            Log.d("jop", "qwerqer")
         }
-        mModel.getList2().observe(this, mObserver2)
 
+        mModel.getList1().observe(this, mObserver2)
+        //mModel.getList2().observe(this, mObserver2)
+        //mModel.getList2().observe(this, mObserver1)
 
+        val mObserver3 = Observer<List<String>> {
+            recycler3.layoutManager = LinearLayoutManager(this.context)
+            recycler3.adapter = RecylcerAdapter(mModel.getList3().value!!, this.context)
+            //recycler3.post(Runnable { recycler3.smoothScrollBy(105, 0) })
+        }
+        mModel.getList2().observe(this, mObserver3)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,12 +57,11 @@ class BlankFragment1 : Fragment() {
 
         button1.setOnClickListener {
             mModel.update()
-
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(ru.m.R.layout.fragment_blank_fragment1, container, false)
+        return inflater.inflate(R.layout.fragment_blank_fragment1, container, false)
     }
 
 }
