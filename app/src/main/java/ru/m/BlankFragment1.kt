@@ -1,20 +1,28 @@
 package ru.m
 
-import android.database.DataSetObserver
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
 
-class BlankFragment1 : Fragment() {
+class BlankFragment1 : Fragment(), AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("jop","==== ${position}")
+        mModel.update2()
+    }
+
     private lateinit var mModel: RecyclerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +38,10 @@ class BlankFragment1 : Fragment() {
             recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             recycler1.adapter = RecylcerAdapter(mModel.getList1().value!!, this.context)
             recycler1.post(Runnable { recycler1.smoothScrollBy(105, 0) })
+            spinner.adapter = SpinnerBaseAdapter(mModel.getList1().value!!, this.context)
+            spinner.setOnItemSelectedListener(this)
         }
+
         mModel.getList1().observe(this, mObserver1)
 
         val mObserver2 = Observer<List<String>> {
