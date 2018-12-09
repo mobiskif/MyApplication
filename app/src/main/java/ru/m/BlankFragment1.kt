@@ -35,13 +35,12 @@ class BlankFragment1 : Fragment() {
 
         val mObserver2 = Observer<List<String>> {
             recycler2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-            recycler2.adapter = RecylcerAdapter(mModel.getList2().value!!, this.activity)
+            recycler2.adapter = RecylcerCardAdapter(mModel.getList2().value!!, this.activity)
             recycler2.post(Runnable { recycler2.smoothScrollBy(75, 0) })
-            Log.d("jop", "qwerqer")
         }
 
         mModel.getList1().observe(this, mObserver2)
-        //mModel.getList2().observe(this, mObserver2)
+        mModel.getList2().observe(this, mObserver2)
         //mModel.getList2().observe(this, mObserver1)
 
         val mObserver3 = Observer<List<String>> {
@@ -56,7 +55,7 @@ class BlankFragment1 : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         button1.setOnClickListener {
-            mModel.update()
+            mModel.update1()
         }
     }
 
