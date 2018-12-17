@@ -3,19 +3,16 @@ package ru.m
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
 
 class ActivityMain : AppCompatActivity() {
+    private lateinit var mModel: RecyclerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +30,8 @@ class ActivityMain : AppCompatActivity() {
             true
         }
 
-        fab.setOnClickListener {
-            view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
         }
 
 
@@ -49,11 +46,15 @@ class ActivityMain : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_slideshow -> {
+            R.id.nav_menu0 -> {
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment0)
                 return true
             }
-            R.id.nav_manage -> {
+            R.id.nav_menu1 -> {
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment1)
+                return true
+            }
+            R.id.nav_menu2 -> {
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment1)
                 return true
             }

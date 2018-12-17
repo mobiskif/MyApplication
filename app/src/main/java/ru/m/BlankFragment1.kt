@@ -14,12 +14,10 @@ import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
 
 class BlankFragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        Log.d("jop","==== ${position}")
         mModel.update2()
     }
 
@@ -30,9 +28,7 @@ class BlankFragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
         //mModel = ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
 
-        mModel = activity?.run {
-            ViewModelProviders.of(this).get(RecyclerViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
+        mModel = activity?.run { ViewModelProviders.of(this).get(RecyclerViewModel::class.java) } ?: throw Exception("Invalid Activity")
 
         val mObserver1 = Observer<List<String>> {
             recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -47,7 +43,7 @@ class BlankFragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         val mObserver2 = Observer<List<String>> {
             recycler2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             recycler2.adapter = RecylcerCardAdapter(mModel.getList2().value!!, this.activity)
-            recycler2.post(Runnable { recycler2.smoothScrollBy(75, 0) })
+            recycler2.post({ recycler2.smoothScrollBy(75, 0) })
         }
 
         mModel.getList1().observe(this, mObserver2)
@@ -64,10 +60,7 @@ class BlankFragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        button1.setOnClickListener {
-            mModel.update1()
-        }
+        button1.setOnClickListener {mModel.update1()}
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

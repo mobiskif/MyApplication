@@ -8,8 +8,8 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Поликлиника"
-        android:textAppearance="@style/Base.TextAppearance.MaterialComponents.Headline6" />
+        android:text="@string/menu1"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -26,8 +26,8 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Талоны"
-        android:textAppearance="@style/Base.TextAppearance.MaterialComponents.Headline6" />
+        android:text="@string/menu2"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler2"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Врачи"
-        android:textAppearance="@style/Base.TextAppearance.MaterialComponents.Headline6" />
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler3"
