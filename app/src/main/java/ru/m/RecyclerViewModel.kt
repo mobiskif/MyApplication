@@ -39,7 +39,7 @@ class RecyclerViewModel : ViewModel() {
     }
     fun update2() {
         //mList2.setValue(listOf<String>("====Жопа, ${System.currentTimeMillis()}", "Попа ====, Попа", "Collins =====, ${System.currentTimeMillis()}"))
-        mList2.setValue(listOf<String>("123123, ${System.currentTimeMillis()}", "34545", "234234, ${System.currentTimeMillis()}"))
+        //mList2.setValue(listOf<String>("123123, ${System.currentTimeMillis()}", "34545", "234234, ${System.currentTimeMillis()}"))
     }
 
 
