@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 
-class SpinnerBaseAdapter(val items: List<String>, val context: Context?) : BaseAdapter() {
+class MySpinnerAdapter(val items: List<String>, val context: Context?) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item, parent, false) as TextView

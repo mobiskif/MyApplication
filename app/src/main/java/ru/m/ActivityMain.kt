@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activiry.*
 
 class ActivityMain : AppCompatActivity() {
-    private lateinit var mModel: RecyclerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

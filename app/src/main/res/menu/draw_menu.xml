@@ -6,9 +6,9 @@
 
     <item
         android:id="@+id/nav_menu0"
-        android:icon="@android:drawable/ic_dialog_alert"
+        android:icon="@drawable/ic_account_circle_24dp"
         android:title="@string/menu0"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/nav_menu1"
         android:icon="@android:drawable/ic_dialog_info"
