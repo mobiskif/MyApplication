@@ -5,6 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -17,6 +19,10 @@ class ActivityMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activiry)
         setSupportActionBar(detail_toolbar)
+
+        //val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.main_activiry)
+        //val person = person("Test", "Person")
+        //binding.setPerson(person)
 
         val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.drawer_open, R.string.drawer_close)
         drawer_layout.addDrawerListener(toggle)

@@ -1,5 +1,6 @@
 package ru.m
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -8,7 +9,9 @@ class MyDataModel : ViewModel() {
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
+    var context:Context? = null
     var currentUser="0"
+    var currentName="0"
     var currentDistrict="0"
     var currentLPU="0"
     var currentSpeciality="0"
@@ -62,6 +65,16 @@ class MyDataModel : ViewModel() {
     fun updateDoctorList() {
         if (!::doctorList.isInitialized) doctorList = MutableLiveData()
         doctorList.setValue(listOf<String>("Иванов А. ${System.currentTimeMillis()}", "Петров П. ${System.currentTimeMillis()}", "Сидоров Г. ${System.currentTimeMillis()}", "Лифшиц Б. ${System.currentTimeMillis()}", "Хрущев Н. ${System.currentTimeMillis()}"))
+    }
+
+    fun changeUser(checkedId: Int) {
+        currentUser="$checkedId"
+        Storage.setCurrentUser(context, currentUser)
+        currentDistrict = Storage.restore(context,"currentDistrict")
+        currentName = "$checkedId === ${System.currentTimeMillis()}"//Storage.restore(context,"currentName")
+        currentLPU = Storage.restore(context,"currentLPU")
+        currentSpeciality = Storage.restore(context,"currentSpeciality")
+        currentDoctor = Storage.restore(context,"currentDoctor")
     }
 
 }
