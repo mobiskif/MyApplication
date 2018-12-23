@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_blank_fragment1.*
 
 class BlankFragment1 : Fragment() {
+
+
     private lateinit var mModel: MyDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ class BlankFragment1 : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        button1.setOnClickListener { mModel.updateLpuList() }
+        //button1.setOnClickListener { mModel.updateLpuList() }
     }
 
 }

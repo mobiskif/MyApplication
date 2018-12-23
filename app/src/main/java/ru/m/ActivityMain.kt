@@ -18,7 +18,7 @@ class ActivityMain : AppCompatActivity() {
         setContentView(R.layout.main_activiry)
         setSupportActionBar(detail_toolbar)
 
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.drawer_open, R.string.drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -54,7 +54,7 @@ class ActivityMain : AppCompatActivity() {
                 return true
             }
             R.id.nav_menu2 -> {
-                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment1)
+                finish()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

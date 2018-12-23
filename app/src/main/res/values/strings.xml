@@ -2,12 +2,12 @@
     <string name="app_name">Запись к врачу</string>
     <string name="menu0">Пациент</string>
     <string name="menu1">Поликлиника</string>
-    <string name="menu2">Талончик</string>
-    <string name="navigation_drawer_open">Open drawer</string>
-    <string name="navigation_drawer_close">Close drawer</string>
+    <string name="menu2">Выход</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
     <string name="nav_header_title">Запись к врачу</string>
     <string name="nav_header_subtitle">ОМС</string>
-    <string name="nav_header_desc">Navigation description</string>
+
     <string name="large_text">
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
@@ -61,9 +61,6 @@
 
                 "Resting elevation.\n\n"
 
-                "All material objects, regardless of size, have a resting elevation, or default elevation "
-                "that does not change. If an object changes elevation, it should return to its resting "
-                "elevation as soon as possible.\n\n"
 
                 "Component elevations.\n\n"
 

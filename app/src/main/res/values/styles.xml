@@ -1,10 +1,9 @@
 <resources>
-
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/primaryColor</item>
-
+        <item name="android:buttonTint">@color/primaryColor</item>
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme"/>
