@@ -5,24 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.TextView
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_blank_fragment0.*
+import kotlinx.android.synthetic.main.myfragment.*
 
 
 class BlankFragment0 : Fragment(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-        //Snackbar.make(this.view!!, "Replace with your own action", Snackbar.LENGTH_LONG).show()
-        //Toast.makeText(this.context,"qwerwer", Toast.LENGTH_SHORT).show()
         mModel.changeUser(checkedId)
-        //textView6.text=mModel.currentUser
 
     }
 
@@ -48,14 +40,19 @@ class BlankFragment0 : Fragment(), View.OnClickListener, RadioGroup.OnCheckedCha
         }
         mModel.getDistrictList().observe(this, mObserver1)
 
+        val mObserver0 = Observer<Any>{
+            textView6.text= mModel.getName().value
+        }
+        mModel.getName().observe(this, mObserver0)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, R.layout.fragment_blank_fragment0, container, false)
-        binding.setVariable(BR.mModel, mModel)
-        binding.executePendingBindings()
-        //return inflater.inflate(R.layout.fragment_blank_fragment0, container, false)
-        return binding.root
+        //val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, R.layout.myfragment, container, false)
+        //val binding : Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.myfragment, container, false)
+        //binding.setVariable(BR.mModel, mModel)
+        //binding.executePendingBindings()
+        return inflater.inflate(R.layout.myfragment, container, false)
+        //return binding.root
     }
 }
 

@@ -9,9 +9,10 @@ class MyDataModel : ViewModel() {
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
+    private lateinit var currentName: MutableLiveData<String>
     var context:Context? = null
     var currentUser="0"
-    var currentName="0"
+    //var currentName = "078o9"
     var currentDistrict="0"
     var currentLPU="0"
     var currentSpeciality="0"
@@ -50,6 +51,14 @@ class MyDataModel : ViewModel() {
         return doctorList
     }
 
+    fun getName(): MutableLiveData<String> {
+        if (!::currentName.isInitialized) {
+            currentName = MutableLiveData()
+            currentName.setValue("qweqwe")
+        }
+        return currentName
+    }
+
 
     fun updateLpuList() {
         if (!::lpuList.isInitialized) lpuList = MutableLiveData()
@@ -71,7 +80,7 @@ class MyDataModel : ViewModel() {
         currentUser="$checkedId"
         Storage.setCurrentUser(context, currentUser)
         currentDistrict = Storage.restore(context,"currentDistrict")
-        currentName = "$checkedId === ${System.currentTimeMillis()}"//Storage.restore(context,"currentName")
+        currentName.value = "$checkedId === ${System.currentTimeMillis()}"//Storage.restore(context,"currentName")
         currentLPU = Storage.restore(context,"currentLPU")
         currentSpeciality = Storage.restore(context,"currentSpeciality")
         currentDoctor = Storage.restore(context,"currentDoctor")

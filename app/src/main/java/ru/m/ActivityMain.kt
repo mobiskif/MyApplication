@@ -5,22 +5,20 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.main_activiry.*
+import kotlinx.android.synthetic.main.main_activity.*
 
 class ActivityMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activiry)
+        setContentView(R.layout.main_activity)
         setSupportActionBar(detail_toolbar)
 
-        //val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.main_activiry)
+        //val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.main_activity)
         //val person = person("Test", "Person")
         //binding.setPerson(person)
 
