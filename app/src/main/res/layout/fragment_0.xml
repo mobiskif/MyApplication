@@ -1,12 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<!--
+
     <data>
 
         <variable
-            name="mModel"
+            name="model"
             type="ru.m.MyDataModel" />
     </data>
--->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,18 +14,18 @@
 
 
         <RadioGroup
-            android:id="@+id/rGroup"
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/radioButton1"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textViewLabel1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                />
+                android:text="Пациент" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
@@ -68,16 +68,17 @@
             android:layout_height="@dimen/fab_margin" />
 
         <EditText
-            android:id="@+id/editText0"
+            android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Имя"
             android:inputType="textPersonName"
+            android:text="@{model.currentName}"
             />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editSecondname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -85,7 +86,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/editSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -93,7 +94,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/editBirstdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -111,13 +112,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textViewLabel2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Район" />
 
             <Spinner
-                android:id="@+id/spinner0"
+                android:id="@+id/spinnerDistrict"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -128,10 +129,9 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onClick"
                 android:text="Сохранить" />
 
         </LinearLayout>

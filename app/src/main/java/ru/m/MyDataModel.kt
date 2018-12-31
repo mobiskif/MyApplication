@@ -9,10 +9,9 @@ class MyDataModel : ViewModel() {
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
-    private lateinit var currentName: MutableLiveData<String>
+    private lateinit var currentUser: MutableLiveData<Int>
+    lateinit var currentName: MutableLiveData<String>
     var context:Context? = null
-    var currentUser="0"
-    //var currentName = "078o9"
     var currentDistrict="0"
     var currentLPU="0"
     var currentSpeciality="0"
@@ -76,14 +75,28 @@ class MyDataModel : ViewModel() {
         doctorList.setValue(listOf<String>("Иванов А. ${System.currentTimeMillis()}", "Петров П. ${System.currentTimeMillis()}", "Сидоров Г. ${System.currentTimeMillis()}", "Лифшиц Б. ${System.currentTimeMillis()}", "Хрущев Н. ${System.currentTimeMillis()}"))
     }
 
-    fun changeUser(checkedId: Int) {
-        currentUser="$checkedId"
-        Storage.setCurrentUser(context, currentUser)
-        currentDistrict = Storage.restore(context,"currentDistrict")
-        currentName.value = "$checkedId === ${System.currentTimeMillis()}"//Storage.restore(context,"currentName")
+    fun changeUser(idUser: Int) {
+        //currentUser="$idUser"
+        Storage.setCurrentUser(context, "$idUser")
+        currentDistrict = Storage.restore( context,"currentDistrict")
+        currentName.value = "$idUser"//Storage.restore(context,"currentName")
         currentLPU = Storage.restore(context,"currentLPU")
         currentSpeciality = Storage.restore(context,"currentSpeciality")
         currentDoctor = Storage.restore(context,"currentDoctor")
+    }
+
+    fun store() {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //Storage.store(context,"currentName", currentName)
+
+    }
+
+    fun getCurrentUser(): MutableLiveData<Int> {
+        if (!::currentUser.isInitialized) {
+            currentUser = MutableLiveData()
+            currentUser.setValue(3)
+        }
+        return currentUser
     }
 
 }

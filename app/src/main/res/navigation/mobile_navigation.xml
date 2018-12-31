@@ -10,7 +10,7 @@
         tools:layout="@layout/fragment_blank_fragment1" />
     <fragment
         android:id="@+id/blankFragment0"
-        android:name="ru.m.BlankFragment0" />
+        android:name="ru.m.Fragment0" />
     <activity
         android:id="@+id/activityMain"
         android:label="ActivityMain"

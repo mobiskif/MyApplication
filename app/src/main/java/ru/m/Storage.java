@@ -32,4 +32,19 @@ public class Storage {
         SharedPreferences settings = c.getSharedPreferences(currentUser, 0);
         return settings.getString(key, "0");
     }
+
+
+    public static void store(Context c, String key, Integer value) {
+        String currentUser = getCurrentUser(c);
+        SharedPreferences settings = c.getSharedPreferences(currentUser, 0);
+        SharedPreferences.Editor ed = settings.edit();
+        ed.putInt(key, value);
+        ed.apply();
+    }
+
+    public static Integer restoreint(Context c, String key) {
+        String currentUser = getCurrentUser(c);
+        SharedPreferences settings = c.getSharedPreferences(currentUser, 0);
+        return settings.getInt(key, 0);
+    }
 }
