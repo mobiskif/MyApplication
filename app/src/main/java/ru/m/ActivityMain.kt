@@ -50,11 +50,11 @@ class ActivityMain : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_menu0 -> {
-                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment0)
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
                 return true
             }
             R.id.nav_menu1 -> {
-                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.blankFragment1)
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
                 return true
             }
             R.id.nav_menu2 -> {

@@ -74,7 +74,7 @@
             android:ems="10"
             android:hint="Имя"
             android:inputType="textPersonName"
-            android:text="@{model.currentName}"
+            android:text="@{model.getName()}"
             />
 
         <EditText

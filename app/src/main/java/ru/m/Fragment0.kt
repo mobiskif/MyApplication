@@ -23,17 +23,20 @@ class Fragment0 : Fragment(), RadioGroup.OnCheckedChangeListener {
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.context = context
 
+        /*
         val observerDistrict = Observer<List<String>> {
             spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, this.context)
-            spinnerDistrict.onItemSelectedListener = spinner0_OnItemSelectedListener(mModel)
+            spinnerDistrict.onItemSelectedListener = spinnerDistrict_OnItemSelectedListener(mModel)
         }
         mModel.getDistrictList().observe(this, observerDistrict)
+        */
 
-        val observerName = Observer<Any>{
+        val observerName = Observer<Any> {
             editName.text.clear()
-            editName.text.insert(0,it.toString())
+            editName.text.insert(0, it.toString())
         }
         mModel.getName().observe(this, observerName)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,28 +48,33 @@ class Fragment0 : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     override fun onResume() {
         super.onResume()
-        var radioButton = radioGroup.getChildAt(mModel.getCurrentUser().value!!-1) as RadioButton
-        radioButton.isChecked=true
-        onCheckedChanged(radioGroup, radioButton.id)
+
+        spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
+        spinnerDistrict.setSelection(mModel.getCurrentDistrict().value!!)
+        spinnerDistrict.onItemSelectedListener = spinnerDistrict_OnItemSelectedListener(mModel)
+
+        val currentUser = mModel.getCurrentUser()
+        val radioButton = radioGroup.getChildAt(currentUser) as RadioButton
+        radioButton.isChecked = true
         radioGroup.setOnCheckedChangeListener(this)
-        saveButton.setOnClickListener {mModel.store()}
+
+        saveButton.setOnClickListener { mModel.store() }
     }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-        var idUser= group?.indexOfChild(group?.findViewById<View>(checkedId))
-        mModel.changeUser(idUser!!)
+        val currentUser = group?.indexOfChild(group?.findViewById<View>(checkedId))
+        mModel.setCurrentUser(currentUser!!)
     }
 
 }
 
-class spinner0_OnItemSelectedListener(private val mModel: MyDataModel) : AdapterView.OnItemSelectedListener {
+class spinnerDistrict_OnItemSelectedListener(private val mModel: MyDataModel) : AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("onNothingSelected not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        mModel.currentDistrict = "$position"
-        mModel.updateLpuList()
+        mModel.setDistrict(position)
     }
 
 }
