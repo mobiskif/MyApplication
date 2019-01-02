@@ -3,23 +3,28 @@ package ru.m
 import android.content.Context
 import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 
 class MyDataModel : ViewModel() {
     val J = "jop"
     var context: Context? = null
     var cdistrict=0
+    //var clpu=0
     lateinit var cid: MutableLiveData<Int>
+    lateinit var clpu: MutableLiveData<Int>
     lateinit var cname: MutableLiveData<String>
     private lateinit var districtList: MutableLiveData<List<String>>
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
 
+
     fun init(c: Context?) {
         context = c
         if (!::cid.isInitialized) cid = MutableLiveData()
         if (!::cname.isInitialized) cname = MutableLiveData()
+        if (!::clpu.isInitialized) clpu = MutableLiveData()
         loadUser(restorecurrent())
     }
 
@@ -79,9 +84,9 @@ class MyDataModel : ViewModel() {
     fun getLpuList(): MutableLiveData<List<String>> {
         if (!::lpuList.isInitialized) lpuList = MutableLiveData()
         when (cdistrict) {
-            1 -> lpuList.setValue(listOf<String>("Поликлиника 11", "Больница 12", "Лаборатория 10", "Скорая помощь 01"))
-            2 -> lpuList.setValue(listOf<String>("Поликлиника 21", "Больница 22", "Лаборатория 20", "Скорая помощь 02"))
-            3 -> lpuList.setValue(listOf<String>("Поликлиника 31", "Больница 32", "Лаборатория 30", "Скорая помощь 03"))
+            1 -> lpuList.setValue(listOf<String>("Поликлиника 1", "Больница 1", "Лаборатория 1", "Скорая помощь 1"))
+            2 -> lpuList.setValue(listOf<String>("Поликлиника 2", "Больница 2", "Лаборатория 2", "Скорая помощь 2"))
+            3 -> lpuList.setValue(listOf<String>("Поликлиника 3", "Больница 3", "Лаборатория 3", "Скорая помощь 3"))
             else -> lpuList.setValue(listOf<String>("Поликлиника", "Больница", "Лаборатория", "Скорая помощь"))
         }
         return lpuList
@@ -96,9 +101,12 @@ class MyDataModel : ViewModel() {
     }
 
     fun getSpecialityList(): MutableLiveData<List<String>> {
-        if (!::specialityList.isInitialized) {
-            specialityList = MutableLiveData()
-            specialityList.setValue(listOf<String>("Терапевт", "Хирург", "Гинеколог"))
+        if (!::specialityList.isInitialized) specialityList = MutableLiveData()
+        when (cdistrict) {
+            1 -> specialityList.setValue(listOf<String>("Терапевт 1", "Хирург 1", "Гинеколог 1", "Окулист 1"))
+            2 -> specialityList.setValue(listOf<String>("Терапевт 2", "Хирург 2", "Гинеколог 2", "Окулист 2"))
+            3 -> specialityList.setValue(listOf<String>("Терапевт 3", "Хирург 3", "Гинеколог 3", "Окулист 3"))
+            else -> specialityList.setValue(listOf<String>("Терапевт", "Хирург", "Гинеколог", "Окулист"))
         }
         return specialityList
     }

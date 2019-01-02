@@ -8,12 +8,10 @@
         android:id="@+id/nav_menu0"
         android:icon="@drawable/ic_account_circle_24dp"
         android:title="@string/menu0"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_menu1"
-        android:icon="@drawable/ic_local_hospital_24dp"
-        android:title="@string/menu1"
-        app:showAsAction="ifRoom" />
+        android:title="@string/menu1" />
     <item
         android:id="@+id/nav_menu2"
         android:title="@string/menu2" />

@@ -27,8 +27,7 @@ class MyRecylcerAdapter(val items: List<String>, val context: Context?) : Recycl
 
         tv.setOnClickListener {
             tv.text = "=-= $position"
-
-            val mModel = context?.run { ViewModelProviders.of(context as FragmentActivity).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
+            //val mModel = context?.run { ViewModelProviders.of(context as FragmentActivity).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
             //mModel.updateLpuList()
         }
     }
