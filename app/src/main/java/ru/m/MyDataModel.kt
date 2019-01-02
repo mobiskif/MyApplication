@@ -18,7 +18,10 @@ class MyDataModel : ViewModel() {
 
     fun init(c: Context?) {
         context = c
-        if (!::cid.isInitialized) cid = MutableLiveData()
+        if (!::cid.isInitialized) {
+            cid = MutableLiveData()
+            //cid.value=1
+        }
         if (!::cname.isInitialized) cname = MutableLiveData()
         loadUser(restorecurrent())
     }
@@ -41,7 +44,7 @@ class MyDataModel : ViewModel() {
 
     private fun restorecurrent(): Int {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
-        return defsettings.getInt("currentUser", 0)
+        return defsettings.getInt("currentUser", 1)
     }
 
     private fun irestore(id: Int, key: String): Int {
