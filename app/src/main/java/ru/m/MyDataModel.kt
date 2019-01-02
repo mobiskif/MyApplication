@@ -14,21 +14,26 @@ class MyDataModel : ViewModel() {
     private lateinit var districtList: MutableLiveData<List<String>>
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
+    private lateinit var specialityList: MutableLiveData<List<String>>
 
     fun init(c: Context?) {
         context = c
         if (!::cid.isInitialized) cid = MutableLiveData()
         if (!::cname.isInitialized) cname = MutableLiveData()
-        changeUser(restorecurrent())
+        loadUser(restorecurrent())
     }
 
     fun saveUser() {
-        savecurrent(cid.value!!)
+        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
+        val eddef = defsettings.edit()
+        eddef.putInt("currentUser", cid.value!!)
+        eddef.apply()
+
         istore(cid.value!!, "district", cdistrict)
         sstore(cid.value!!, "name", cname.value!!)
     }
 
-    fun changeUser(id: Int) {
+    fun loadUser(id: Int) {
         cname.value = srestore(id, "name")
         cdistrict=irestore(id, "district")
         cid.value = id
@@ -37,13 +42,6 @@ class MyDataModel : ViewModel() {
     private fun restorecurrent(): Int {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         return defsettings.getInt("currentUser", 0)
-    }
-
-    private fun savecurrent(user: Int) {
-        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
-        val eddef = defsettings.edit()
-        eddef.putInt("currentUser", user)
-        eddef.apply()
     }
 
     private fun irestore(id: Int, key: String): Int {
@@ -95,6 +93,14 @@ class MyDataModel : ViewModel() {
             doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
         }
         return doctorList
+    }
+
+    fun getSpecialityList(): MutableLiveData<List<String>> {
+        if (!::specialityList.isInitialized) {
+            specialityList = MutableLiveData()
+            specialityList.setValue(listOf<String>("Терапевт", "Хирург", "Гинеколог"))
+        }
+        return specialityList
     }
 
 /*

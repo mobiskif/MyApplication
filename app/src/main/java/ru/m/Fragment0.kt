@@ -15,21 +15,14 @@ import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.main_activity.*
 
 class Fragment0 : Fragment() {
-    val J = "jop"
+    private val J = "jop"
     private lateinit var mModel: MyDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.init(context)
-
-        //val observerUser = Observer<Any> { updateUI() }
         mModel.cid.observe(this, Observer<Any> { updateUI() })
-    }
-
-    private fun updateUI() {
-        editName.text.clear(); editName.text.insert(0, mModel.cname.value)
-        spinnerDistrict.setSelection(mModel.cdistrict)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +39,7 @@ class Fragment0 : Fragment() {
         radioButton.isChecked = true
         radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
-            mModel.changeUser(position)
+            mModel.loadUser(position)
         }
 
         spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
@@ -58,6 +51,11 @@ class Fragment0 : Fragment() {
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
         }
         updateUI()
+    }
+
+    private fun updateUI() {
+        editName.text.clear(); editName.text.insert(0, mModel.cname.value)
+        spinnerDistrict.setSelection(mModel.cdistrict)
     }
 
 }
