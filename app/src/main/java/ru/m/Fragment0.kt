@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.main_activity.*
 
 class Fragment0 : Fragment() {
-    val J="jop"
+    val J = "jop"
     private lateinit var mModel: MyDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +25,13 @@ class Fragment0 : Fragment() {
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.init(context)
 
-        val observerUser = Observer<Any> {
-            Log.d(J,"Observer= ${mModel.cid.value} ${mModel.cname}")
-            editName.text.clear(); editName.text.insert(0, mModel.cname)
-            spinnerDistrict.setSelection(mModel.cdistrict)
-        }
-        mModel.cid.observe(this, observerUser)
+        //val observerUser = Observer<Any> { updateUI() }
+        mModel.cid.observe(this, Observer<Any> { updateUI() })
+    }
+
+    private fun updateUI() {
+        editName.text.clear(); editName.text.insert(0, mModel.cname)
+        spinnerDistrict.setSelection(mModel.cdistrict)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,36 +51,15 @@ class Fragment0 : Fragment() {
             mModel.changeUser(position)
         }
 
+        spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
+
         saveButton.setOnClickListener {
             mModel.cname = editName.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
             mModel.saveUser()
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
         }
-
-        spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
-        spinnerDistrict.setOnItemSelectedListener(SpinnerListener(mModel))
-
-        editName.text.clear(); editName.text.insert(0, mModel.cname)
-        spinnerDistrict.setSelection(mModel.cdistrict)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mModel.cname = editName.text.toString()
-        mModel.cdistrict = spinnerDistrict.selectedItemPosition
-        mModel.saveUser()
-
-    }
-}
-
-class SpinnerListener(private val model: MyDataModel) : AdapterView.OnItemSelectedListener {
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("onNothingSelected not implemented")
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //model.setDistrict(position)
+        updateUI()
     }
 
 }

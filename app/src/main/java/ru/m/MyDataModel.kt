@@ -8,37 +8,36 @@ import androidx.lifecycle.ViewModel
 
 class MyDataModel : ViewModel() {
     val J = "jop"
+    var context: Context? = null
+    var cname = ""
+    var cdistrict=0
+
     lateinit var cid: MutableLiveData<Int>
+    lateinit var currentName: MutableLiveData<String>
+    private lateinit var districtList: MutableLiveData<List<String>>
+    private lateinit var lpuList: MutableLiveData<List<String>>
+    private lateinit var specialityList: MutableLiveData<List<String>>
+    private lateinit var doctorList: MutableLiveData<List<String>>
+    private lateinit var currentDistrict: MutableLiveData<Int>
+    private lateinit var currentLPU: MutableLiveData<Int>
+    private lateinit var currentUser: MutableLiveData<Int>
 
     private fun restorecurrent(): Int {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         return defsettings.getInt("currentUser", 0)
     }
 
-    fun savecurrent(user: Int) {
+    private fun savecurrent(user: Int) {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         val eddef = defsettings.edit()
         eddef.putInt("currentUser", user)
         eddef.apply()
     }
 
-    var cname = ""
-    var cdistrict=0
-
-    private lateinit var districtList: MutableLiveData<List<String>>
-    private lateinit var lpuList: MutableLiveData<List<String>>
-    private lateinit var specialityList: MutableLiveData<List<String>>
-    private lateinit var doctorList: MutableLiveData<List<String>>
-    lateinit var currentName: MutableLiveData<String>
-    private lateinit var currentDistrict: MutableLiveData<Int>
-    private lateinit var currentLPU: MutableLiveData<Int>
-    private lateinit var currentUser: MutableLiveData<Int>
-    var context: Context? = null
-
     fun changeUser(id: Int) {
         cname = srestore(id, "name")
-        currentName.value=cname
         cdistrict=irestore(id, "district")
+        currentName.value=cname
         cid.value = id
     }
 
@@ -104,14 +103,6 @@ class MyDataModel : ViewModel() {
         if (!::cid.isInitialized) cid = MutableLiveData()
         if (!::currentName.isInitialized) currentName = MutableLiveData()
         changeUser(restorecurrent())
-    }
-
-    fun getName(): MutableLiveData<String> {
-        if (!::currentName.isInitialized) {
-            currentName = MutableLiveData()
-        }
-        currentName.setValue(Storage.restore(context,"currentName"))
-        return currentName
     }
 
 /*
