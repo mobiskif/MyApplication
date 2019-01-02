@@ -14,12 +14,6 @@ class MyDataModel : ViewModel() {
     private lateinit var districtList: MutableLiveData<List<String>>
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
-    /*
-    private lateinit var currentDistrict: MutableLiveData<Int>
-    private lateinit var currentLPU: MutableLiveData<Int>
-    private lateinit var currentUser: MutableLiveData<Int>
-    private lateinit var specialityList: MutableLiveData<List<String>>
-    */
 
     fun init(c: Context?) {
         context = c
@@ -102,7 +96,6 @@ class MyDataModel : ViewModel() {
         }
         return doctorList
     }
-
 
 /*
     fun getDistrict(): MutableLiveData<Int> {
