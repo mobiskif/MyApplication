@@ -18,10 +18,7 @@ class MyDataModel : ViewModel() {
 
     fun init(c: Context?) {
         context = c
-        if (!::cid.isInitialized) {
-            cid = MutableLiveData()
-            //cid.value=1
-        }
+        if (!::cid.isInitialized) cid = MutableLiveData()
         if (!::cname.isInitialized) cname = MutableLiveData()
         loadUser(restorecurrent())
     }
@@ -93,7 +90,7 @@ class MyDataModel : ViewModel() {
     fun getDoctorList(): MutableLiveData<List<String>> {
         if (!::doctorList.isInitialized) {
             doctorList = MutableLiveData()
-            doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
         }
         return doctorList
     }
