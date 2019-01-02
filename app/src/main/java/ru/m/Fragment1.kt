@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment() {
@@ -21,7 +19,7 @@ class Fragment1 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
-        mModel.context = context
+        //mModel.context = context
 /*
         val mObserver1 = Observer<Int> {
             //recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -30,7 +28,7 @@ class Fragment1 : Fragment() {
             //spinner.adapter = MySpinnerAdapter(mModel.getLpuList().value!!, context)
             //spinner.setOnItemSelectedListener(spinner1_OnItemSelectedListener(mModel))
         }
-        //mModel.getCurrentDistrict().observe(this, mObserver1)
+        //mModel.getDistrict().observe(this, mObserver1)
 
         val mObserver2 = Observer<List<String>> {
             recycler2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -51,12 +49,16 @@ class Fragment1 : Fragment() {
     override fun onResume() {
         super.onResume()
         spinner.adapter = MySpinnerAdapter(mModel.getLpuList().value!!, context)
-        //spinner.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
-        recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        recycler1.adapter = MyRecylcerAdapter(mModel.getLpuList().value!!, context)
+        //spinner.setSelection(mModel.getLPU().value!!)
 
-        recycler2.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-        recycler2.adapter = MyRecylcerAdapter(mModel.getSpecialityList().value!!, context)
+        //spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
+        //spinner2.setSelection(mModel.getLPU().value!!)
+
+        //recycler1.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        //recycler1.adapter = MyRecylcerAdapter(mModel.getLpuList().value!!, context)
+
+        //recycler2.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        //recycler2.adapter = MyRecylcerAdapter(mModel.getSpecialityList().value!!, context)
 
         recycler3.layoutManager = LinearLayoutManager(this.context)
         recycler3.adapter = MyRecylcerAdapter(mModel.getDoctorList().value!!, context)

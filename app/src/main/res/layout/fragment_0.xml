@@ -25,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Пациент" />
+                android:text="Пациент"
+                android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
@@ -73,10 +74,11 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Имя"
+            android:text="@{model.currentName}"
             android:inputType="textPersonName"
-            android:text="@{model.getName()}"
             />
-
+<!--
+-->
         <EditText
             android:id="@+id/editSecondname"
             android:layout_width="match_parent"
@@ -115,7 +117,8 @@
                 android:id="@+id/textViewLabel2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Район" />
+                android:text="Район"
+                android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
             <Spinner
                 android:id="@+id/spinnerDistrict"

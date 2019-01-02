@@ -1,29 +1,75 @@
 package ru.m
 
 import android.content.Context
+import android.preference.PreferenceManager
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MyDataModel : ViewModel() {
+    val J = "jop"
+    lateinit var cid: MutableLiveData<Int>
+
+    private fun restorecurrent(): Int {
+        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
+        return defsettings.getInt("currentUser", 0)
+    }
+
+    fun savecurrent(user: Int) {
+        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
+        val eddef = defsettings.edit()
+        eddef.putInt("currentUser", user)
+        eddef.apply()
+    }
+
+    var cname = ""
+    var cdistrict=0
+
     private lateinit var districtList: MutableLiveData<List<String>>
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
-    private lateinit var currentName: MutableLiveData<String>
+    lateinit var currentName: MutableLiveData<String>
     private lateinit var currentDistrict: MutableLiveData<Int>
-
+    private lateinit var currentLPU: MutableLiveData<Int>
+    private lateinit var currentUser: MutableLiveData<Int>
     var context: Context? = null
-    private var currentUser = 1
-    //private var currentDistrict = 1
-    var currentLPU = "0"
-    var currentSpeciality = "0"
-    var currentDoctor = "0"
 
+    fun changeUser(id: Int) {
+        cname = srestore(id, "name")
+        currentName.value=cname
+        cdistrict=irestore(id, "district")
+        cid.value = id
+    }
 
-    fun store() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        //Storage.store(context,"currentName", currentName)
+    private fun irestore(id: Int, key: String): Int {
+        val settings = context!!.getSharedPreferences(id.toString(), 0)
+        return settings.getInt(key,1)
+    }
 
+    private fun srestore(id: Int, key: String): String {
+        val settings = context!!.getSharedPreferences(id.toString(), 0)
+        return settings.getString(key,"")
+    }
+
+    fun saveUser() {
+        savecurrent(cid.value!!)
+        istore(cid.value!!, "district", cdistrict)
+        sstore(cid.value!!, "name", cname)
+    }
+
+    private fun istore(id: Int, key: String, value: Int) {
+        val settings = context!!.getSharedPreferences(id.toString(), 0)
+        val ed = settings.edit()
+        ed.putInt(key, value)
+        ed.apply()
+    }
+
+    private fun sstore(id: Int, key: String, value: String) {
+        val settings = context!!.getSharedPreferences(id.toString(), 0)
+        val ed = settings.edit()
+        ed.putString(key, value)
+        ed.apply()
     }
 
     fun getDistrictList(): MutableLiveData<List<String>> {
@@ -36,21 +82,13 @@ class MyDataModel : ViewModel() {
 
     fun getLpuList(): MutableLiveData<List<String>> {
         if (!::lpuList.isInitialized) lpuList = MutableLiveData()
-        when (getCurrentDistrict().value) {
+        when (cdistrict) {
             1 -> lpuList.setValue(listOf<String>("Поликлиника 11", "Больница 12", "Лаборатория 10", "Скорая помощь 01"))
             2 -> lpuList.setValue(listOf<String>("Поликлиника 21", "Больница 22", "Лаборатория 20", "Скорая помощь 02"))
             3 -> lpuList.setValue(listOf<String>("Поликлиника 31", "Больница 32", "Лаборатория 30", "Скорая помощь 03"))
             else -> lpuList.setValue(listOf<String>("Поликлиника", "Больница", "Лаборатория", "Скорая помощь"))
         }
         return lpuList
-    }
-
-    fun getSpecialityList(): MutableLiveData<List<String>> {
-        if (!::specialityList.isInitialized) {
-            specialityList = MutableLiveData()
-            specialityList.setValue(listOf<String>("Хирург", "Терапевт", "Уролог", "Кардиолог", "Гинеколог", "Окулист"))
-        }
-        return specialityList
     }
 
     fun getDoctorList(): MutableLiveData<List<String>> {
@@ -61,31 +99,83 @@ class MyDataModel : ViewModel() {
         return doctorList
     }
 
-    fun getName(): MutableLiveData<String> {
+    fun init(c: Context?) {
+        context = c
+        if (!::cid.isInitialized) cid = MutableLiveData()
         if (!::currentName.isInitialized) currentName = MutableLiveData()
-        currentName.setValue("user=${getCurrentUser()}")
+        changeUser(restorecurrent())
+    }
+
+    fun getName(): MutableLiveData<String> {
+        if (!::currentName.isInitialized) {
+            currentName = MutableLiveData()
+        }
+        currentName.setValue(Storage.restore(context,"currentName"))
         return currentName
     }
 
-    fun setCurrentUser(idUser: Int) {
-        currentUser=idUser
-        getName()
+/*
+    var context: Context? = null
+
+    fun setCurrentUser(user: Int) {
+        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
+        val eddef = defsettings.edit()
+        Log.d("jop", "setCurrentUser($user)")
+        eddef.putInt("currentUser", user)
+        eddef.apply()
     }
 
     fun getCurrentUser(): Int {
+        val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
+        Log.d("jop", "getCurrentUser() = " + defsettings.getInt("currentUser", 0).toString())
+        return defsettings.getInt("currentUser", 0)
+    }
+
+    fun setUser(idUser: Int) {
+        currentUser.setValue(idUser)
+        Storage.setCurrentUser(context, idUser)
+        //getName()
+        //getDistrict()
+    }
+
+    fun getUser(): MutableLiveData<Int> {
+        if (!::currentUser.isInitialized) {
+            currentUser = MutableLiveData()
+        }
+        currentUser.setValue(Storage.getCurrentUser(context))
         return currentUser
     }
 
     fun setDistrict(position: Int) {
+        //Log.d("jop", "set district position = $position")
         currentDistrict.value = position
-        getLpuList()
+        //getLpuList()
     }
 
-    fun getCurrentDistrict(): MutableLiveData<Int> {
-        if (!::currentDistrict.isInitialized) currentDistrict = MutableLiveData()
-        currentDistrict.setValue(1)
+    fun getDistrict(): MutableLiveData<Int> {
+        if (!::currentDistrict.isInitialized) {
+            currentDistrict = MutableLiveData()
+        }
+        currentDistrict.setValue(Storage.restoreint(context,"currentDistrict"))
         return currentDistrict
     }
+
+    fun getLPU(): MutableLiveData<Int> {
+        if (!::currentLPU.isInitialized) currentLPU = MutableLiveData()
+        currentLPU.setValue(2)
+        return currentLPU
+    }
+
+    fun setLPU(position: Int) {
+        currentLPU.value = position
+        getSpecialityList()
+    }
+
+    fun setName(s: String) {
+        currentName.setValue(s)
+    }
+
+*/
 
 }
 
