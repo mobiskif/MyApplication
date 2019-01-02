@@ -1,11 +1,9 @@
 package ru.m
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
@@ -30,7 +28,7 @@ class Fragment0 : Fragment() {
     }
 
     private fun updateUI() {
-        editName.text.clear(); editName.text.insert(0, mModel.cname)
+        editName.text.clear(); editName.text.insert(0, mModel.cname.value)
         spinnerDistrict.setSelection(mModel.cdistrict)
     }
 
@@ -54,7 +52,7 @@ class Fragment0 : Fragment() {
         spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
 
         saveButton.setOnClickListener {
-            mModel.cname = editName.text.toString()
+            mModel.cname.value = editName.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
             mModel.saveUser()
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
