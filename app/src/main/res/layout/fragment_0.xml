@@ -3,7 +3,7 @@
     <data>
 
         <variable
-            name="model"
+            name="model0"
             type="ru.m.MyDataModel" />
     </data>
 
@@ -76,7 +76,8 @@
                 android:ems="10"
                 android:hint="Имя"
                 android:inputType="textPersonName"
-                android:text="@{model.cname}" />
+                android:text="@{model0.cname}"
+                />
 
             <EditText
                 android:id="@+id/editSecondname"
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Фамилия"
+                android:text="@{model0.cfam}"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -92,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Отчество"
+                android:text="@{model0.cotch}"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -100,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="1984-07-23"
+                android:text="@{model0.cdate}"
                 android:inputType="date" />
 
             <Space

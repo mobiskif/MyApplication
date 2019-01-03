@@ -27,7 +27,7 @@ class Fragment0 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: ru.m.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
-        binding.model = mModel
+        binding.model0 = mModel
         //return inflater.inflate(R.layout.fragment_0, container, false)
         return binding.root
     }
@@ -46,6 +46,9 @@ class Fragment0 : Fragment() {
 
         saveButton.setOnClickListener {
             mModel.cname.value = editName.text.toString()
+            mModel.cfam.value = editSecondname.text.toString()
+            mModel.cotch.value = editSurname.text.toString()
+            mModel.cdate.value = editBirstdate.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
             mModel.saveUser()
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
@@ -55,6 +58,9 @@ class Fragment0 : Fragment() {
 
     private fun updateUI() {
         editName.text.clear(); editName.text.insert(0, mModel.cname.value)
+        editSecondname.text.clear(); editSecondname.text.insert(0, mModel.cfam.value)
+        editSurname.text.clear(); editSurname.text.insert(0, mModel.cotch.value)
+        editBirstdate.text.clear(); editBirstdate.text.insert(0, mModel.cdate.value)
         spinnerDistrict.setSelection(mModel.cdistrict)
     }
 
