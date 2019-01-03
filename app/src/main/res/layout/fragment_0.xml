@@ -70,16 +70,6 @@
                 android:layout_height="@dimen/fab_margin" />
 
             <EditText
-                android:id="@+id/editName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Имя"
-                android:inputType="textPersonName"
-                android:text="@{model0.cname}"
-                />
-
-            <EditText
                 android:id="@+id/editSecondname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,6 +77,15 @@
                 android:hint="Фамилия"
                 android:text="@{model0.cfam}"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Имя"
+                android:inputType="textPersonName"
+                android:text="@{model0.cname}" />
 
             <EditText
                 android:id="@+id/editSurname"

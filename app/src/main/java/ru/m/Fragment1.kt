@@ -24,8 +24,12 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.clpu.observe(this, Observer<Any> {
-            //Snackbar.make(this.view!!, "Replace with your own action", Snackbar.LENGTH_LONG).show()
+            recycler3.adapter = MyRecylcerAdapter(mModel.getTalonList().value!!, context)
+            recycler3.smoothScrollBy(100, 0)
+            spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
             mModel.saveUser()
+        })
+        mModel.cspec.observe(this, Observer<Any> {
             recycler4.adapter = MyListAdapter(mModel.getDoctorList().value!!, context)
         })
     }
@@ -33,21 +37,14 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
         spinner1.adapter = MySpinnerAdapter(mModel.getLpuList().value!!, context)
-        spinner1.setOnItemSelectedListener(this)
         spinner1.setSelection(mModel.clpu.value!!)
-
-        spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
-
+        spinner1.setOnItemSelectedListener(this)
+        spinner2.setOnItemSelectedListener(this)
         recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        recycler3.adapter = MyRecylcerAdapter(mModel.getDoctorList().value!!, context)
-        recycler3.smoothScrollBy(100, 0)
-
         recycler4.layoutManager = LinearLayoutManager(this.context)
-        recycler4.adapter = MyListAdapter(mModel.getDoctorList().value!!, context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return inflater.inflate(R.layout.fragment_1, container, false)
         val binding: ru.m.databinding.Fragment1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = mModel
         //return inflater.inflate(R.layout.fragment_0, container, false)
@@ -55,7 +52,11 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        mModel.clpu.value=position
+
+        when (parent!!.id) {
+            R.id.spinner1 -> mModel.clpu.value=position
+            R.id.spinner2 -> mModel.cspec.value= position.toString()
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -21,7 +22,6 @@ class Fragment0 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
-        mModel.init(context)
         mModel.cid.observe(this, Observer<Any> { updateUI() })
     }
 
@@ -50,8 +50,12 @@ class Fragment0 : Fragment() {
             mModel.cotch.value = editSurname.text.toString()
             mModel.cdate.value = editBirstdate.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
-            mModel.saveUser()
-            NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+            if (mModel.cdate.value!!.length > 9) {
+                mModel.saveUser()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+            }
+            else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-03'", Snackbar.LENGTH_LONG).show()
+
         }
         updateUI()
     }
