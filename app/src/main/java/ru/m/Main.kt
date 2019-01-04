@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.main_activity.*
 
-class ActivityMain : AppCompatActivity() {
+class Main : AppCompatActivity() {
     private lateinit var mModel: MyDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

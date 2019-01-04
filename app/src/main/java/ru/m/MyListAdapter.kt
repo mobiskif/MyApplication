@@ -21,8 +21,8 @@ class MyListAdapter(val items: List<String>, val context: Context?) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
-        var tv = holder.hv
-        tv.setText(items.get(position))
+        val tv = holder.hv
+        tv.setText(items[position])
         tv.setOnClickListener {
             tv.text = "=-= $position"
         }

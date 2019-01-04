@@ -3,12 +3,10 @@
     package="ru.m">
 
     <application
-        android:allowBackup="true"
-        android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name="ru.m.ActivityMain">
+        android:icon="@drawable/redcross_small"
+        android:theme="@style/AppTheme.NoActionBar"
+        >
+        <activity android:name="ru.m.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,4 +15,10 @@
         </activity>
     </application>
 
+    <!--
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+    -->
 </manifest>

@@ -76,7 +76,8 @@
                 android:ems="10"
                 android:hint="Фамилия"
                 android:text="@{model0.cfam}"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                />
 
             <EditText
                 android:id="@+id/editName"
@@ -127,9 +128,9 @@
                     android:layout_height="wrap_content" />
 
                 <Space
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    />
 
             </LinearLayout>
 

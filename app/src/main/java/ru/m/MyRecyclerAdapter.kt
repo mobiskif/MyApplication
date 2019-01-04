@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 
 
-class MyRecylcerAdapter(val items: List<String>, val context: Context?) : RecyclerView.Adapter<ViewHolder>() {
+class MyRecylcerAdapter(val items: List<String>, private val context: Context?) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
@@ -22,8 +22,8 @@ class MyRecylcerAdapter(val items: List<String>, val context: Context?) : Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var tv = holder.hv
-        tv.setText(items.get(position))
+        val tv = holder.hv
+        tv.setText(items[position])
 
         tv.setOnClickListener {
             tv.text = "=-= $position"
