@@ -1,7 +1,6 @@
-package ru.m
+package ru.mobiskif
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -45,7 +42,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ru.m.databinding.Fragment1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
+        val binding: ru.mobiskif.databinding.Fragment1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = mModel
         //return inflater.inflate(R.layout.fragment_0, container, false)
         return binding.root

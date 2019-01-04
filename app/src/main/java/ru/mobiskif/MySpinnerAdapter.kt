@@ -1,19 +1,12 @@
-package ru.m
+package ru.mobiskif
 
 import android.R
 import android.content.Context
-import android.database.DataSetObserver
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter.IGNORE_ITEM_VIEW_TYPE
 import android.widget.BaseAdapter
-import android.widget.SpinnerAdapter
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
 
 class MySpinnerAdapter(private val items: List<String>, val context: Context?) : BaseAdapter() {
 

@@ -1,10 +1,9 @@
-package ru.m
+package ru.mobiskif
 
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 
 class MyDataModel : ViewModel() {

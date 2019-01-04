@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.m">
+    package="ru.mobiskif">
 
     <application
         android:icon="@drawable/redcross_small"
         android:theme="@style/AppTheme.NoActionBar"
+        android:label="@string/app_name"
         >
-        <activity android:name="ru.m.Main">
+        <activity android:name=".Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

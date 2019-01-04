@@ -1,4 +1,4 @@
-package ru.m
+package ru.mobiskif
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,7 +26,7 @@ class Fragment0 : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ru.m.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
+        val binding: ru.mobiskif.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
         binding.model0 = mModel
         //return inflater.inflate(R.layout.fragment_0, container, false)
         return binding.root

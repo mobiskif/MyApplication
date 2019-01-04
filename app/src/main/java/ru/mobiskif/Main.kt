@@ -1,4 +1,4 @@
-package ru.m
+package ru.mobiskif
 
 import android.os.Bundle
 import android.view.Menu

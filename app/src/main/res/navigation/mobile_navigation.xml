@@ -7,11 +7,11 @@
     <fragment
         android:id="@+id/Fragment1"
         tools:layout="@layout/fragment_1"
-        android:name="ru.m.Fragment1" />
+        android:name="ru.mobiskif.Fragment1" />
     <fragment
         android:id="@+id/Fragment0"
         tools:layout="@layout/fragment_0"
-        android:name="ru.m.Fragment0" />
+        android:name="ru.mobiskif.Fragment0" />
     <activity
         android:id="@+id/activityMain"
         android:label="ActivityMain"
