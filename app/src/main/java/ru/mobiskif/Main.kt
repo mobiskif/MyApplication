@@ -31,7 +31,6 @@ class Main : AppCompatActivity() {
             true
         }
 
-
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
         }

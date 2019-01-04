@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/nav_menu0"
-        android:icon="@drawable/ic_account_circle_24dp"
+        android:icon="?attr/actionModeCopyDrawable"
         android:title="@string/menu0"
         app:showAsAction="ifRoom" />
     <item

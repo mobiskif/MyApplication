@@ -54,7 +54,7 @@ class Fragment0 : Fragment() {
                 mModel.saveUser()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
-            else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-03'", Snackbar.LENGTH_LONG).show()
+            else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
 
         }
         updateUI()

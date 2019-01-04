@@ -12,22 +12,24 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
+import kotlinx.android.synthetic.main.main_activity.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var mModel: MyDataModel
+    val J="jop"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.clpu.observe(this, Observer<Any> {
-            recycler3.adapter = MyRecylcerAdapter(mModel.getTalonList().value!!, context)
+            recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
             recycler3.smoothScrollBy(100, 0)
             spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
             mModel.saveUser()
         })
         mModel.cspec.observe(this, Observer<Any> {
-            recycler4.adapter = MyListAdapter(mModel.getDoctorList().value!!, context)
+            recycler4.adapter = DoctorListAdapter(mModel.getDoctorList().value!!, context, nav_host_fragment )
         })
     }
 
@@ -35,9 +37,11 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onResume()
         spinner1.adapter = MySpinnerAdapter(mModel.getLpuList().value!!, context)
         spinner1.setSelection(mModel.clpu.value!!)
-        spinner1.setOnItemSelectedListener(this)
-        spinner2.setOnItemSelectedListener(this)
+        spinner1.onItemSelectedListener = this
+        spinner2.onItemSelectedListener = this
         recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
+        recycler3.smoothScrollBy(100, 0)
         recycler4.layoutManager = LinearLayoutManager(this.context)
     }
 

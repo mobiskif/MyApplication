@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-
-class MyRecylcerAdapter(val items: List<String>, private val context: Context?) : RecyclerView.Adapter<ViewHolder>() {
+class TalonRecylcerAdapter(val items: List<String>, private val context: Context?) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
@@ -20,18 +19,14 @@ class MyRecylcerAdapter(val items: List<String>, private val context: Context?) 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tv = holder.hv
-        tv.setText(items[position])
-
+        tv.text = items[position]
         tv.setOnClickListener {
             tv.text = "=-= $position"
-            //val mModel = context?.run { ViewModelProviders.of(context as FragmentActivity).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
-            //mModel.updateLpuList()
         }
     }
-
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    val hv = view.findViewById<TextView>(R.id.text1)
+    val hv = view.findViewById<TextView>(R.id.text1)!!
 }
 

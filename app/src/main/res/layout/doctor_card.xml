@@ -16,10 +16,10 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
             android:layout_marginRight="@dimen/fab_margin"
-            card_view:srcCompat="@drawable/redcross_small" />
+            card_view:srcCompat="@drawable/doctor" />
 
         <TextView
             android:id="@+id/text1"
