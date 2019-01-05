@@ -28,7 +28,7 @@ class Main : AppCompatActivity() {
         binding.modelmain = mModel
 
         setSupportActionBar(detail_toolbar)
-
+/*
         val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.drawer_open, R.string.drawer_close)
         drawer_layout.addDrawerListener(toggle)
         //toggle.syncState()
@@ -43,14 +43,14 @@ class Main : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
         }
-
+*/
         if (mModel.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
         else NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
 
     }
 
 
-    override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
+    //override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)

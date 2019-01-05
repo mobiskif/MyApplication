@@ -27,6 +27,7 @@ class Fragment2 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onResume()
         recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         recyclerTalon.adapter = TalonListAdapter(mModel.getTalonList().value!!, context, nav_host_fragment )
+        activity!!.collapsing_toolbar.title = mModel.cspec.value + ' ' + mModel.cfam.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
