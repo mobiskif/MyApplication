@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -57,6 +58,7 @@ class Fragment0 : Fragment() {
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
 
         }
+        activity!!.appbar.setExpanded(true,true)
         updateUI()
     }
 
@@ -66,6 +68,7 @@ class Fragment0 : Fragment() {
         editSurname.text.clear(); editSurname.text.insert(0, mModel.cotch.value)
         editBirstdate.text.clear(); editBirstdate.text.insert(0, mModel.cdate.value)
         spinnerDistrict.setSelection(mModel.cdistrict)
+        activity!!.collapsing_toolbar.title = mModel.cname.value + ' ' + mModel.cfam.value
     }
 
 }

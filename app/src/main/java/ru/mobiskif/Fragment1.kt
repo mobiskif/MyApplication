@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_1.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -43,6 +44,8 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
         recycler3.smoothScrollBy(100, 0)
         recycler4.layoutManager = LinearLayoutManager(this.context)
+        activity!!.appbar?.setExpanded(false,true)
+        activity!!.collapsing_toolbar.title = mModel.cname.value + ' ' + mModel.cfam.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
