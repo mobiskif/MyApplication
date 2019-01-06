@@ -8,8 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.doctor_card.view.*
-import android.widget.Toast
-
+import androidx.navigation.fragment.NavHostFragment
 
 
 class DoctorListAdapter(private val items: List<String>, private val navfragment: Fragment, val mModel: MyDataModel) : RecyclerView.Adapter<ViewHolder2>() {
@@ -20,7 +19,7 @@ class DoctorListAdapter(private val items: List<String>, private val navfragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder2 {
         val view = LayoutInflater.from(navfragment.context).inflate(R.layout.doctor_card, parent, false)
-        return ViewHolder2(view, items)
+        return ViewHolder2(view, mModel, navfragment)
     }
 
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
@@ -31,15 +30,19 @@ class DoctorListAdapter(private val items: List<String>, private val navfragment
     }
 }
 
-class ViewHolder2(view: View, private val items: List<String>) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class ViewHolder2(view: View, private val model: MyDataModel, val navfragment: Fragment) : RecyclerView.ViewHolder(view), View.OnClickListener {
     val hv = view.findViewById<TextView>(R.id.text1)!!
     val cv = view.findViewById<CardView>(R.id.card_view)!!
     init { itemView.setOnClickListener(this) }
+
     override fun onClick(view: View) {
         val pos = adapterPosition
         if (pos != RecyclerView.NO_POSITION) {
-            val clickedDataItem = items[pos]
-            Toast.makeText(view.context, "You clicked $clickedDataItem", Toast.LENGTH_SHORT).show()
+            val clickedDataItem = model.getDoctorList().value!![pos]
+            model.cdoctor.value=clickedDataItem
+            //Toast.makeText(view.context, "You clicked $clickedDataItem", Toast.LENGTH_SHORT).show()
+            NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment2)
+
         }
     }
 }

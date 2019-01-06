@@ -17,8 +17,7 @@
         app:expandedTitleMarginEnd="@dimen/fab_margin"
         app:expandedTitleMarginStart="@dimen/fab_margin"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:title="@{modelmain.cname}"
-        >
+        app:title="@{modelmain.cname}">
 
         <ImageView
             android:id="@+id/image"

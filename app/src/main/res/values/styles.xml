@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
@@ -8,10 +8,11 @@
 
     <style name="AppTheme" parent="BaseTheme">
         <item name="android:buttonTint">@color/primaryColor</item>
+    </style>
+<!--
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
+-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />

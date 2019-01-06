@@ -1,5 +1,6 @@
 package ru.mobiskif
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,14 +8,21 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
 import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_activity.view.*
+import com.google.android.material.appbar.AppBarLayout
+
+
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -25,9 +33,10 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.clpu.observe(this, Observer<Any> {
-            recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
+            else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
             recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
-            recycler3.smoothScrollBy(100, 0)
+            recycler3.smoothScrollBy(80, 0)
             spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
             mModel.saveUser()
         })
@@ -43,11 +52,21 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         spinner1.setSelection(mModel.clpu.value!!)
         spinner1.onItemSelectedListener = this
         spinner2.onItemSelectedListener = this
-        recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        Log.d(J, getResources().getConfiguration().orientation.toString())
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+            recycler3.layoutManager = GridLayoutManager(this.context, 2)
+        }
+        else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        //recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
-        recycler3.smoothScrollBy(100, 0)
-        activity!!.appbar?.setExpanded(false,true)
-        activity!!.collapsing_toolbar.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
+        recycler3.smoothScrollBy(80, 0)
+        //activity!!.appbar?.setExpanded(false,true)
+        //var par = activity!!.collapsing_toolbar.layoutParams as AppBarLayout.LayoutParams
+        //par.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)
+        //ViewCompat.setNestedScrollingEnabled(drawer_layout, false);
+        //activity?.actionBar!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
+        activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

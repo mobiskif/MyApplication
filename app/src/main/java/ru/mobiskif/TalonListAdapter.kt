@@ -26,7 +26,9 @@ class TalonListAdapter(private val items: List<String>, private val context: Con
         val tv = holder.hv
         var cv = holder.cv
         tv.text = items[position]
-        cv.setOnClickListener { NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment2) }
+        cv.setOnClickListener {
+            //NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment2)
+        }
     }
 }
 

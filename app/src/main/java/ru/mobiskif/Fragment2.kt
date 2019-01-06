@@ -1,5 +1,6 @@
 package ru.mobiskif
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_1.*
 import kotlinx.android.synthetic.main.fragment_2.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -25,9 +28,18 @@ class Fragment2 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
-        recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        //recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+            recyclerTalon.layoutManager = GridLayoutManager(this.context, 2)
+        }
+        else recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+
         recyclerTalon.adapter = TalonListAdapter(mModel.getTalonList().value!!, context, nav_host_fragment )
-        activity!!.collapsing_toolbar.title = mModel.cspec.value + ' ' + mModel.cfam.value
+        //activity!!.collapsing_toolbar.title = mModel.cspec.value + ' ' + mModel.cfam.value
+        activity!!.title = mModel.cspec.value + ' ' + mModel.cdoctor.value
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

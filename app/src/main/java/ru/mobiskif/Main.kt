@@ -19,15 +19,19 @@ class Main : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.main_activity)
+        setContentView(R.layout.main_activity)
 
         mModel = run { ViewModelProviders.of(this).get(MyDataModel::class.java) }
         mModel.init(this)
 
-        val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
-        binding.modelmain = mModel
+        //getActionBar().setHomeButtonEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
-        setSupportActionBar(detail_toolbar)
+        //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        //binding.modelmain = mModel
+
+        //setSupportActionBar(detail_toolbar)
 /*
         val toggle = ActionBarDrawerToggle(this, drawer_layout, detail_toolbar, R.string.drawer_open, R.string.drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -50,7 +54,9 @@ class Main : AppCompatActivity() {
     }
 
 
-    //override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
+//override fun onSupportNavigateUp() = findNavController(nav_host_fragment).navigateUp()
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)

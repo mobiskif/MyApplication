@@ -58,7 +58,7 @@ class Fragment0 : Fragment() {
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
 
         }
-        activity!!.appbar.setExpanded(true,true)
+        //activity!!.appbar.setExpanded(true,true)
         updateUI()
     }
 
@@ -68,7 +68,9 @@ class Fragment0 : Fragment() {
         editSurname.text.clear(); editSurname.text.insert(0, mModel.cotch.value)
         editBirstdate.text.clear(); editBirstdate.text.insert(0, mModel.cdate.value)
         spinnerDistrict.setSelection(mModel.cdistrict)
-        activity!!.collapsing_toolbar.title = mModel.cname.value + ' ' + mModel.cfam.value
+        //activity!!.collapsing_toolbar.title = mModel.cname.value + ' ' + mModel.cfam.value
+        activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
+
     }
 
 }
