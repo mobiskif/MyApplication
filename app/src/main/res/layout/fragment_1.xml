@@ -16,41 +16,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewInfo"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{model1.cfam + ' ' + model1.cname + ' ' + model1.cotch + ' ' + model1.cdate}"
-                android:textAppearance="@android:style/TextAppearance.Material.Menu"
-                android:visibility="gone" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fab_margin"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Талоны"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fab_margin" />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,19 +31,17 @@
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
                     android:layout_weight="1" />
 
                 <Spinner
                     android:id="@+id/spinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
                     android:layout_weight="1" />
 
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fab_margin" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler4"
@@ -81,7 +49,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
     </ScrollView>
+
 
 </layout>

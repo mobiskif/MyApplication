@@ -25,12 +25,14 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.clpu.observe(this, Observer<Any> {
+            recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
             recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
             recycler3.smoothScrollBy(100, 0)
             spinner2.adapter = MySpinnerAdapter(mModel.getSpecialityList().value!!, context)
             mModel.saveUser()
         })
         mModel.cspec.observe(this, Observer<Any> {
+            recycler4.layoutManager = LinearLayoutManager(this.context)
             recycler4.adapter = DoctorListAdapter(mModel.getDoctorList().value!!, nav_host_fragment, mModel )
         })
     }
@@ -44,7 +46,6 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         recycler3.adapter = TalonRecylcerAdapter(mModel.getTalonList().value!!, context)
         recycler3.smoothScrollBy(100, 0)
-        recycler4.layoutManager = LinearLayoutManager(this.context)
         activity!!.appbar?.setExpanded(false,true)
         activity!!.collapsing_toolbar.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
     }

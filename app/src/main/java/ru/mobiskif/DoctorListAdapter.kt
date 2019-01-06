@@ -13,7 +13,6 @@ import android.widget.Toast
 
 
 class DoctorListAdapter(private val items: List<String>, private val navfragment: Fragment, val mModel: MyDataModel) : RecyclerView.Adapter<ViewHolder2>() {
-    //lateinit var itemClickListener: AdapterView.OnItemClickListener
 
     override fun getItemCount(): Int {
         return items.count()
