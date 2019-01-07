@@ -18,6 +18,7 @@ class Main : AppCompatActivity() {
     private lateinit var mModel: MyDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 

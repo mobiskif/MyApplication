@@ -28,6 +28,15 @@
     <fragment
         android:id="@+id/Fragment2"
         tools:layout="@layout/fragment_2"
-        android:name="ru.mobiskif.Fragment2" />
+        android:name="ru.mobiskif.Fragment2" >
+        <action
+            android:id="@+id/action_Fragment2_to_help"
+            app:destination="@id/help" />
+    </fragment>
+    <activity
+        android:id="@+id/help"
+        android:name="ru.mobiskif.Help"
+        android:label="activity_help"
+        tools:layout="@layout/activity_help" />
 
 </navigation>

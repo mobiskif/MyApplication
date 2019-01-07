@@ -45,8 +45,8 @@ dependencies {
     //kapt 'com.android.databinding:compiler:3.4.0-alpha03'
     //implementation 'androidx.databinding:databinding-runtime:3.4.0-alpha03'
 
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
-
 
 
 /*

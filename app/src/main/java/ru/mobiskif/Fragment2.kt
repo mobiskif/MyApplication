@@ -2,10 +2,12 @@ package ru.mobiskif
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -50,6 +52,11 @@ class Fragment2 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        //NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment0)
+        //Toast.makeText(context, "You clicked $position", Toast.LENGTH_SHORT).show()
+        Log.d(J, "wqeqweqwe")
+
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

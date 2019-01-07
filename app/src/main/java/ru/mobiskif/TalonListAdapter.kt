@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -28,6 +29,8 @@ class TalonListAdapter(private val items: List<String>, private val context: Con
         tv.text = items[position]
         cv.setOnClickListener {
             //NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment2)
+            Toast.makeText(context, "You clicked $position", Toast.LENGTH_SHORT).show()
+
         }
     }
 }
