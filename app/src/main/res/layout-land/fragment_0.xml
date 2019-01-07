@@ -5,7 +5,7 @@
 
         <variable
             name="model0"
-            type="ru.mobiskif.MyDataModel" />
+            type="ru.mobiskif.MainViewModel" />
     </data>
 
     <LinearLayout
@@ -13,6 +13,52 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editSecondname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Фамилия"
+                android:inputType="textPersonName"
+                android:text="@{model0.cfam}" />
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Имя"
+                android:inputType="textPersonName"
+                android:text="@{model0.cname}" />
+
+            <EditText
+                android:id="@+id/editSurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Отчество"
+                android:inputType="textPersonName"
+                android:text="@{model0.cotch}" />
+
+            <EditText
+                android:id="@+id/editBirstdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="1984-07-23"
+                android:inputType="date"
+                android:text="@{model0.cdate}" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,6 +115,10 @@
                     android:text="5" />
             </RadioGroup>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fab_margin" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,56 +146,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fab_margin" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/editSecondname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Фамилия"
-                android:inputType="textPersonName"
-                android:text="@{model0.cfam}" />
-
-            <EditText
-                android:id="@+id/editName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Имя"
-                android:inputType="textPersonName"
-                android:text="@{model0.cname}" />
-
-            <EditText
-                android:id="@+id/editSurname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Отчество"
-                android:inputType="textPersonName"
-                android:text="@{model0.cotch}" />
-
-            <EditText
-                android:id="@+id/editBirstdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="1984-07-23"
-                android:inputType="date"
-                android:text="@{model0.cdate}" />
-
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="Сохранить" />
 
         </LinearLayout>

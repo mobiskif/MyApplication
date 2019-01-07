@@ -4,7 +4,7 @@
 
         <variable
             name="model1"
-            type="ru.mobiskif.MyDataModel" />
+            type="ru.mobiskif.MainViewModel" />
     </data>
 
     <ScrollView

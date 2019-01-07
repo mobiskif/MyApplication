@@ -23,7 +23,7 @@
     <activity
         android:id="@+id/activityMain"
         android:label="ActivityMain"
-        tools:layout="@layout/main_activity"
+        tools:layout="@layout/activity_main"
         />
     <fragment
         android:id="@+id/Fragment2"
@@ -35,7 +35,7 @@
     </fragment>
     <activity
         android:id="@+id/help"
-        android:name="ru.mobiskif.Help"
+        android:name="ru.mobiskif.HelpActivity"
         android:label="activity_help"
         tools:layout="@layout/activity_help" />
 

@@ -7,25 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_1.*
 import kotlinx.android.synthetic.main.fragment_2.*
-import kotlinx.android.synthetic.main.main_activity.*
 
 class Fragment2 : Fragment(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var mModel: MyDataModel
+    private lateinit var mModel: MainViewModel
     val J="jop"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
+        mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
     }
 
     override fun onResume() {
@@ -38,7 +35,7 @@ class Fragment2 : Fragment(), AdapterView.OnItemSelectedListener {
         }
         else recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
 
-        recyclerTalon.adapter = TalonListAdapter(mModel.getTalonList().value!!, context, nav_host_fragment )
+        recyclerTalon.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon )
         //activity!!.collapsing_toolbar.title = mModel.cspec.value + ' ' + mModel.cfam.value
         activity!!.title = mModel.cspec.value + ' ' + mModel.cdoctor.value
 

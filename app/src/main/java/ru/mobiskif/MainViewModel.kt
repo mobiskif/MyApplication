@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MyDataModel : ViewModel() {
+class MainViewModel : ViewModel() {
     val J = "jop"
     var context: Context? = null
     var cdistrict=0

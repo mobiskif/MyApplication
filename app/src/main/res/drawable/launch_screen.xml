@@ -10,9 +10,8 @@
     <item>
 
         <bitmap
-            android:src="@drawable/redcross_small"
+            android:src="@drawable/doctor"
             android:gravity="center"/>
-
     </item>
 
 </layer-list>

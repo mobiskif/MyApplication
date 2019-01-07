@@ -12,17 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_0.*
-import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class Fragment0 : Fragment() {
     private val J = "jop"
-    private lateinit var mModel: MyDataModel
+    private lateinit var mModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mModel = activity?.run { ViewModelProviders.of(this).get(MyDataModel::class.java) } ?: throw Exception("Invalid Activity")
+        mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
         mModel.cid.observe(this, Observer<Any> { updateUI() })
     }
 
@@ -43,7 +42,7 @@ class Fragment0 : Fragment() {
             mModel.loadUser(position)
         }
 
-        spinnerDistrict.adapter = MySpinnerAdapter(mModel.getDistrictList().value!!, context)
+        spinnerDistrict.adapter = SpinnerAdapter(mModel.getDistrictList().value!!, context)
 
         saveButton.setOnClickListener {
             mModel.cname.value = editName.text.toString()
