@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mModel = run { ViewModelProviders.of(this).get(MainViewModel::class.java) }
-        mModel.init(this)
+        mModel.context = this.applicationContext
+        mModel.init()
         title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
         //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)

@@ -1,15 +1,21 @@
 package ru.mobiskif
 
+import android.app.Activity
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_1.*
 
 class MainViewModel : ViewModel() {
     val J = "jop"
     var context: Context? = null
-    var cdistrict=0
+    var cdistrict = 0
     lateinit var cuser: MutableLiveData<Int>
 
     lateinit var cname: MutableLiveData<String>
@@ -30,9 +36,22 @@ class MainViewModel : ViewModel() {
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var talonList: MutableLiveData<List<String>>
 
+    fun setOwner(ow: LifecycleOwner) {
+        ow?.let {
+            clpu.observe(it, Observer<Any> {
+                Log.d(J, "Сработал наблюдатель clpu")
+                refreshSpecialityList()
+            })
+            cspec.observe(it, Observer<Any> {
+                Log.d(J, "Сработал наблюдатель cspec")
+            })
+            cdoctor.observe(it, Observer<Any> {
+                Log.d(J, "Сработал наблюдатель cdoctor")
+            })
+        }
+    }
 
-    fun init(c: Context?) {
-        context = c
+    fun init() {
         if (!::cuser.isInitialized) cuser = MutableLiveData()
         if (!::cname.isInitialized) cname = MutableLiveData()
         if (!::clpu.isInitialized) clpu = MutableLiveData()
@@ -45,6 +64,7 @@ class MainViewModel : ViewModel() {
         if (!::cspec.isInitialized) cspec = MutableLiveData()
         if (!::cspecname.isInitialized) cspecname = MutableLiveData()
         loadUser(restorecurrent())
+
     }
 
     fun saveUser() {
@@ -75,9 +95,9 @@ class MainViewModel : ViewModel() {
         cdoctorname.value = srestore(id, "doctorname")
         cspec.value = irestore(id, "spec")
         cspecname.value = srestore(id, "specname")
-        clpu.value=irestore(id, "lpu")
-        clpuname.value=srestore(id, "lpuname")
-        cdistrict=irestore(id, "district")
+        clpu.value = irestore(id, "lpu")
+        clpuname.value = srestore(id, "lpuname")
+        cdistrict = irestore(id, "district")
         cuser.value = id
     }
 
@@ -88,12 +108,12 @@ class MainViewModel : ViewModel() {
 
     private fun irestore(id: Int, key: String): Int {
         val settings = context!!.getSharedPreferences(id.toString(), 0)
-        return settings.getInt(key,1)
+        return settings.getInt(key, 1)
     }
 
     private fun srestore(id: Int, key: String): String {
         val settings = context!!.getSharedPreferences(id.toString(), 0)
-        return settings.getString(key,"")
+        return settings.getString(key, "")
     }
 
     private fun istore(id: Int, key: String, value: Int) {
@@ -145,6 +165,11 @@ class MainViewModel : ViewModel() {
 
     fun getSpecialityList(): MutableLiveData<List<String>> {
         if (!::specialityList.isInitialized) specialityList = MutableLiveData()
+        return specialityList
+    }
+
+    fun refreshSpecialityList(): MutableLiveData<List<String>> {
+        if (!::specialityList.isInitialized) specialityList = MutableLiveData()
         when (clpu.value) {
             1 -> specialityList.setValue(listOf<String>("Терапевт 1", "Хирург 1", "Гинеколог 1", "Окулист 1"))
             2 -> specialityList.setValue(listOf<String>("Терапевт 2", "Хирург 2", "Гинеколог 2", "Окулист 2"))
@@ -163,7 +188,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun request(a: Any?, b: Any?) {
-        Log.d(J,"request ${a.toString()}, ${b.toString()}")
+        Log.d(J, "request ${a.toString()}, ${b.toString()}")
     }
 
 }

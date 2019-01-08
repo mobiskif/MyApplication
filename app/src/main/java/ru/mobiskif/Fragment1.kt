@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +26,8 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
+        mModel.setOwner(this)
+
         mModel.clpu.observe(this, Observer<Any> {
             initUI()
             spinner2.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context)
@@ -35,6 +38,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             recycler4.layoutManager = LinearLayoutManager(this.context)
             recycler4.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor, mModel )
         })
+
     }
 
     override fun onResume() {
@@ -45,7 +49,6 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         spinner2.onItemSelectedListener = this
 
         initUI()
-        activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -78,5 +81,6 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         recycler3.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon, mModel)
         recycler3.smoothScrollBy(80, 0)
+        activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
     }
 }
