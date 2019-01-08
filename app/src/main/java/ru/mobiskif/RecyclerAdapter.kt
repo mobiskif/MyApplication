@@ -2,13 +2,14 @@ package ru.mobiskif
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_talon.view.*
 
-class RecylcerAdapter(val items: List<String>, private val fragm: Fragment, val layout_id: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapter(val items: List<String>, private val fragm: Fragment, val layout_id: Int, var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
@@ -21,13 +22,12 @@ class RecylcerAdapter(val items: List<String>, private val fragm: Fragment, val 
         holder.itemView.text1.text = items[position]
 
         holder.itemView.setOnClickListener {
-            //Toast.makeText(fragm, "You clicked $position", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(fragm.context, "Это RecyclerAdapter $position", Toast.LENGTH_SHORT).show()
+            model.cdoctor.value = position
+            model.cdoctorname.value = items[position]
             if (layout_id==R.layout.card_doctor) NavHostFragment.findNavController(fragm).navigate(R.id.Fragment2)
             if (layout_id==R.layout.card_talon) NavHostFragment.findNavController(fragm).navigate(R.id.action_Fragment2_to_help)
         }
-
-        holder.itemView.text1.setOnClickListener {
-            holder.itemView.text1.text = "== $position"
-        }
+        //holder.itemView.text1.setOnClickListener {holder.itemView.text1.text = "== $position"}
     }
 }

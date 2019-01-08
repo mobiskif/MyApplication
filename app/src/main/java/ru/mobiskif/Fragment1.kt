@@ -28,11 +28,12 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         mModel.clpu.observe(this, Observer<Any> {
             initUI()
             spinner2.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context)
+            spinner2.setSelection(mModel.cspec.value!!)
             mModel.saveUser()
         })
         mModel.cspec.observe(this, Observer<Any> {
             recycler4.layoutManager = LinearLayoutManager(this.context)
-            recycler4.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor )
+            recycler4.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor, mModel )
         })
     }
 
@@ -42,6 +43,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         spinner1.setSelection(mModel.clpu.value!!)
         spinner1.onItemSelectedListener = this
         spinner2.onItemSelectedListener = this
+
         initUI()
         activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
     }
@@ -56,8 +58,14 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         when (parent!!.id) {
-            R.id.spinner1 -> mModel.clpu.value=position
-            R.id.spinner2 -> mModel.cspec.value= position.toString()
+            R.id.spinner1 -> {
+                mModel.clpu.value= position
+                mModel.clpuname.value= parent.adapter.getItem(position).toString()
+            }
+            R.id.spinner2 -> {
+                mModel.cspec.value= position
+                mModel.cspecname.value= parent.adapter.getItem(position).toString()
+            }
         }
     }
 
@@ -68,7 +76,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     fun initUI(){
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
         else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        recycler3.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon)
+        recycler3.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon, mModel)
         recycler3.smoothScrollBy(80, 0)
     }
 }

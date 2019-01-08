@@ -22,7 +22,7 @@ class Fragment0 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
-        mModel.cid.observe(this, Observer<Any> { updateUI() })
+        mModel.cuser.observe(this, Observer<Any> { updateUI() })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +35,7 @@ class Fragment0 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val radioButton = radioGroup.getChildAt(mModel.cid.value!!) as RadioButton
+        val radioButton = radioGroup.getChildAt(mModel.cuser.value!!) as RadioButton
         radioButton.isChecked = true
         radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))

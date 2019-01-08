@@ -10,14 +10,20 @@ class MainViewModel : ViewModel() {
     val J = "jop"
     var context: Context? = null
     var cdistrict=0
-    lateinit var cid: MutableLiveData<Int>
-    lateinit var clpu: MutableLiveData<Int>
+    lateinit var cuser: MutableLiveData<Int>
+
     lateinit var cname: MutableLiveData<String>
     lateinit var cfam: MutableLiveData<String>
     lateinit var cotch: MutableLiveData<String>
     lateinit var cdate: MutableLiveData<String>
-    lateinit var cdoctor: MutableLiveData<String>
-    lateinit var cspec: MutableLiveData<String>
+
+    lateinit var clpu: MutableLiveData<Int>
+    lateinit var clpuname: MutableLiveData<String>
+    lateinit var cspec: MutableLiveData<Int>
+    lateinit var cspecname: MutableLiveData<String>
+    lateinit var cdoctor: MutableLiveData<Int>
+    lateinit var cdoctorname: MutableLiveData<String>
+
     private lateinit var districtList: MutableLiveData<List<String>>
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
@@ -27,31 +33,37 @@ class MainViewModel : ViewModel() {
 
     fun init(c: Context?) {
         context = c
-        if (!::cid.isInitialized) cid = MutableLiveData()
+        if (!::cuser.isInitialized) cuser = MutableLiveData()
         if (!::cname.isInitialized) cname = MutableLiveData()
         if (!::clpu.isInitialized) clpu = MutableLiveData()
+        if (!::clpuname.isInitialized) clpuname = MutableLiveData()
         if (!::cfam.isInitialized) cfam = MutableLiveData()
         if (!::cotch.isInitialized) cotch = MutableLiveData()
         if (!::cdate.isInitialized) cdate = MutableLiveData()
         if (!::cdoctor.isInitialized) cdoctor = MutableLiveData()
+        if (!::cdoctorname.isInitialized) cdoctorname = MutableLiveData()
         if (!::cspec.isInitialized) cspec = MutableLiveData()
+        if (!::cspecname.isInitialized) cspecname = MutableLiveData()
         loadUser(restorecurrent())
     }
 
     fun saveUser() {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         val eddef = defsettings.edit()
-        eddef.putInt("currentUser", cid.value!!)
+        eddef.putInt("currentUser", cuser.value!!)
         eddef.apply()
 
-        istore(cid.value!!, "district", cdistrict)
-        istore(cid.value!!, "lpu", clpu.value!!)
-        sstore(cid.value!!, "name", cname.value!!)
-        sstore(cid.value!!, "fam", cfam.value!!)
-        sstore(cid.value!!, "otch", cotch.value!!)
-        sstore(cid.value!!, "date", cdate.value!!)
-        sstore(cid.value!!, "doctor", cdoctor.value!!)
-        sstore(cid.value!!, "spec", cspec.value!!)
+        istore(cuser.value!!, "district", cdistrict)
+        sstore(cuser.value!!, "name", cname.value!!)
+        sstore(cuser.value!!, "fam", cfam.value!!)
+        sstore(cuser.value!!, "otch", cotch.value!!)
+        sstore(cuser.value!!, "date", cdate.value!!)
+        istore(cuser.value!!, "lpu", clpu.value!!)
+        sstore(cuser.value!!, "lpuname", clpuname.value!!)
+        istore(cuser.value!!, "spec", cspec.value!!)
+        sstore(cuser.value!!, "specname", cspecname.value!!)
+        istore(cuser.value!!, "doctor", cdoctor.value!!)
+        sstore(cuser.value!!, "doctorname", cdoctorname.value!!)
     }
 
     fun loadUser(id: Int) {
@@ -59,11 +71,14 @@ class MainViewModel : ViewModel() {
         cfam.value = srestore(id, "fam")
         cotch.value = srestore(id, "otch")
         cdate.value = srestore(id, "date")
-        cdoctor.value = srestore(id, "doctor")
-        cspec.value = srestore(id, "spec")
+        cdoctor.value = irestore(id, "doctor")
+        cdoctorname.value = srestore(id, "doctorname")
+        cspec.value = irestore(id, "spec")
+        cspecname.value = srestore(id, "specname")
         clpu.value=irestore(id, "lpu")
+        clpuname.value=srestore(id, "lpuname")
         cdistrict=irestore(id, "district")
-        cid.value = id
+        cuser.value = id
     }
 
     private fun restorecurrent(): Int {
@@ -119,9 +134,9 @@ class MainViewModel : ViewModel() {
     fun getDoctorList(): MutableLiveData<List<String>> {
         if (!::doctorList.isInitialized) doctorList = MutableLiveData()
         when (cspec.value) {
-            "1" -> doctorList.setValue(listOf<String>("Иванов1 А.", "Петров1 П.", "Сидоров1 Г.", "Лифшиц1 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-            "2" -> doctorList.setValue(listOf<String>("Иванов2 А.", "Петров2 П.", "Сидоров2 Г.", "Лифшиц2 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-            "3" -> doctorList.setValue(listOf<String>("Иванов3 А.", "Петров3 П.", "Сидоров3 Г.", "Лифшиц3 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            1 -> doctorList.setValue(listOf<String>("Иванов1 А.", "Петров1 П.", "Сидоров1 Г.", "Лифшиц1 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            2 -> doctorList.setValue(listOf<String>("Иванов2 А.", "Петров2 П.", "Сидоров2 Г.", "Лифшиц2 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            3 -> doctorList.setValue(listOf<String>("Иванов3 А.", "Петров3 П.", "Сидоров3 Г.", "Лифшиц3 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
             else -> doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
         }
         request("doctorList", cspec.value)

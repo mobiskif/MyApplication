@@ -9,12 +9,7 @@ class SimpleViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
     init { itemView.setOnClickListener(this) }
 
     override fun onClick(view: View) {
-        val pos = adapterPosition
-        if (pos != RecyclerView.NO_POSITION) {
-            //val clickedDataItem = model.getDoctorList().value!![pos]
-            //model.cdoctor.value=clickedDataItem
-            Toast.makeText(view.context, "You clicked $pos", Toast.LENGTH_SHORT).show()
-            //NavHostFragment.findNavController(navfragment).navigate(R.id.Fragment2)
-        }
+        if (adapterPosition != RecyclerView.NO_POSITION)
+            Toast.makeText(view.context, "Это ViewHolder $adapterPosition", Toast.LENGTH_SHORT).show()
     }
 }
