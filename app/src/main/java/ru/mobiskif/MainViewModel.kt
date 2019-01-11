@@ -5,12 +5,14 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.collection.ArraySet
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_1.*
+import java.util.*
 
 class MainViewModel : ViewModel() {
     val J = "jop"
@@ -40,7 +42,6 @@ class MainViewModel : ViewModel() {
         ow?.let {
             clpu.observe(it, Observer<Any> {
                 Log.d(J, "Сработал наблюдатель clpu")
-                refreshSpecialityList()
             })
             cspec.observe(it, Observer<Any> {
                 Log.d(J, "Сработал наблюдатель cspec")
@@ -133,7 +134,9 @@ class MainViewModel : ViewModel() {
     fun getDistrictList(): MutableLiveData<List<String>> {
         if (!::districtList.isInitialized) {
             districtList = MutableLiveData()
-            districtList.setValue(listOf<String>("Кировский", "Приморский", "Московский", "Невский"))
+            //districtList.setValue(listOf<String>("Кировский", "Приморский", "Московский", "Невский"))
+            districtList.value = context!!.getResources().getStringArray(R.array.area).toMutableList()
+
         }
         request("districtList", null)
         return districtList
@@ -141,54 +144,60 @@ class MainViewModel : ViewModel() {
 
     fun getLpuList(): MutableLiveData<List<String>> {
         if (!::lpuList.isInitialized) lpuList = MutableLiveData()
+        /*
         when (cdistrict) {
             1 -> lpuList.setValue(listOf<String>("Поликлиника 1", "Больница 1", "Лаборатория 1", "Скорая помощь 1"))
             2 -> lpuList.setValue(listOf<String>("Поликлиника 2", "Больница 2", "Лаборатория 2", "Скорая помощь 2"))
             3 -> lpuList.setValue(listOf<String>("Поликлиника 3", "Больница 3", "Лаборатория 3", "Скорая помощь 3"))
             else -> lpuList.setValue(listOf<String>("Поликлиника", "Больница", "Лаборатория", "Скорая помощь"))
         }
+        */
+
+        lpuList.value = context!!.getResources().getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)
         return lpuList
     }
 
-    fun getDoctorList(): MutableLiveData<List<String>> {
-        if (!::doctorList.isInitialized) doctorList = MutableLiveData()
-        when (cspec.value) {
-            1 -> doctorList.setValue(listOf<String>("Иванов1 А.", "Петров1 П.", "Сидоров1 Г.", "Лифшиц1 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-            2 -> doctorList.setValue(listOf<String>("Иванов2 А.", "Петров2 П.", "Сидоров2 Г.", "Лифшиц2 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-            3 -> doctorList.setValue(listOf<String>("Иванов3 А.", "Петров3 П.", "Сидоров3 Г.", "Лифшиц3 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-            else -> doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
-        }
-        request("doctorList", cspec.value)
-        return doctorList
-    }
-
     fun getSpecialityList(): MutableLiveData<List<String>> {
         if (!::specialityList.isInitialized) specialityList = MutableLiveData()
-        return specialityList
-    }
-
-    fun refreshSpecialityList(): MutableLiveData<List<String>> {
-        if (!::specialityList.isInitialized) specialityList = MutableLiveData()
+        /*
         when (clpu.value) {
             1 -> specialityList.setValue(listOf<String>("Терапевт 1", "Хирург 1", "Гинеколог 1", "Окулист 1"))
             2 -> specialityList.setValue(listOf<String>("Терапевт 2", "Хирург 2", "Гинеколог 2", "Окулист 2"))
             3 -> specialityList.setValue(listOf<String>("Терапевт 3", "Хирург 3", "Гинеколог 3", "Окулист 3"))
             else -> specialityList.setValue(listOf<String>("Терапевт", "Хирург", "Гинеколог", "Окулист"))
         }
+        */
+        specialityList.value = context!!.getResources().getStringArray(R.array.spec).toMutableList()
         request("specialityList", clpu.value)
         return specialityList
+    }
+
+    fun getDoctorList(): MutableLiveData<List<String>> {
+        if (!::doctorList.isInitialized) doctorList = MutableLiveData()
+        /*
+        when (cspec.value) {
+            1 -> doctorList.setValue(listOf<String>("Иванов1 А.", "Петров1 П.", "Сидоров1 Г.", "Лифшиц1 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            2 -> doctorList.setValue(listOf<String>("Иванов2 А.", "Петров2 П.", "Сидоров2 Г.", "Лифшиц2 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            3 -> doctorList.setValue(listOf<String>("Иванов3 А.", "Петров3 П.", "Сидоров3 Г.", "Лифшиц3 Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+            else -> doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
+        }
+        */
+        doctorList.value = context!!.getResources().getStringArray(R.array.doc).toMutableList()
+        request("doctorList", cspec.value)
+        return doctorList
     }
 
     fun getTalonList(): MutableLiveData<List<String>> {
         if (!::talonList.isInitialized) talonList = MutableLiveData()
         talonList.setValue(listOf<String>("Talon 1", "Talon 2", "Talon 3", "Talon 4", "Talon 5", "Talon 6", "Talon 7"))
+        talonList.value = context!!.getResources().getStringArray(R.array.talons).toMutableList()
         request("talonList", clpu.value)
         return talonList
     }
 
     fun request(a: Any?, b: Any?) {
-        Log.d(J, "request ${a.toString()}, ${b.toString()}")
+        Log.d(J, "request ${a.toString()}(${b.toString()})")
     }
 
 }

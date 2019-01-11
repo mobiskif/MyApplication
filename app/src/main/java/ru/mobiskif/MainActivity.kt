@@ -16,15 +16,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         mModel = run { ViewModelProviders.of(this).get(MainViewModel::class.java) }
         mModel.context = this.applicationContext
         mModel.init()
         title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
+        setTheme(R.style.AppTheme)
+        setContentView(R.layout.activity_main)
         //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //binding.modelmain = mModel
 
@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
         fab.visibility = View.INVISIBLE
 
-        if (mModel.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
-        else NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+        if (mModel.cdate.value!!.length > 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
 
     }
 
