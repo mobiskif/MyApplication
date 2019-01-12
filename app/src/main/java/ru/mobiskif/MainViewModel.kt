@@ -36,7 +36,7 @@ class MainViewModel : ViewModel() {
     private lateinit var lpuList: MutableLiveData<List<String>>
     private lateinit var doctorList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
-    private lateinit var talonList: MutableLiveData<List<String>>
+    private lateinit var talonList: MutableLiveData<List<Map<String, Any>>>
 
     fun setOwner(ow: LifecycleOwner) {
         ow?.let {
@@ -188,10 +188,40 @@ class MainViewModel : ViewModel() {
         return doctorList
     }
 
-    fun getTalonList(): MutableLiveData<List<String>> {
+    fun getTalonList(): MutableLiveData<List<Map<String, Any>>> {
         if (!::talonList.isInitialized) talonList = MutableLiveData()
-        talonList.setValue(listOf<String>("Talon 1", "Talon 2", "Talon 3", "Talon 4", "Talon 5", "Talon 6", "Talon 7"))
-        talonList.value = context!!.getResources().getStringArray(R.array.talons).toMutableList()
+        //talonList.setValue(listOf<String>("Talon 1", "Talon 2", "Talon 3", "Talon 4", "Talon 5", "Talon 6", "Talon 7"))
+        //talonList.value = context!!.getResources().getStringArray(R.array.week).toMutableList()
+
+        var ll = mutableListOf<Map<String, Any>>()
+        var m: MutableMap<String, Any> = mutableMapOf()
+
+
+        m = mutableMapOf()
+        m.put("День недели","Пн")
+        m.put("Дата","28/12/19")
+        m.put("Время работы","14:30 - 18:45")
+        ll.add(m)
+
+        m = mutableMapOf()
+        m.put("День недели","Вн")
+        m.put("Дата","29/12/19")
+        m.put("Время работы","15:30 - 18:45")
+        ll.add(m)
+
+        m = mutableMapOf()
+        m.put("День недели","Ср")
+        m.put("Дата","30/12/19")
+        m.put("Время работы","17:00 - 18:45")
+        ll.add(m)
+
+        m = mutableMapOf()
+        m.put("День недели","Чт")
+        m.put("Дата","30/12/19")
+        m.put("Время работы","17:00 - 18:45")
+        ll.add(m)
+
+        talonList.value = ll
         request("talonList", clpu.value)
         return talonList
     }

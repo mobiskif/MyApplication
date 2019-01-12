@@ -1,18 +1,17 @@
 package ru.mobiskif
 
-import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import com.prolificinteractive.materialcalendarview.CalendarDay
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.resources.TextAppearance
 import kotlinx.android.synthetic.main.fragment_2.*
-import java.util.*
 
 
 class Fragment2 : Fragment() {
@@ -30,11 +29,11 @@ class Fragment2 : Fragment() {
         //if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerTalon.layoutManager = GridLayoutManager(this.context, 4)
         //else recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         //else recyclerTalon.layoutManager = GridLayoutManager(this.context, 2)
-        recyclerTalon.layoutManager = GridLayoutManager(context,4)
-        recyclerTalon.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon, mModel)
+        recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        recyclerTalon.adapter = RecylcerAdapter_Talon(mModel.getTalonList().value!!, this, R.layout.card_calend, mModel)
         activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
 
-        calendarView.selectedDate=CalendarDay.today()
+        //calendarView.selectedDate=CalendarDay.today()
         //calendarView.setDateSelected()
 
     }
