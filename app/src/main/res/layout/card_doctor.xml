@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_weight="1"
-                    android:text="Text View"
+                    android:text="Сидоров Сидор"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <TextView
@@ -48,14 +48,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
                     android:gravity="right"
-                    android:text="Info" />
+                    android:text="120 тал" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Text view"
+                android:text="терапевт 14 уч"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
         </LinearLayout>
