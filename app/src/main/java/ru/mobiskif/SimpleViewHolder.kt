@@ -2,7 +2,6 @@ package ru.mobiskif
 
 import android.view.View
 import android.widget.Toast
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 
 class SimpleViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {

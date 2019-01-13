@@ -1,21 +1,13 @@
 package ru.mobiskif
 
-import android.app.Activity
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.collection.ArraySet
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_1.*
-import java.util.*
 
 class MainViewModel : ViewModel() {
-    val J = "jop"
+    private val J = "jop"
     var context: Context? = null
     var cdistrict = 0
     lateinit var cuser: MutableLiveData<Int>
@@ -37,20 +29,6 @@ class MainViewModel : ViewModel() {
     private lateinit var doctorList: MutableLiveData<List<String>>
     private lateinit var specialityList: MutableLiveData<List<String>>
     private lateinit var talonList: MutableLiveData<List<Map<String, Any>>>
-
-    fun setOwner(ow: LifecycleOwner) {
-        ow?.let {
-            clpu.observe(it, Observer<Any> {
-                Log.d(J, "Сработал наблюдатель clpu")
-            })
-            cspec.observe(it, Observer<Any> {
-                Log.d(J, "Сработал наблюдатель cspec")
-            })
-            cdoctor.observe(it, Observer<Any> {
-                Log.d(J, "Сработал наблюдатель cdoctor")
-            })
-        }
-    }
 
     fun init() {
         if (!::cuser.isInitialized) cuser = MutableLiveData()
@@ -135,7 +113,7 @@ class MainViewModel : ViewModel() {
         if (!::districtList.isInitialized) {
             districtList = MutableLiveData()
             //districtList.setValue(listOf<String>("Кировский", "Приморский", "Московский", "Невский"))
-            districtList.value = context!!.getResources().getStringArray(R.array.area).toMutableList()
+            districtList.value = context!!.resources.getStringArray(R.array.area).toMutableList()
 
         }
         request("districtList", null)
@@ -153,7 +131,7 @@ class MainViewModel : ViewModel() {
         }
         */
 
-        lpuList.value = context!!.getResources().getStringArray(R.array.lpu).toMutableList()
+        lpuList.value = context!!.resources.getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)
         return lpuList
     }
@@ -168,7 +146,7 @@ class MainViewModel : ViewModel() {
             else -> specialityList.setValue(listOf<String>("Терапевт", "Хирург", "Гинеколог", "Окулист"))
         }
         */
-        specialityList.value = context!!.getResources().getStringArray(R.array.spec).toMutableList()
+        specialityList.value = context!!.resources.getStringArray(R.array.spec).toMutableList()
         request("specialityList", clpu.value)
         return specialityList
     }
@@ -183,7 +161,7 @@ class MainViewModel : ViewModel() {
             else -> doctorList.setValue(listOf<String>("Иванов А.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н.", "Петров П.", "Сидоров Г.", "Лифшиц Б.", "Хрущев Н."))
         }
         */
-        doctorList.value = context!!.getResources().getStringArray(R.array.doc).toMutableList()
+        doctorList.value = context!!.resources.getStringArray(R.array.doc).toMutableList()
         request("doctorList", cspec.value)
         return doctorList
     }
@@ -193,59 +171,59 @@ class MainViewModel : ViewModel() {
         //talonList.setValue(listOf<String>("Talon 1", "Talon 2", "Talon 3", "Talon 4", "Talon 5", "Talon 6", "Talon 7"))
         //talonList.value = context!!.getResources().getStringArray(R.array.week).toMutableList()
 
-        var ll = mutableListOf<Map<String, Any>>()
+        val ll = mutableListOf<Map<String, Any>>()
         var tal = mutableListOf<Map<String, String>>()
         var m: MutableMap<String, Any> = mutableMapOf()
         var mt: MutableMap<String, String> = mutableMapOf()
 
 
         m = mutableMapOf()
-        m.put("День недели","Пн")
-        m.put("Дата","28/12/19")
-        m.put("Время работы","14:30 - 18:45")
+        m["День недели"] = "Пн"
+        m["Дата"] = "28/12/19"
+        m["Время работы"] = "14:30 - 18:45"
 
         mt = mutableMapOf()
-        mt.put("1234-1", "14:56")
-        mt.put("1234-2", "15:56")
-        mt.put("1234-3", "16:56")
-        mt.put("1234-4", "17:56")
-        m.put("Талоны", mt)
+        mt["1234-1"] = "14:56"
+        mt["1234-2"] = "15:56"
+        mt["1234-3"] = "16:56"
+        mt["1234-4"] = "17:56"
+        m["Талоны"] = mt
         ll.add(m)
 
         m = mutableMapOf()
-        m.put("День недели","Вн")
-        m.put("Дата","29/12/19")
-        m.put("Время работы","15:30 - 18:45")
+        m["День недели"] = "Вн"
+        m["Дата"] = "29/12/19"
+        m["Время работы"] = "15:30 - 18:45"
         mt = mutableMapOf()
-        mt.put("12345-1", "14:56")
-        mt.put("12345-2", "15:56")
-        mt.put("12345-3", "16:56")
-        mt.put("12345-4", "17:56")
-        m.put("Талоны", mt)
+        mt["12345-1"] = "14:56"
+        mt["12345-2"] = "15:56"
+        mt["12345-3"] = "16:56"
+        mt["12345-4"] = "17:56"
+        m["Талоны"] = mt
         ll.add(m)
 
         m = mutableMapOf()
-        m.put("День недели","Ср")
-        m.put("Дата","30/12/19")
-        m.put("Время работы","17:00 - 18:45")
+        m["День недели"] = "Ср"
+        m["Дата"] = "30/12/19"
+        m["Время работы"] = "17:00 - 18:45"
         mt = mutableMapOf()
-        mt.put("123456-1", "14:56")
-        mt.put("123456-2", "15:56")
-        mt.put("123456-3", "16:56")
-        mt.put("123456-4", "17:56")
-        m.put("Талоны", mt)
+        mt["123456-1"] = "14:56"
+        mt["123456-2"] = "15:56"
+        mt["123456-3"] = "16:56"
+        mt["123456-4"] = "17:56"
+        m["Талоны"] = mt
         ll.add(m)
 
         m = mutableMapOf()
-        m.put("День недели","Чт")
-        m.put("Дата","30/12/19")
-        m.put("Время работы","17:00 - 18:45")
+        m["День недели"] = "Чт"
+        m["Дата"] = "30/12/19"
+        m["Время работы"] = "17:00 - 18:45"
         mt = mutableMapOf()
-        mt.put("1234567-1", "14:56")
-        mt.put("1234567-2", "15:56")
-        mt.put("1234567-3", "16:56")
-        mt.put("1234567-4", "17:56")
-        m.put("Талоны", mt)
+        mt["1234567-1"] = "14:56"
+        mt["1234567-2"] = "15:56"
+        mt["1234567-3"] = "16:56"
+        mt["1234567-4"] = "17:56"
+        m["Талоны"] = mt
         ll.add(m)
 
         talonList.value = ll
@@ -253,7 +231,42 @@ class MainViewModel : ViewModel() {
         return talonList
     }
 
-    fun request(a: Any?, b: Any?) {
+    fun getHistory(): MutableLiveData<List<Map<String, Any>>> {
+        if (!::talonList.isInitialized) talonList = MutableLiveData()
+        //talonList.setValue(listOf<String>("Talon 1", "Talon 2", "Talon 3", "Talon 4", "Talon 5", "Talon 6", "Talon 7"))
+        //talonList.value = context!!.getResources().getStringArray(R.array.week).toMutableList()
+
+        val ll = mutableListOf<Map<String, Any>>()
+        var tal = mutableListOf<Map<String, String>>()
+        var m: MutableMap<String, Any> = mutableMapOf()
+        var mt: MutableMap<String, String> = mutableMapOf()
+
+
+        m = mutableMapOf()
+        m["День недели"] = "Пн"
+        m["Дата"] = "28/12/19"
+        m["Время работы"] = "14:30 - 18:45"
+
+        mt = mutableMapOf()
+        mt["1234-1"] = "14:56"
+        m["Талоны"] = mt
+        ll.add(m)
+
+        m = mutableMapOf()
+        m["День недели"] = "Ср"
+        m["Дата"] = "30/12/19"
+        m["Время работы"] = "17:00 - 18:45"
+        mt = mutableMapOf()
+        mt["123456-4"] = "17:56"
+        m["Талоны"] = mt
+        ll.add(m)
+
+        talonList.value = ll
+        request("historyList", clpu.value)
+        return talonList
+    }
+
+    private fun request(a: Any?, b: Any?) {
         Log.d(J, "request ${a.toString()}(${b.toString()})")
     }
 

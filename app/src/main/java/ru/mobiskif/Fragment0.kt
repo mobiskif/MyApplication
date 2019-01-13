@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Fragment0 : Fragment() {
-    private val J = "jop"
     private lateinit var mModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

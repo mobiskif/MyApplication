@@ -1,5 +1,4 @@
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -11,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
 
         <LinearLayout
@@ -29,7 +29,8 @@
                 android:ems="10"
                 android:hint="Фамилия"
                 android:inputType="textPersonName"
-                android:text="@{model0.cfam}" />
+                android:text="@{model0.cfam}"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/editName"
@@ -38,7 +39,8 @@
                 android:ems="10"
                 android:hint="Имя"
                 android:inputType="textPersonName"
-                android:text="@{model0.cname}" />
+                android:text="@{model0.cname}"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/editSurname"
@@ -47,7 +49,8 @@
                 android:ems="10"
                 android:hint="Отчество"
                 android:inputType="textPersonName"
-                android:text="@{model0.cotch}" />
+                android:text="@{model0.cotch}"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/editBirstdate"
@@ -56,7 +59,8 @@
                 android:ems="10"
                 android:hint="1984-07-23"
                 android:inputType="date"
-                android:text="@{model0.cdate}" />
+                android:text="@{model0.cdate}"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
 

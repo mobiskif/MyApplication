@@ -2,14 +2,12 @@ package ru.mobiskif
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_talon.view.*
 
-class RecylcerAdapter(val items: List<String>, private val fragm: Fragment, val layout_id: Int, var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapter(private val items: List<String>, private val fragm: Fragment, private val layout_id: Int, private var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()

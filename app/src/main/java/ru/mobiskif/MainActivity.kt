@@ -5,10 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -46,20 +44,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.nav_menu0 -> {
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
-                return true
+                true
             }
             R.id.nav_menu1 -> {
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
-                return true
+                true
             }
             R.id.nav_menu2 -> {
                 finish()
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
