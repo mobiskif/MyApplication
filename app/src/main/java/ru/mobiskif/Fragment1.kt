@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
-
     private lateinit var mModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

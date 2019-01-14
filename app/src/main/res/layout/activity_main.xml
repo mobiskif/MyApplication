@@ -7,19 +7,19 @@
             type="ru.mobiskif.MainViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/coordlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/plant_detail_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="@dimen/fab_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            >
 
             <fragment
                 android:id="@+id/nav_host_fragment"
@@ -38,7 +38,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/ic_menu_help"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:backgroundTint="@color/primaryColor"
             app:tint="@color/primaryTextColor" />
 

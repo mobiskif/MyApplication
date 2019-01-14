@@ -5,6 +5,7 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
+        android:supportsRtl="false"
         android:icon="@drawable/doctor"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">

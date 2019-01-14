@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -30,7 +31,8 @@
                 android:hint="Фамилия"
                 android:inputType="textPersonName"
                 android:text="@{model0.cfam}"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/editName"
@@ -40,7 +42,8 @@
                 android:hint="Имя"
                 android:inputType="textPersonName"
                 android:text="@{model0.cname}"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/editSurname"
@@ -50,7 +53,8 @@
                 android:hint="Отчество"
                 android:inputType="textPersonName"
                 android:text="@{model0.cotch}"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/editBirstdate"
@@ -60,7 +64,8 @@
                 android:hint="1984-07-23"
                 android:inputType="date"
                 android:text="@{model0.cdate}"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
 
         </LinearLayout>
 

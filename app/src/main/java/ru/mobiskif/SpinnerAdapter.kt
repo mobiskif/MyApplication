@@ -10,7 +10,8 @@ import android.widget.TextView
 class SpinnerAdapter(private val items: List<String>, val context: Context?) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
+        val view = if (convertView!=null) convertView as TextView
+        else LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
         view.text = items[position]
         return view
     }
