@@ -14,23 +14,21 @@
 
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/spinnerLPU"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler3"
+            android:id="@+id/recyclerHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/spinnerSpec"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler4"

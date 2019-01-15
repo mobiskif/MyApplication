@@ -27,15 +27,16 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onResume()
         activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
-        spinner1.adapter = SpinnerAdapter(mModel.getLpuList().value!!, context)
-        spinner1.onItemSelectedListener = this
-        spinner1.setSelection(mModel.clpu.value!!)
-        spinner2.onItemSelectedListener = this
+        spinnerLPU.adapter = SpinnerAdapter(mModel.getLpuList().value!!, context)
+        spinnerLPU.setSelection(mModel.clpu.value!!)
+        spinnerLPU.onItemSelectedListener = this
+        spinnerSpec.onItemSelectedListener = this
 
-        recycler3.adapter = RecylcerAdapterTalon(mModel.getHistory().value!!, this, R.layout.card_calend)
-        //recycler3.adapter = RecylcerAdapter(mModel.getHistory().value!!, this, R.layout.card_talon, mModel)
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
-        else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        recyclerHistory.adapter = RecylcerAdapterTalon(mModel.getHistory().value!!, this, R.layout.card_calend)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            recyclerHistory.layoutManager = GridLayoutManager(this.context, 2)
+        else
+            recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,20 +49,20 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         when (parent!!.id) {
-            R.id.spinner1 -> {
+            R.id.spinnerLPU -> {
                 Log.d("jop", "Сработал onItemSelected spinner1($position)")
-                mModel.clpu.value= position
-                mModel.clpuname.value= parent.adapter.getItem(position).toString()
-                spinner2.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context)
-                spinner2.setSelection(mModel.cspec.value!!)
+                mModel.clpu.value = position
+                mModel.clpuname.value = parent.adapter.getItem(position).toString()
+                spinnerSpec.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context)
+                spinnerSpec.setSelection(mModel.cspec.value!!)
             }
-            R.id.spinner2 -> {
+            R.id.spinnerSpec -> {
                 Log.d("jop", "Сработал onItemSelected spinner2($position)")
-                mModel.cspec.value= position
-                mModel.cspecname.value= parent.adapter.getItem(position).toString()
+                mModel.cspec.value = position
+                mModel.cspecname.value = parent.adapter.getItem(position).toString()
                 recycler4.layoutManager = LinearLayoutManager(this.context)
-                recycler4.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor, mModel )
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
+                recycler4.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor, mModel)
+                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
                 else recycler3.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
                 //recycler3.adapter = RecylcerAdapter(mModel.getTalonList().value!!, this, R.layout.card_talon, mModel)
                 recycler3.adapter = RecylcerAdapterTalon(mModel.getTalonList().value!!, this, R.layout.card_calend)
