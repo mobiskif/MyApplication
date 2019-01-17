@@ -26,7 +26,7 @@ class Fragment2 : Fragment() {
 
         //if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerTalon.layoutManager = GridLayoutManager(this.context, 4)
         recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        recyclerTalon.adapter = RecylcerAdapterTalon(mModel.getTalonList().value!!, this, R.layout.card_calend)
+        recyclerTalon.adapter = RecylcerAdapterCalend(mModel.getTalonList().value!!, this, R.layout.card_calend)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

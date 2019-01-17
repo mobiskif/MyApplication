@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_0.*
 
 class Fragment0 : Fragment() {
     private lateinit var mModel: MainViewModel
@@ -38,10 +38,10 @@ class Fragment0 : Fragment() {
         radioButton.isChecked = true
         radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
-            mModel.loadUser(position)
+            mModel.loadUser(position, context!!)
         }
 
-        spinnerDistrict.adapter = SpinnerAdapter(mModel.getDistrictList().value!!, context)
+        spinnerDistrict.adapter = mModel.districtAdapter
 
         saveButton.setOnClickListener {
             mModel.cname.value = editName.text.toString()
@@ -50,13 +50,12 @@ class Fragment0 : Fragment() {
             mModel.cdate.value = editBirstdate.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
             if (mModel.cdate.value!!.length > 9) {
-                mModel.saveUser()
+                mModel.saveUser(this.context)
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
 
         }
-        //activity!!.appbar.setExpanded(true,true)
         updateUI()
     }
 
@@ -66,7 +65,6 @@ class Fragment0 : Fragment() {
         editSurname.text.clear(); editSurname.text.insert(0, mModel.cotch.value)
         editBirstdate.text.clear(); editBirstdate.text.insert(0, mModel.cdate.value)
         spinnerDistrict.setSelection(mModel.cdistrict)
-        //activity!!.collapsing_toolbar.title = mModel.cname.value + ' ' + mModel.cfam.value
         activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
     }

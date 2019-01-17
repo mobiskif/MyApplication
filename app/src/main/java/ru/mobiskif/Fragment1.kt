@@ -28,7 +28,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
         spinnerLPU.onItemSelectedListener = this
-        spinnerLPU.adapter = SpinnerAdapter(mModel.getLpuList().value!!, context)
+        spinnerLPU.adapter = mModel.lpuAdapter
         spinnerLPU.setSelection(mModel.clpu.value!!)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)

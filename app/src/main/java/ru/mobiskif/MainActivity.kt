@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
 
-        model.context = this.applicationContext
-        model.load()
+        //model.context = this.applicationContext
+        model.load(this)
         title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
 
         fab.setOnClickListener { view ->
