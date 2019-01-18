@@ -38,10 +38,10 @@ class Fragment0 : Fragment() {
         radioButton.isChecked = true
         radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
-            mModel.loadUser(position, context!!)
+            mModel.loadUser(position)
         }
 
-        spinnerDistrict.adapter = mModel.districtAdapter
+        spinnerDistrict.adapter = mModel.adapterDistrict
 
         saveButton.setOnClickListener {
             mModel.cname.value = editName.text.toString()

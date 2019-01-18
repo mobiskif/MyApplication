@@ -1,20 +1,21 @@
 package ru.mobiskif
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_talon.view.*
+import kotlinx.android.synthetic.main.card_history.view.*
 
-class RecylcerAdapter(private val items: List<String>, private val fragm: Fragment, private val layout_id: Int, private var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapterDoctor(private val items: List<String>, private val fragm: Context, private val layout_id: Int, private var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            = SimpleViewHolder(LayoutInflater.from(fragm.context).inflate(layout_id, parent, false))
+            = SimpleViewHolder(LayoutInflater.from(fragm).inflate(layout_id, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.text1.text = items[position]
@@ -23,8 +24,8 @@ class RecylcerAdapter(private val items: List<String>, private val fragm: Fragme
             //Toast.makeText(fragm.context, "Это RecyclerAdapter $position", Toast.LENGTH_SHORT).show()
             model.cdoctor.value = position
             model.cdoctorname.value = items[position]
-            if (layout_id==R.layout.card_doctor) NavHostFragment.findNavController(fragm).navigate(R.id.Fragment2)
-            if (layout_id==R.layout.card_talon) NavHostFragment.findNavController(fragm).navigate(R.id.action_Fragment2_to_help)
+            //if (layout_id==R.layout.card_doctor) NavHostFragment.findNavController(fragm).navigate(R.id.Fragment2)
+            //if (layout_id==R.layout.card_history) NavHostFragment.findNavController(fragm).navigate(R.id.action_Fragment2_to_help)
         }
 
         //holder.itemView.text1.setOnClickListener {holder.itemView.text1.text = "== $position"}

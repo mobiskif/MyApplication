@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel: ViewModel() {
-    private var context: Context? = null
+    private lateinit var context: Context
     var cdistrict = 0
     var cuser = MutableLiveData<Int>()
     var cname = MutableLiveData<String>()
@@ -21,20 +21,26 @@ class MainViewModel: ViewModel() {
     var cdoctor = MutableLiveData<Int>()
     var cdoctorname = MutableLiveData<String>()
 
-    var districtList = MutableLiveData<List<String>>()
-    var lpuList = MutableLiveData<List<String>>()
+    private var districtList = MutableLiveData<List<String>>()
+    private var lpuList = MutableLiveData<List<String>>()
     private var doctorList = MutableLiveData<List<String>>()
     private var specialityList = MutableLiveData<List<String>>()
     private var talonList = MutableLiveData<List<Map<String, Any>>>()
 
-    lateinit var districtAdapter: SpinnerAdapter
-    lateinit var lpuAdapter: SpinnerAdapter
+    lateinit var adapterDistrict: SpinnerAdapter
+    lateinit var adapterLPU: SpinnerAdapter
+    lateinit var adapterSpec: SpinnerAdapter
+    lateinit var adapterHistory: RecylcerAdapterHistory
+    lateinit var adapterDoctor: RecylcerAdapterDoctor
 
     fun load(context: Context) {
         this.context=context
-        districtAdapter = SpinnerAdapter(gettDistrictList().value!!, context)
-        lpuAdapter = SpinnerAdapter(gettLpuList().value!!, context)
-        loadUser(restorecurrent(), context)
+        adapterDistrict = SpinnerAdapter(gettDistrictList().value!!, context)
+        adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
+        adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
+        adapterHistory = RecylcerAdapterHistory(getTalonList().value!!, context, R.layout.card_history)
+        adapterDoctor = RecylcerAdapterDoctor(getDoctorList().value!!, context, R.layout.card_doctor, this)
+        loadUser(restorecurrent())
     }
 
     fun saveUser(context: Context?) {
@@ -43,31 +49,31 @@ class MainViewModel: ViewModel() {
         eddef.putInt("currentUser", cuser.value!!)
         eddef.apply()
 
-        istore(cuser.value!!, "district", cdistrict, context)
-        sstore(cuser.value!!, "name", cname.value!!, context)
-        sstore(cuser.value!!, "fam", cfam.value!!, context)
-        sstore(cuser.value!!, "otch", cotch.value!!, context)
-        sstore(cuser.value!!, "date", cdate.value!!, context)
-        istore(cuser.value!!, "lpu", clpu.value!!, context)
-        sstore(cuser.value!!, "lpuname", clpuname.value!!, context)
-        istore(cuser.value!!, "spec", cspec.value!!, context)
-        sstore(cuser.value!!, "specname", cspecname.value!!, context)
-        istore(cuser.value!!, "doctor", cdoctor.value!!, context)
-        sstore(cuser.value!!, "doctorname", cdoctorname.value!!, context)
+        istore(cuser.value!!, "district", cdistrict)
+        sstore(cuser.value!!, "name", cname.value!!)
+        sstore(cuser.value!!, "fam", cfam.value!!)
+        sstore(cuser.value!!, "otch", cotch.value!!)
+        sstore(cuser.value!!, "date", cdate.value!!)
+        istore(cuser.value!!, "lpu", clpu.value!!)
+        sstore(cuser.value!!, "lpuname", clpuname.value!!)
+        istore(cuser.value!!, "spec", cspec.value!!)
+        sstore(cuser.value!!, "specname", cspecname.value!!)
+        istore(cuser.value!!, "doctor", cdoctor.value!!)
+        sstore(cuser.value!!, "doctorname", cdoctorname.value!!)
     }
 
-    fun loadUser(id: Int, context: Context) {
-        cname.value = srestore(id, "name", context)
-        cfam.value = srestore(id, "fam", context)
-        cotch.value = srestore(id, "otch", context)
-        cdate.value = srestore(id, "date", context)
-        cdoctor.value = irestore(id, "doctor", context)
-        cdoctorname.value = srestore(id, "doctorname", context)
-        cspec.value = irestore(id, "spec", context)
-        cspecname.value = srestore(id, "specname", context)
-        clpu.value = irestore(id, "lpu", context)
-        clpuname.value = srestore(id, "lpuname", context)
-        cdistrict = irestore(id, "district", context)
+    fun loadUser(id: Int) {
+        cname.value = srestore(id, "name")
+        cfam.value = srestore(id, "fam")
+        cotch.value = srestore(id, "otch")
+        cdate.value = srestore(id, "date")
+        cdoctor.value = irestore(id, "doctor")
+        cdoctorname.value = srestore(id, "doctorname")
+        cspec.value = irestore(id, "spec")
+        cspecname.value = srestore(id, "specname")
+        clpu.value = irestore(id, "lpu")
+        clpuname.value = srestore(id, "lpuname")
+        cdistrict = irestore(id, "district")
         cuser.value = id
     }
 
@@ -76,25 +82,25 @@ class MainViewModel: ViewModel() {
         return defsettings.getInt("currentUser", 1)
     }
 
-    private fun irestore(id: Int, key: String, context: Context): Int {
-        val settings = context!!.getSharedPreferences(id.toString(), 0)
+    private fun irestore(id: Int, key: String): Int {
+        val settings = context.getSharedPreferences(id.toString(), 0)
         return settings.getInt(key, 1)
     }
 
-    private fun srestore(id: Int, key: String, context: Context): String {
-        val settings = context!!.getSharedPreferences(id.toString(), 0)
+    private fun srestore(id: Int, key: String): String {
+        val settings = context.getSharedPreferences(id.toString(), 0)
         return settings.getString(key, "")
     }
 
-    private fun istore(id: Int, key: String, value: Int, context: Context?) {
-        val settings = context!!.getSharedPreferences(id.toString(), 0)
+    private fun istore(id: Int, key: String, value: Int) {
+        val settings = context.getSharedPreferences(id.toString(), 0)
         val ed = settings.edit()
         ed.putInt(key, value)
         ed.apply()
     }
 
-    private fun sstore(id: Int, key: String, value: String, context: Context?) {
-        val settings = context!!.getSharedPreferences(id.toString(), 0)
+    private fun sstore(id: Int, key: String, value: String) {
+        val settings = context.getSharedPreferences(id.toString(), 0)
         val ed = settings.edit()
         ed.putString(key, value)
         ed.apply()
@@ -102,12 +108,12 @@ class MainViewModel: ViewModel() {
 
     private fun gettDistrictList(): MutableLiveData<List<String>> {
         //if (!::districtList.isInitialized) districtList = MutableLiveData()
-        districtList.value = context!!.resources.getStringArray(R.array.area).toMutableList()
+        districtList.value = context.resources.getStringArray(R.array.area).toMutableList()
         request("districtList")
         return districtList
     }
 
-    private fun gettLpuList(): MutableLiveData<List<String>> {
+    private fun getLpuList(): MutableLiveData<List<String>> {
         lpuList.value = context!!.resources.getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)
         return lpuList

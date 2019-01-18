@@ -28,12 +28,12 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
 
         spinnerLPU.onItemSelectedListener = this
-        spinnerLPU.adapter = mModel.lpuAdapter
+        spinnerLPU.adapter = mModel.adapterLPU
         spinnerLPU.setSelection(mModel.clpu.value!!)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        recyclerHistory.adapter = RecylcerAdapterHistory(mModel.getTalonList().value!!, this, R.layout.card_talon)
+        recyclerHistory.adapter = mModel.adapterHistory
         recyclerHistory.smoothScrollBy(80, 0)
     }
 
@@ -54,19 +54,19 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
                 else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-                recyclerHistory.adapter = RecylcerAdapterHistory(mModel.getTalonList().value!!, this, R.layout.card_talon)
+                recyclerHistory.adapter = mModel.adapterHistory
                 recyclerHistory.smoothScrollBy(80, 0)
 
-                spinnerSpec.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context)
-                spinnerSpec.setSelection(mModel.cspec.value!!)
+                spinnerSpec.adapter = mModel.adapterSpec
                 spinnerSpec.onItemSelectedListener = this
+                spinnerSpec.setSelection(mModel.cspec.value!!)
             }
             R.id.spinnerSpec -> {
                 Log.d("jop", "Сработал onItemSelected spinner2($position)")
                 mModel.cspec.value = position
                 mModel.cspecname.value = parent.adapter.getItem(position).toString()
                 recyclerDoctor.layoutManager = LinearLayoutManager(this.context)
-                recyclerDoctor.adapter = RecylcerAdapter(mModel.getDoctorList().value!!, this, R.layout.card_doctor, mModel)
+                recyclerDoctor.adapter = mModel.adapterDoctor
             }
         }
     }
