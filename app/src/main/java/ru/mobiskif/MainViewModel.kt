@@ -3,6 +3,7 @@ package ru.mobiskif
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -32,18 +33,19 @@ class MainViewModel: ViewModel() {
     lateinit var adapterSpec: SpinnerAdapter
     lateinit var adapterHistory: RecylcerAdapterHistory
     lateinit var adapterDoctor: RecylcerAdapterDoctor
+    var cfragment: Fragment? = null
 
-    fun load(context: Context) {
+    fun loadModel(context: Context) {
         this.context=context
-        adapterDistrict = SpinnerAdapter(gettDistrictList().value!!, context)
+        adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
         adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
         adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
-        adapterHistory = RecylcerAdapterHistory(getTalonList().value!!, context, R.layout.card_history)
+        adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history)
         adapterDoctor = RecylcerAdapterDoctor(getDoctorList().value!!, context, R.layout.card_doctor, this)
         loadUser(restorecurrent())
     }
 
-    fun saveUser(context: Context?) {
+    fun saveUser(context: Context) {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         val eddef = defsettings.edit()
         eddef.putInt("currentUser", cuser.value!!)
@@ -106,7 +108,7 @@ class MainViewModel: ViewModel() {
         ed.apply()
     }
 
-    private fun gettDistrictList(): MutableLiveData<List<String>> {
+    private fun getDistrictList(): MutableLiveData<List<String>> {
         //if (!::districtList.isInitialized) districtList = MutableLiveData()
         districtList.value = context.resources.getStringArray(R.array.area).toMutableList()
         request("districtList")
@@ -152,7 +154,7 @@ class MainViewModel: ViewModel() {
         ll.add(m)
 
         m = mutableMapOf()
-        m["День недели"] = "Вн"
+        m["День недели"] = "Вт"
         m["Дата"] = "29/12/19"
         m["Время работы"] = "15:30 - 18:45"
         mt = mutableMapOf()

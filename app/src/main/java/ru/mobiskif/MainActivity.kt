@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //model.context = this.applicationContext
-        model.load(this)
+        model.loadModel(this)
         title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
 
         fab.setOnClickListener { view ->
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.action_Fragment2_to_help)
         }
 
-        if (model.cdate.value!!.length > 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

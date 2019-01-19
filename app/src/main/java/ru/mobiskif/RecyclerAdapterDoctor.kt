@@ -3,10 +3,9 @@ package ru.mobiskif
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_history.view.*
+import kotlinx.android.synthetic.main.card_doctor.view.*
 
 class RecylcerAdapterDoctor(private val items: List<String>, private val fragm: Context, private val layout_id: Int, private var model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -19,13 +18,11 @@ class RecylcerAdapterDoctor(private val items: List<String>, private val fragm: 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.text1.text = items[position]
-
         holder.itemView.setOnClickListener {
-            //Toast.makeText(fragm.context, "Это RecyclerAdapter $position", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(fragm, "Это RecyclerAdapter $position = ${R.layout.card_doctor}", Toast.LENGTH_SHORT).show()
             model.cdoctor.value = position
             model.cdoctorname.value = items[position]
-            //if (layout_id==R.layout.card_doctor) NavHostFragment.findNavController(fragm).navigate(R.id.Fragment2)
-            //if (layout_id==R.layout.card_history) NavHostFragment.findNavController(fragm).navigate(R.id.action_Fragment2_to_help)
+            NavHostFragment.findNavController(model.cfragment!!).navigate(R.id.Fragment2)
         }
 
         //holder.itemView.text1.setOnClickListener {holder.itemView.text1.text = "== $position"}

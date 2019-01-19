@@ -55,18 +55,35 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="146" />
-                            <option name="y" value="-167" />
+                            <option name="x" value="129" />
+                            <option name="y" value="-307" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_Fragment2_to_fragment3">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_Fragment2_to_help">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="Fragment3">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="413" />
+                            <option name="y" value="-286" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -88,8 +105,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="297" />
-                            <option name="y" value="-505" />
+                            <option name="x" value="314" />
+                            <option name="y" value="-646" />
                           </Point>
                         </option>
                       </LayoutPositions>

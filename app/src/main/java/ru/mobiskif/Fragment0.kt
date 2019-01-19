@@ -50,7 +50,7 @@ class Fragment0 : Fragment() {
             mModel.cdate.value = editBirstdate.text.toString()
             mModel.cdistrict = spinnerDistrict.selectedItemPosition
             if (mModel.cdate.value!!.length > 9) {
-                mModel.saveUser(this.context)
+                mModel.saveUser(this.context!!)
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()

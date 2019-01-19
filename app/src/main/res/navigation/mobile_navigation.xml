@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/Fragment0">
+    app:startDestination="@id/Fragment1">
     <fragment
         android:id="@+id/Fragment1"
         tools:layout="@layout/fragment_1"
@@ -30,6 +30,9 @@
         tools:layout="@layout/fragment_2"
         android:name="ru.mobiskif.Fragment2" >
         <action
+            android:id="@+id/action_Fragment2_to_fragment3"
+            app:destination="@id/Fragment3" />
+        <action
             android:id="@+id/action_Fragment2_to_help"
             app:destination="@id/help" />
     </fragment>
@@ -38,5 +41,9 @@
         android:name="ru.mobiskif.HelpActivity"
         android:label="activity_help"
         tools:layout="@layout/activity_help" />
+    <fragment
+        android:id="@+id/Fragment3"
+        android:name="ru.mobiskif.Fragment3"
+        tools:layout="@layout/fragment_3" />
 
 </navigation>
