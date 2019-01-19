@@ -20,9 +20,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
 
-        //model.context = this.applicationContext
         model.loadModel(this)
-        title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
+        //title ="Пациент " + model.cfam.value + ' ' + model.cname.value
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()

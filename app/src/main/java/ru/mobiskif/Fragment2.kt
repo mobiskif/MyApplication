@@ -23,15 +23,15 @@ class Fragment2 : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
-
+        mModel.cfragment=this
         //if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerTalon.layoutManager = GridLayoutManager(this.context, 4)
         recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-        recyclerTalon.adapter = RecylcerAdapterCalend(mModel.getTalonList().value!!, this, R.layout.card_calend)
+        recyclerTalon.adapter = mModel.adapterCalend
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: ru.mobiskif.databinding.Fragment2Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_2, container, false)
-        binding.model1 = mModel
+        binding.model2 = mModel
         return binding.root
         //return inflater.inflate(R.layout.fragment_2, container, false)
     }

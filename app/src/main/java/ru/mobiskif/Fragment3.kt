@@ -19,12 +19,13 @@ class Fragment3 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
+        mModel.cfragment=this
+        //activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: ru.mobiskif.databinding.Fragment3Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_3, container, false)
-        binding.model1 = mModel
+        binding.model3 = mModel
         return binding.root
         //return inflater.inflate(R.layout.fragment_2, container, false)
     }

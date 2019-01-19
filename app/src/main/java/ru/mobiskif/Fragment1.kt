@@ -22,12 +22,14 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
-        mModel.cfragment=this
+        //mModel.cfragment=this
     }
 
     override fun onResume() {
         super.onResume()
-        activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
+        //activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
+        activity!!.title ="Пациент " + mModel.cfam.value + ' ' + mModel.cname.value
+        mModel.cfragment=this
 
         spinnerLPU.onItemSelectedListener = this
         spinnerLPU.adapter = mModel.adapterLPU
@@ -57,7 +59,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 mModel.clpu.value = position
                 mModel.clpuname.value = parent.adapter.getItem(position).toString()
 
-                recyclerHistory.adapter = RecylcerAdapterHistory(mModel.getHistory().value!!, context!!, R.layout.card_history)
+                recyclerHistory.adapter = RecylcerAdapterHistory(mModel.getHistory().value!!, context!!, R.layout.card_history, mModel)
                 recyclerHistory.smoothScrollBy(80, 0)
 
                 spinnerSpec.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context!!)

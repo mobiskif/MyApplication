@@ -21,18 +21,15 @@ class MainViewModel: ViewModel() {
     var cspecname = MutableLiveData<String>()
     var cdoctor = MutableLiveData<Int>()
     var cdoctorname = MutableLiveData<String>()
-
-    private var districtList = MutableLiveData<List<String>>()
-    private var lpuList = MutableLiveData<List<String>>()
-    private var doctorList = MutableLiveData<List<String>>()
-    private var specialityList = MutableLiveData<List<String>>()
-    private var talonList = MutableLiveData<List<Map<String, Any>>>()
+    var ctalon = MutableLiveData<String>()
+    var ctalonvalue = MutableLiveData<String>()
 
     lateinit var adapterDistrict: SpinnerAdapter
     lateinit var adapterLPU: SpinnerAdapter
     lateinit var adapterSpec: SpinnerAdapter
     lateinit var adapterHistory: RecylcerAdapterHistory
     lateinit var adapterDoctor: RecylcerAdapterDoctor
+    lateinit var adapterCalend: RecylcerAdapterCalend
     var cfragment: Fragment? = null
 
     fun loadModel(context: Context) {
@@ -40,8 +37,9 @@ class MainViewModel: ViewModel() {
         adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
         adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
         adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
-        adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history)
+        adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history, this)
         adapterDoctor = RecylcerAdapterDoctor(getDoctorList().value!!, context, R.layout.card_doctor, this)
+        adapterCalend = RecylcerAdapterCalend(getTalonList().value!!, context, R.layout.card_calend, this)
         loadUser(restorecurrent())
     }
 
@@ -110,30 +108,35 @@ class MainViewModel: ViewModel() {
 
     private fun getDistrictList(): MutableLiveData<List<String>> {
         //if (!::districtList.isInitialized) districtList = MutableLiveData()
+        var districtList = MutableLiveData<List<String>>()
         districtList.value = context.resources.getStringArray(R.array.area).toMutableList()
         request("districtList")
         return districtList
     }
 
     private fun getLpuList(): MutableLiveData<List<String>> {
+        var lpuList = MutableLiveData<List<String>>()
         lpuList.value = context!!.resources.getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)
         return lpuList
     }
 
     fun getSpecialityList(): MutableLiveData<List<String>> {
+        var specialityList = MutableLiveData<List<String>>()
         specialityList.value = context!!.resources.getStringArray(R.array.spec).toMutableList()
         request("specialityList", clpu.value)
         return specialityList
     }
 
     fun getDoctorList(): MutableLiveData<List<String>> {
+        var doctorList = MutableLiveData<List<String>>()
         doctorList.value = context!!.resources.getStringArray(R.array.doc).toMutableList()
         request("doctorList", cspec.value)
         return doctorList
     }
 
     fun getTalonList(): MutableLiveData<List<Map<String, Any>>> {
+        var talonList = MutableLiveData<List<Map<String, Any>>>()
         val ll = mutableListOf<Map<String, Any>>()
         var tal = mutableListOf<Map<String, String>>()
         var m: MutableMap<String, Any> = mutableMapOf()
@@ -195,6 +198,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getHistory(): MutableLiveData<List<Map<String, Any>>> {
+        var talonList = MutableLiveData<List<Map<String, Any>>>()
         val ll = mutableListOf<Map<String, Any>>()
         var tal = mutableListOf<Map<String, String>>()
         var m: MutableMap<String, Any> = mutableMapOf()

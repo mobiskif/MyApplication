@@ -49,6 +49,7 @@
         <item>Хирург-травматолг</item>
         <item>Гастроентеролог</item>
     </string-array>
+
     <string-array name="talons">
         <item>16:00</item>
         <item>16:30</item>

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_calend.view.*
 
-class RecylcerAdapterHistory(private val items: List<Map<String, Any>>, private val context: Context, private val layout_id: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapterHistory(private val items: List<Map<String, Any>>, private val context: Context, private val layout_id: Int, model: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
