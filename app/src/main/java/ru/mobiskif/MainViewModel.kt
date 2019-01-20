@@ -3,6 +3,7 @@ package ru.mobiskif
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,22 +27,27 @@ class MainViewModel: ViewModel() {
     var ctalon = MutableLiveData<String>()
     var ctalonvalue = MutableLiveData<String>()
 
-    lateinit var adapterDistrict: SpinnerAdapter
+    lateinit var adapterDistrict: BaseAdapter
     lateinit var adapterLPU: SpinnerAdapter
     lateinit var adapterSpec: SpinnerAdapter
     lateinit var adapterHistory: RecylcerAdapterHistory
     lateinit var adapterDoctor: RecylcerAdapterDoctor
     lateinit var adapterCalend: RecylcerAdapterCalend
 
+    lateinit var hs: Hub
+
     fun loadModel(context: Context) {
         this.context=context
-        adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
+        loadUser(restorecurrent())
+        hs = Hub(context)
+
+        Thread({ adapterDistrict = SpinnerAdapterC(hs.getDisrictList(), context) }).start()
+        //adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
         adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
         adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
         adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history, this)
         adapterDoctor = RecylcerAdapterDoctor(getDoctorList().value!!, context, R.layout.card_doctor, this)
         adapterCalend = RecylcerAdapterCalend(getTalonList().value!!, context, R.layout.card_calend, this)
-        loadUser(restorecurrent())
     }
 
     fun saveUser(context: Context) {
@@ -110,7 +116,7 @@ class MainViewModel: ViewModel() {
     private fun getDistrictList(): MutableLiveData<List<String>> {
         //if (!::districtList.isInitialized) districtList = MutableLiveData()
         var districtList = MutableLiveData<List<String>>()
-        districtList.value = context.resources.getStringArray(R.array.area).toMutableList()
+        districtList.value = context!!.resources.getStringArray(R.array.area).toMutableList()
         request("districtList")
         return districtList
     }
