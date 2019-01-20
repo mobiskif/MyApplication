@@ -22,12 +22,10 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = activity?.run { ViewModelProviders.of(this).get(MainViewModel::class.java) } ?: throw Exception("Invalid Activity")
-        //mModel.cfragment=this
     }
 
     override fun onResume() {
         super.onResume()
-        //activity!!.title = mModel.cfam.value + ' ' + mModel.cname.value + ' ' + mModel.cdate.value
         activity!!.title ="Пациент " + mModel.cfam.value + ' ' + mModel.cname.value
         mModel.cfragment=this
 

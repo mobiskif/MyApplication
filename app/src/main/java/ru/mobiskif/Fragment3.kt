@@ -19,8 +19,8 @@ class Fragment3 : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
         mModel.cfragment=this
-        //activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel: ViewModel() {
     private lateinit var context: Context
+    lateinit var cfragment: Fragment
+
     var cdistrict = 0
     var cuser = MutableLiveData<Int>()
     var cname = MutableLiveData<String>()
@@ -30,7 +32,6 @@ class MainViewModel: ViewModel() {
     lateinit var adapterHistory: RecylcerAdapterHistory
     lateinit var adapterDoctor: RecylcerAdapterDoctor
     lateinit var adapterCalend: RecylcerAdapterCalend
-    var cfragment: Fragment? = null
 
     fun loadModel(context: Context) {
         this.context=context
@@ -114,7 +115,7 @@ class MainViewModel: ViewModel() {
         return districtList
     }
 
-    private fun getLpuList(): MutableLiveData<List<String>> {
+    fun getLpuList(): MutableLiveData<List<String>> {
         var lpuList = MutableLiveData<List<String>>()
         lpuList.value = context!!.resources.getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)

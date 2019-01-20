@@ -1,9 +1,11 @@
 package ru.mobiskif
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
@@ -15,7 +17,16 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_0.*
 
-class Fragment0 : Fragment() {
+class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d("jop", "Сработал onItemSelected spinnerLPU($position)")
+        mModel.getLpuList()
+    }
+
     private lateinit var mModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,15 +35,10 @@ class Fragment0 : Fragment() {
         mModel.cuser.observe(this, Observer<Any> { updateUI() })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ru.mobiskif.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
-        binding.model0 = mModel
-        //return inflater.inflate(R.layout.fragment_0, container, false)
-        return binding.root
-    }
-
     override fun onResume() {
         super.onResume()
+        activity!!.title ="Пациент " + mModel.cfam.value + ' ' + mModel.cname.value
+        mModel.cfragment=this
 
         val radioButton = radioGroup.getChildAt(mModel.cuser.value!!) as RadioButton
         radioButton.isChecked = true
@@ -42,6 +48,7 @@ class Fragment0 : Fragment() {
         }
 
         spinnerDistrict.adapter = mModel.adapterDistrict
+        spinnerDistrict.onItemSelectedListener = this
 
         saveButton.setOnClickListener {
             mModel.cname.value = editName.text.toString()
@@ -57,6 +64,13 @@ class Fragment0 : Fragment() {
 
         }
         updateUI()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding: ru.mobiskif.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
+        binding.model0 = mModel
+        //return inflater.inflate(R.layout.fragment_0, container, false)
+        return binding.root
     }
 
     private fun updateUI() {

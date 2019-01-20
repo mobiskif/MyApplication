@@ -24,6 +24,7 @@ class Fragment2 : Fragment() {
         super.onResume()
         activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
         mModel.cfragment=this
+
         //if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerTalon.layoutManager = GridLayoutManager(this.context, 4)
         recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         recyclerTalon.adapter = mModel.adapterCalend
