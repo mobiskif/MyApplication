@@ -34,15 +34,12 @@ class MainViewModel: ViewModel() {
     lateinit var adapterDoctor: RecylcerAdapterDoctor
     lateinit var adapterCalend: RecylcerAdapterCalend
 
-    lateinit var hs: Hub
 
     fun loadModel(context: Context) {
         this.context=context
         loadUser(restorecurrent())
-        hs = Hub(context)
 
-        Thread({ adapterDistrict = SpinnerAdapterC(hs.getDisrictList(), context) }).start()
-        //adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
+        adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
         adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
         adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
         adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history, this)
