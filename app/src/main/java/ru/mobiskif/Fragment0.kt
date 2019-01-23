@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_0.*
 
 class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var model: MyViewModel
+    private lateinit var binding: ru.mobiskif.databinding.Fragment0Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +29,11 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
-        activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
         model.getDistrlist().observe(activity!!, Observer<List<String>> { distr ->
             spinnerDistrict.adapter = ArrayAdapter(this.context, android.R.layout.simple_spinner_item, distr)
             spinnerDistrict.setSelection(model.pos_distr)
             spinnerDistrict.onItemSelectedListener = this
-            Log.d("jop", "Сработал District Observer")
+            //Log.d("jop", "Сработал District Observer")
         })
 
         model.getUser().observe(activity!!, Observer<Int> {
@@ -43,9 +43,11 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
                 model.pos_user=position
                 model.getUser()
-                Log.d("jop", "onChekListener($position)")
+                //Log.d("jop", "onChekListener($position)")
             }
-            Log.d("jop", "Сработал User Observer")
+            //Log.d("jop", "Сработал User Observer")
+            binding.invalidateAll()
+            activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
         })
 
         saveButton.setOnClickListener {
@@ -66,18 +68,12 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ru.mobiskif.databinding.Fragment0Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
         binding.model0 = model
         //return inflater.inflate(R.layout.fragment_0, container, false)
         return binding.root
     }
 
-    private fun updateUI() {
-        //editName.text.clear(); editName.text.insert(0, model.cname.value)
-        //editSecondname.text.clear(); editSecondname.text.insert(0, model.cfam.value)
-        //editSurname.text.clear(); editSurname.text.insert(0, model.cotch.value)
-        //editBirstdate.text.clear(); editBirstdate.text.insert(0, model.cdate.value)
-    }
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -85,7 +81,7 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         model.pos_distr = position
         model.getLpulist()
-        Log.d("jop", "onItemSelected($position)")
+        //Log.d("jop", "onItemSelected($position)")
     }
 
 }

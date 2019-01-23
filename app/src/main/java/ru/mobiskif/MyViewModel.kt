@@ -27,7 +27,11 @@ class MyViewModel: ViewModel() {
             cuser = MutableLiveData()
             //Thread({ cuser.postValue(1) }).start()
         }
-        Thread({ cuser.postValue(pos_user) }).start()
+        Thread({
+            cname.postValue("jopa $pos_user")
+            cfam.postValue("qweqweqwe $pos_user")
+            cuser.postValue(pos_user)
+        }).start()
         return cuser
     }
     fun getDistrlist(): LiveData<List<String>> {
