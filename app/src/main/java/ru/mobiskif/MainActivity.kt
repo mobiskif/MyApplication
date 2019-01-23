@@ -10,25 +10,21 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var model: MainViewModel
+    private lateinit var model: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = run { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+        model = ViewModelProviders.of(this).get(MyViewModel::class.java)
         //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //binding.modelmain = model
-        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
-
-        model.loadModel(this)
-        //title ="Пациент " + model.cfam.value + ' ' + model.cname.value
+        setTheme(R.style.AppTheme)
+        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
             NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.action_Fragment2_to_help)
         }
-
-        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
