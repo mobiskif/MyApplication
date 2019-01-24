@@ -44,7 +44,7 @@ class Hub {
             }
             isr.close()
             reader.close()
-            Log.e("jop", "Ответ= " + sb.length + " bytes, " + sb)
+            Log.e("jop", "$action= " + sb.length + " bytes, " + sb)
 
             //препарсинг
             var factory = XmlPullParserFactory.newInstance()

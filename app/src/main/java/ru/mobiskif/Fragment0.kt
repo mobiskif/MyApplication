@@ -1,7 +1,6 @@
 package ru.mobiskif
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_0.*
 
 class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -33,7 +30,6 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerDistrict.adapter = ArrayAdapter(this.context, android.R.layout.simple_spinner_item, distr)
             spinnerDistrict.setSelection(model.pos_distr)
             spinnerDistrict.onItemSelectedListener = this
-            //Log.d("jop", "Сработал District Observer")
         })
 
         model.getUser().observe(activity!!, Observer<Int> {
@@ -41,29 +37,22 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
             radioButton.isChecked = true
             radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
                 val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
-                model.pos_user=position
-                model.getUser()
-                //Log.d("jop", "onChekListener($position)")
+                Storage(activity!!).loadModel(model, position)
+                binding.invalidateAll()
+                spinnerDistrict.setSelection(model.pos_distr)
+                activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
             }
-            //Log.d("jop", "Сработал User Observer")
-            binding.invalidateAll()
-            activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
+            //binding.invalidateAll()
+            //spinnerDistrict.setSelection(model.pos_distr)
+            //activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
         })
 
         saveButton.setOnClickListener {
-            /*
-            mModel.cname.value = editName.text.toString()
-            mModel.cfam.value = editSecondname.text.toString()
-            mModel.cotch.value = editSurname.text.toString()
-            mModel.cdate.value = editBirstdate.text.toString()
-            model.cdistrict = spinnerDistrict.selectedItemPosition + 1
-            if (mModel.cdate.value!!.length > 9) {
-                mModel.saveUser(this.context!!)
-                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+            model.cdate.value = editBirstdate.text.toString()
+            if (model.cdate.value!!.length > 9) {
+                Storage(context!!).saveModel(model)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
-            */
-
         }
     }
 
@@ -80,8 +69,7 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         model.pos_distr = position
-        model.getLpulist()
-        //Log.d("jop", "onItemSelected($position)")
+        //model.getLpulist()
     }
 
 }

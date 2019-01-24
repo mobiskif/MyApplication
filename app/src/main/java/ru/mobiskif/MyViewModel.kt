@@ -12,11 +12,10 @@ class MyViewModel: ViewModel() {
     var pos_distr = 3
     var pos_user = 1
     var pos_lpu = 1
-    var cdistr = MutableLiveData<String>("")
-    var cname = MutableLiveData<String>("")
+    var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
-    var cdate = MutableLiveData<String>("qwe")
+    var cdate = MutableLiveData<String>("")
 
     init {
 
@@ -30,6 +29,8 @@ class MyViewModel: ViewModel() {
         Thread({
             cname.postValue("jopa $pos_user")
             cfam.postValue("qweqweqwe $pos_user")
+            cotch.postValue("aasfsdf $pos_user")
+            cdate.postValue("32143qwe $pos_user")
             cuser.postValue(pos_user)
         }).start()
         return cuser

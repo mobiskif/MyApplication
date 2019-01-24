@@ -15,10 +15,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
+        Storage(this).loadModel(model, Storage(this).restortuser())
         //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //binding.modelmain = model
-        setContentView(R.layout.activity_main)
         setTheme(R.style.AppTheme)
+        setContentView(R.layout.activity_main)
         if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
 
         fab.setOnClickListener { view ->
