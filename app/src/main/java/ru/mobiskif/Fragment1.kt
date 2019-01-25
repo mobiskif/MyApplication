@@ -24,11 +24,13 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("jopp", "onCreate ${this.activity}  ${this}")
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d("jopp", "onResume ${this.activity}  ${this}")
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
@@ -40,6 +42,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("jopp", "onCreateView ${this.activity}  ${this}")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = model
         model.getLpulist().observe(activity!!, Observer<List<String>> { lpus ->
@@ -82,4 +85,10 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("jopp", "onDestoyView ${this.activity}  ${this}")
+    }
+
 }

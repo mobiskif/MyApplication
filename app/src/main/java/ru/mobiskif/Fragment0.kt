@@ -1,6 +1,7 @@
 package ru.mobiskif
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +25,12 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        Log.d("jopp", "onCreate ${this.activity}  ${this}")
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d("jopp", "onResume ${this.activity}  ${this}")
         model.getDistrlist().observe(activity!!, Observer<List<String>> { distr ->
             spinnerDistrict.adapter = ArrayAdapter(this.context, android.R.layout.simple_spinner_item, distr)
             spinnerDistrict.setSelection(model.pos_distr)
@@ -62,6 +65,7 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("jopp", "onCreateView ${this.activity}  ${this}")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
         binding.model0 = model
         //return inflater.inflate(R.layout.fragment_0, container, false)
@@ -77,4 +81,8 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
         //model.getLpulist()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("jopp", "onDestoyView ${this.activity}  ${this}")
+    }
 }
