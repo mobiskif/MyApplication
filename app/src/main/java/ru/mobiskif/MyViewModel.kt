@@ -8,7 +8,7 @@ class MyViewModel: ViewModel() {
     private lateinit var distrlist: MutableLiveData<List<String>>
     private lateinit var speclist: MutableLiveData<List<String>>
     private lateinit var lpulist: MutableLiveData<List<String>>
-    private lateinit var cuser: MutableLiveData<Int>
+    lateinit var cuser: MutableLiveData<Int>
     var pos_distr = 3
     var pos_user = 1
     var pos_lpu = 1
@@ -17,22 +17,11 @@ class MyViewModel: ViewModel() {
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
 
-    init {
-
-    }
-
     fun getUser(): LiveData<Int> {
         if (!::cuser.isInitialized) {
             cuser = MutableLiveData()
-            //Thread({ cuser.postValue(1) }).start()
+            Thread({ cuser.postValue(pos_user) }).start()
         }
-        Thread({
-            cname.postValue("jopa $pos_user")
-            cfam.postValue("qweqweqwe $pos_user")
-            cotch.postValue("aasfsdf $pos_user")
-            cdate.postValue("32143qwe $pos_user")
-            cuser.postValue(pos_user)
-        }).start()
         return cuser
     }
     fun getDistrlist(): LiveData<List<String>> {
@@ -46,7 +35,7 @@ class MyViewModel: ViewModel() {
     fun getLpulist(): LiveData<List<String>> {
         if (!::lpulist.isInitialized) {
             lpulist = MutableLiveData()
-            //Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",cdistrict)) }).start()
+            //Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         }
         Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         return lpulist
@@ -55,8 +44,9 @@ class MyViewModel: ViewModel() {
     fun getSpeclist(): LiveData<List<String>> {
         if (!::speclist.isInitialized) {
             speclist = MutableLiveData()
-            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
+            //Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
         }
+        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
         return speclist
     }
 

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
-        Storage(this).loadModel(model, Storage(this).restortuser())
+        Storage(this).loadModel(model, Storage(this).restoreuser())
         //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //binding.modelmain = model
         setTheme(R.style.AppTheme)

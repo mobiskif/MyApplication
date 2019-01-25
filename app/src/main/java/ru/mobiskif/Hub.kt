@@ -126,7 +126,7 @@ class Hub {
                     "   <soapenv:Header/>" +
                     "   <soapenv:Body>" +
                     "      <tem:GetLPUList>" +
-                    "         <tem:IdDistrict>" + idDistrict + "</tem:IdDistrict>" +
+                    "         <tem:IdDistrict>${idDistrict + 1}</tem:IdDistrict>" +
                     "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
                     "      </tem:GetLPUList>" +
                     "   </soapenv:Body>" +

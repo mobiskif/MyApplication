@@ -12,7 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_0.*
 
 class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -42,15 +44,18 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 spinnerDistrict.setSelection(model.pos_distr)
                 activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
             }
-            //binding.invalidateAll()
-            //spinnerDistrict.setSelection(model.pos_distr)
-            //activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
         })
 
         saveButton.setOnClickListener {
             model.cdate.value = editBirstdate.text.toString()
             if (model.cdate.value!!.length > 9) {
+                model.cname.value=editName.text.toString()
+                model.cfam.value=editSecondname.text.toString()
+                model.cotch.value=editSurname.text.toString()
+                model.cdate.value=editBirstdate.text.toString()
+                //model.pos_user=radioGroup.indexOfChild(radioGroup.findViewById(radioGroup.checkedRadioButtonId))
                 Storage(context!!).saveModel(model)
+                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
         }

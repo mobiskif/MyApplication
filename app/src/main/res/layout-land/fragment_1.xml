@@ -4,7 +4,7 @@
 
         <variable
             name="model1"
-            type="ru.mobiskif.MainViewModel" />
+            type="ru.mobiskif.MyViewModel" />
     </data>
 
 

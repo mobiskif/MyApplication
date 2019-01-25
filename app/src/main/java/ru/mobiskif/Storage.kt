@@ -27,7 +27,7 @@ class Storage(val context: Context) {
         model.pos_user = pos_user
     }
 
-    fun restortuser(): Int {
+    fun restoreuser(): Int {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)
         return defsettings.getInt("pos_user", 1)
     }
