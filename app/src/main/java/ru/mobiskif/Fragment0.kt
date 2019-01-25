@@ -55,7 +55,6 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.cfam.value=editSecondname.text.toString()
                 model.cotch.value=editSurname.text.toString()
                 model.cdate.value=editBirstdate.text.toString()
-                //model.pos_user=radioGroup.indexOfChild(radioGroup.findViewById(radioGroup.checkedRadioButtonId))
                 Storage(context!!).saveModel(model)
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
@@ -77,6 +76,7 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (model.pos_distr != position) {
             model.pos_distr = position
+            model.pos_lpu = 1
             model.updateLpuList()
         }
     }

@@ -1,6 +1,5 @@
 package ru.mobiskif
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ class MyViewModel: ViewModel() {
     private lateinit var distrlist: MutableLiveData<List<String>>
     private lateinit var speclist: MutableLiveData<List<String>>
     private lateinit var lpulist: MutableLiveData<List<String>>
+    private lateinit var histlist: MutableLiveData<List<String>>
     lateinit var cuser: MutableLiveData<Int>
     var pos_distr = 3
     var pos_user = 1
@@ -38,7 +38,6 @@ class MyViewModel: ViewModel() {
             lpulist = MutableLiveData()
             Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         }
-        //Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         return lpulist
     }
 
@@ -46,13 +45,49 @@ class MyViewModel: ViewModel() {
         Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
     }
 
-    fun getSpeclist(): LiveData<List<String>> {
+    fun getSpecList(): LiveData<List<String>> {
         if (!::speclist.isInitialized) {
             speclist = MutableLiveData()
-            //Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
+            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
         }
-        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
         return speclist
+    }
+
+    fun updateSpecList() {
+        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList",pos_lpu)) }).start()
+    }
+
+    fun getHistoryList(): MutableLiveData<List<Map<String, Any>>> {
+        var talonList = MutableLiveData<List<Map<String, Any>>>()
+        val ll = mutableListOf<Map<String, Any>>()
+        var tal = mutableListOf<Map<String, String>>()
+        var m: MutableMap<String, Any> = mutableMapOf()
+        var mt: MutableMap<String, String> = mutableMapOf()
+
+
+        m = mutableMapOf()
+        m["День недели"] = "Пн"
+        m["Дата"] = "28/12/19"
+        m["Время работы"] = "14:30 - 18:45"
+
+        mt = mutableMapOf()
+        mt["1234-1"] = "14:56"
+        mt["1234-2"] = "15:56"
+        m["Талоны"] = mt
+        ll.add(m)
+
+        m = mutableMapOf()
+        m["День недели"] = "Ср"
+        m["Дата"] = "30/12/19"
+        m["Время работы"] = "17:00 - 18:45"
+        mt = mutableMapOf()
+        mt["123456-4"] = "17:56"
+        m["Талоны"] = mt
+        ll.add(m)
+
+        talonList.value = ll
+        //request("historyList", clpu.value)
+        return talonList
     }
 
 }

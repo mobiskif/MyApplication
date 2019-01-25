@@ -2,7 +2,6 @@ package ru.mobiskif
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_0.*
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -38,8 +36,16 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        //recyclerHistory.adapter = model.adapterHistory
-        //recyclerHistory.smoothScrollBy(80, 0)
+        model.getHistoryList().observe(activity!!, Observer { hist ->
+            recyclerHistory!!.adapter = RecylcerAdapterHistory(model.getHistoryList().value!!, context!!, R.layout.card_history, model)
+            recyclerHistory.smoothScrollBy(80, 0)
+        })
+
+        model.getSpecList().observe(activity!!, Observer<List<String>> { specs ->
+            spinnerSpec!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, specs)
+            spinnerSpec!!.onItemSelectedListener = this
+        })
+
         recyclerDoctor.layoutManager = LinearLayoutManager(this.context)
     }
 
@@ -50,29 +56,16 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
         when (parent!!.id) {
             R.id.spinnerLPU -> {
-                /*
-                Log.d("jop", "Сработал onItemSelected spinnerLPU($position)")
-                mModel.clpu.value = position
-                mModel.clpuname.value = parent.adapter.getItem(position).toString()
-
-                recyclerHistory.adapter = RecylcerAdapterHistory(model.getHistory().value!!, context!!, R.layout.card_history, mModel)
-                recyclerHistory.smoothScrollBy(80, 0)
-
-                spinnerSpec.adapter = SpinnerAdapter(mModel.getSpecialityList().value!!, context!!)
-                spinnerSpec.onItemSelectedListener = this
-                spinnerSpec.setSelection(mModel.cspec.value!!)
-                */
+                if (model.pos_lpu != position) {
+                    model.pos_lpu = position
+                    Storage(context!!).saveModel(model)
+                    model.updateSpecList()
+                }
             }
             R.id.spinnerSpec -> {
-                /*
-                Log.d("jop", "Сработал onItemSelected spinnerSpec($position)")
-                mModel.cspec.value = position
-                mModel.cspecname.value = parent.adapter.getItem(position).toString()
-                recyclerDoctor.adapter = RecylcerAdapterDoctor(mModel.getDoctorList().value!!, context!!, R.layout.card_doctor, mModel)
-                */
+                //
             }
         }
     }
@@ -84,6 +77,8 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         model.getLpulist().removeObservers(activity!!)
+        model.getHistoryList().removeObservers(activity!!)
+        model.getSpecList().removeObservers(activity!!)
     }
 
 }
