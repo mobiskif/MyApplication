@@ -24,34 +24,29 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("jopp", "onCreate ${this.activity}  ${this}")
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("jopp", "onResume ${this.activity}  ${this}")
+
+        model.getLpulist().observe(activity!!, Observer<List<String>> { lpus ->
+            spinnerLPU!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lpus)
+            spinnerLPU!!.setSelection(model.pos_lpu)
+            spinnerLPU!!.onItemSelectedListener = this
+        })
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         //recyclerHistory.adapter = model.adapterHistory
         //recyclerHistory.smoothScrollBy(80, 0)
-
         recyclerDoctor.layoutManager = LinearLayoutManager(this.context)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("jopp", "onCreateView ${this.activity}  ${this}")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = model
-        model.getLpulist().observe(activity!!, Observer<List<String>> { lpus ->
-            binding.spinnerLPU!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lpus)
-            binding.spinnerLPU!!.setSelection(model.pos_lpu)
-            binding.spinnerLPU!!.onItemSelectedListener = this
-        })
         return binding.root
-        //return inflater.inflate(R.layout.fragment_0, container, false)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -88,7 +83,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("jopp", "onDestoyView ${this.activity}  ${this}")
+        model.getLpulist().removeObservers(activity!!)
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.mobiskif
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,10 +36,14 @@ class MyViewModel: ViewModel() {
     fun getLpulist(): LiveData<List<String>> {
         if (!::lpulist.isInitialized) {
             lpulist = MutableLiveData()
-            //Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
+            Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         }
-        Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
+        //Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
         return lpulist
+    }
+
+    fun updateLpuList() {
+        Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
     }
 
     fun getSpeclist(): LiveData<List<String>> {

@@ -25,14 +25,13 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
-        Log.d("jopp", "onCreate ${this.activity}  ${this}")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("jopp", "onResume ${this.activity}  ${this}")
+
         model.getDistrlist().observe(activity!!, Observer<List<String>> { distr ->
-            spinnerDistrict.adapter = ArrayAdapter(this.context, android.R.layout.simple_spinner_item, distr)
+            spinnerDistrict.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, distr)
             spinnerDistrict.setSelection(model.pos_distr)
             spinnerDistrict.onItemSelectedListener = this
         })
@@ -65,7 +64,6 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("jopp", "onCreateView ${this.activity}  ${this}")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_0, container, false)
         binding.model0 = model
         //return inflater.inflate(R.layout.fragment_0, container, false)
@@ -77,12 +75,15 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        model.pos_distr = position
-        //model.getLpulist()
+        if (model.pos_distr != position) {
+            model.pos_distr = position
+            model.updateLpuList()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("jopp", "onDestoyView ${this.activity}  ${this}")
+        model.getDistrlist().removeObservers(activity!!)
+        model.getUser().removeObservers(activity!!)
     }
 }
