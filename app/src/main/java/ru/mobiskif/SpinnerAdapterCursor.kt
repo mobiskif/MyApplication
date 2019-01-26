@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class SpinnerAdapterC(private val items: Cursor, val context: Context) : BaseAdapter() {
+class SpinnerAdapterCursor(private val items: Cursor, val context: Context) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = if (convertView!=null) convertView as TextView

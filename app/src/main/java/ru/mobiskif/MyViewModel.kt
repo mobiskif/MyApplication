@@ -9,10 +9,12 @@ class MyViewModel: ViewModel() {
     private lateinit var speclist: MutableLiveData<List<String>>
     private lateinit var lpulist: MutableLiveData<List<String>>
     private lateinit var histlist: MutableLiveData<List<String>>
-    lateinit var cuser: MutableLiveData<Int>
-    var pos_distr = 3
+    private lateinit var doclist: MutableLiveData<List<String>>
+    private lateinit var cuser: MutableLiveData<Int>
+    var pos_distr = 1
     var pos_user = 1
     var pos_lpu = 1
+    var pos_spec = 1
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
@@ -25,6 +27,7 @@ class MyViewModel: ViewModel() {
         }
         return cuser
     }
+
     fun getDistrlist(): LiveData<List<String>> {
         if (!::distrlist.isInitialized) {
             distrlist = MutableLiveData()
@@ -89,5 +92,18 @@ class MyViewModel: ViewModel() {
         //request("historyList", clpu.value)
         return talonList
     }
+
+    fun getDoctorList(): MutableLiveData<List<String>> {
+        if (!::doclist.isInitialized) {
+            doclist = MutableLiveData()
+            Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList", pos_lpu)) }).start()
+        }
+        return doclist
+    }
+
+    fun updateDocList() {
+        Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList",pos_spec)) }).start()
+    }
+
 
 }

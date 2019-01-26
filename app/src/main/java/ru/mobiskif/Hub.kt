@@ -248,4 +248,63 @@ class Hub {
         return ret.toMutableList()
     }
 
+    fun GetDoc(action: String, idLPU: Int): List<String> {
+        var ret = arrayListOf<String>()
+        val idPat = "452528"
+
+        val query =
+            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                    "   <soapenv:Header/>\n" +
+                    "   <soapenv:Body>\n" +
+                    "      <tem:GetSpesialityList>\n" +
+                    "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                    "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                    "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                    "      </tem:GetSpesialityList>\n" +
+                    "   </soapenv:Body>\n" +
+                    "</soapenv:Envelope>"
+
+        val myParser = readSOAP(query, action)
+
+        val from = arrayOf("_ID", "column1", "column2", "column3")
+        var event: Int
+        var text: String? = null
+        val mc = MatrixCursor(from)
+        val row = arrayOfNulls<Any>(from.size)
+        //mc.addRow(row);
+        try {
+            event = myParser!!.getEventType()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                val name = myParser!!.getName()
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser!!.getText()
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "CountFreeParticipantIE" -> row[2] = text
+                            "IdSpesiality" -> row[0] = text
+                            "NameSpesiality" -> {
+                                row[1] = text
+                                mc.addRow(row)
+                                ret.add(row[1].toString())
+                            }
+                            else -> {
+                            }
+                        }
+                        text = null
+                    }
+                }
+                event = myParser!!.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return listOf("err1", "err2")
+        }
+
+        return ret.toMutableList()
+    }
+
 }

@@ -17,6 +17,7 @@ class Storage(val context: Context) {
         sstore(model.pos_user, "cdate", model.cdate.value!!)
         istore(model.pos_user, "pos_distr", model.pos_distr)
         istore(model.pos_user, "pos_lpu", model.pos_lpu)
+        istore(model.pos_user, "pos_spec", model.pos_spec)
     }
 
     fun loadModel(model: MyViewModel, pos_user: Int) {
@@ -26,6 +27,7 @@ class Storage(val context: Context) {
         model.cdate.value = srestore(pos_user, "cdate")
         model.pos_distr = irestore(pos_user, "pos_distr")
         model.pos_lpu = irestore(pos_user, "pos_lpu")
+        model.pos_spec = irestore(pos_user, "pos_spec")
         model.pos_user = pos_user
     }
 

@@ -34,7 +34,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerLPU!!.onItemSelectedListener = this
         })
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recycler3.layoutManager = GridLayoutManager(this.context, 2)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerDoctor.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         model.getHistoryList().observe(activity!!, Observer { hist ->
             recyclerHistory!!.adapter = RecylcerAdapterHistory(model.getHistoryList().value!!, context!!, R.layout.card_history, model)
@@ -47,6 +47,9 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         })
 
         recyclerDoctor.layoutManager = LinearLayoutManager(this.context)
+        model.getDoctorList().observe(activity!!, Observer { hist ->
+            recyclerDoctor!!.adapter = RecylcerAdapterDoctor(model.getDoctorList().value!!, context!!, R.layout.card_doctor, model)
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,7 +68,11 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 }
             }
             R.id.spinnerSpec -> {
-                //
+                if (model.pos_spec != position) {
+                    model.pos_spec = position
+                    Storage(context!!).saveModel(model)
+                    model.updateDocList()
+                }
             }
         }
     }
@@ -79,6 +86,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         model.getLpulist().removeObservers(activity!!)
         model.getHistoryList().removeObservers(activity!!)
         model.getSpecList().removeObservers(activity!!)
+        model.getDoctorList().removeObservers(activity!!)
     }
 
 }
