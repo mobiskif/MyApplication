@@ -2,6 +2,7 @@ package ru.mobiskif
 
 import android.database.MatrixCursor
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
@@ -62,14 +63,14 @@ class Hub {
     fun GetDistr(action: String): List<String> {
         var ret = arrayListOf<String>()
         val query =
-            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                    "   <soapenv:Header/>\n" +
-                    "   <soapenv:Body>\n" +
-                    "      <tem:GetDistrictList>\n" +
-                    "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                    "      </tem:GetDistrictList>\n" +
-                    "   </soapenv:Body>\n" +
-                    "</soapenv:Envelope>"
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <tem:GetDistrictList>\n" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                        "      </tem:GetDistrictList>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
 
@@ -82,7 +83,7 @@ class Hub {
         try {
             event = myParser!!.getEventType()
             while (event != XmlPullParser.END_DOCUMENT) {
-                val name = myParser!!.getName()
+                val name = myParser.getName()
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
@@ -107,7 +108,7 @@ class Hub {
                         text = null
                     }
                 }
-                event = myParser!!.next()
+                event = myParser.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
@@ -122,15 +123,15 @@ class Hub {
         val districtID = "17"
 
         val query =
-            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
-                    "   <soapenv:Header/>" +
-                    "   <soapenv:Body>" +
-                    "      <tem:GetLPUList>" +
-                    "         <tem:IdDistrict>${idDistrict + 1}</tem:IdDistrict>" +
-                    "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
-                    "      </tem:GetLPUList>" +
-                    "   </soapenv:Body>" +
-                    "</soapenv:Envelope>"
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:GetLPUList>" +
+                        "         <tem:IdDistrict>${idDistrict + 1}</tem:IdDistrict>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "      </tem:GetLPUList>" +
+                        "   </soapenv:Body>" +
+                        "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
 
@@ -194,16 +195,16 @@ class Hub {
         val idPat = "452528"
 
         val query =
-            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                    "   <soapenv:Header/>\n" +
-                    "   <soapenv:Body>\n" +
-                    "      <tem:GetSpesialityList>\n" +
-                    "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
-                    "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
-                    "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                    "      </tem:GetSpesialityList>\n" +
-                    "   </soapenv:Body>\n" +
-                    "</soapenv:Envelope>"
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <tem:GetSpesialityList>\n" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                        "      </tem:GetSpesialityList>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
 
@@ -248,63 +249,68 @@ class Hub {
         return ret.toMutableList()
     }
 
-    fun GetDoc(action: String, idLPU: Int): List<String> {
-        var ret = arrayListOf<String>()
-        val idPat = "452528"
+    fun GetDoc(action: String, id: Int): MutableList<Map<String, String>> {
+
+        val idPat = "502655"
+        val specID = 78
+        val idLPU = 174
 
         val query =
-            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                    "   <soapenv:Header/>\n" +
-                    "   <soapenv:Body>\n" +
-                    "      <tem:GetSpesialityList>\n" +
-                    "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
-                    "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
-                    "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                    "      </tem:GetSpesialityList>\n" +
-                    "   </soapenv:Body>\n" +
-                    "</soapenv:Envelope>"
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <tem:GetDoctorList>\n" +
+                        "         <tem:idSpesiality>" + specID + "</tem:idSpesiality>\n" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                        "      </tem:GetDoctorList>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
 
-        val from = arrayOf("_ID", "column1", "column2", "column3")
+        var result: MutableList<Map<String, String>> = mutableListOf()
         var event: Int
-        var text: String? = null
-        val mc = MatrixCursor(from)
-        val row = arrayOfNulls<Any>(from.size)
-        //mc.addRow(row);
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
         try {
             event = myParser!!.getEventType()
+            //set= mutableMapOf()
             while (event != XmlPullParser.END_DOCUMENT) {
-                val name = myParser!!.getName()
+                var name = myParser.getName()
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser!!.getText()
+                    XmlPullParser.TEXT -> text = myParser.getText()
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
-                            "CountFreeParticipantIE" -> row[2] = text
-                            "IdSpesiality" -> row[0] = text
-                            "NameSpesiality" -> {
-                                row[1] = text
-                                mc.addRow(row)
-                                ret.add(row[1].toString())
-                            }
-                            else -> {
+                            "AriaNumber" -> set["AriaNumber"] = text
+                            "CountFreeParticipantIE" -> set["CountFreeParticipantIE"] = text
+                            "CountFreeTicket" -> set["CountFreeTicket"] = text
+                            "IdDoc" -> set["IdDoc"] = text
+                            "LastDate" -> set["LastDate"] = text
+                            "Name" -> set["Name"] = text
+                            "NearestDate" -> set["NearestDate"] = text
+                            "Snils" -> { set["Snils"] = text
+                                result.add(set)
+                                set = mutableMapOf()
                             }
                         }
-                        text = null
+                        text = ""
                     }
                 }
-                event = myParser!!.next()
+                event = myParser.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
-            return listOf("err1", "err2")
+            return mutableListOf()
         }
 
-        return ret.toMutableList()
+        //return ret.toMutableList()
+        return result
     }
 
 }

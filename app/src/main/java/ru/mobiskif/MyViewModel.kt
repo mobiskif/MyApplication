@@ -5,16 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MyViewModel: ViewModel() {
-    private lateinit var distrlist: MutableLiveData<List<String>>
-    private lateinit var speclist: MutableLiveData<List<String>>
-    private lateinit var lpulist: MutableLiveData<List<String>>
-    private lateinit var histlist: MutableLiveData<List<String>>
-    private lateinit var doclist: MutableLiveData<List<String>>
-    private lateinit var cuser: MutableLiveData<Int>
+
     var pos_distr = 1
     var pos_user = 1
     var pos_lpu = 1
     var pos_spec = 1
+
+    private lateinit var distrlist: MutableLiveData<List<String>>
+    private lateinit var speclist: MutableLiveData<List<String>>
+    private lateinit var lpulist: MutableLiveData<List<String>>
+    private lateinit var histlist: MutableLiveData<List<String>>
+    private lateinit var talonlist: MutableLiveData<List<Map<String, Any>>>
+    private lateinit var doclist: MutableLiveData<MutableList<Map<String, String>>>
+    private lateinit var cuser: MutableLiveData<Int>
+
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
@@ -61,7 +65,7 @@ class MyViewModel: ViewModel() {
     }
 
     fun getHistoryList(): MutableLiveData<List<Map<String, Any>>> {
-        var talonList = MutableLiveData<List<Map<String, Any>>>()
+        talonlist = MutableLiveData<List<Map<String, Any>>>()
         val ll = mutableListOf<Map<String, Any>>()
         var tal = mutableListOf<Map<String, String>>()
         var m: MutableMap<String, Any> = mutableMapOf()
@@ -88,12 +92,12 @@ class MyViewModel: ViewModel() {
         m["Талоны"] = mt
         ll.add(m)
 
-        talonList.value = ll
+        talonlist.value = ll
         //request("historyList", clpu.value)
-        return talonList
+        return talonlist
     }
 
-    fun getDoctorList(): MutableLiveData<List<String>> {
+    fun getDoctorList(): MutableLiveData<MutableList<Map<String, String>>> {
         if (!::doclist.isInitialized) {
             doclist = MutableLiveData()
             Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList", pos_lpu)) }).start()
@@ -102,7 +106,7 @@ class MyViewModel: ViewModel() {
     }
 
     fun updateDocList() {
-        Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList",pos_spec)) }).start()
+        Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", pos_spec)) }).start()
     }
 
 

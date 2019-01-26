@@ -12,7 +12,7 @@
     card_view:contentPadding="@dimen/fab_margin">
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/textViewFIO"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Text View"

@@ -19,7 +19,7 @@ class RecylcerAdapterCalend(private val items: List<Map<String, Any>>, private v
             = SimpleViewHolder(LayoutInflater.from(fragm).inflate(layout_id, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.text1.text = items[position]["День недели"].toString()
+        holder.itemView.textViewFIO.text = items[position]["День недели"].toString()
         holder.itemView.text2.text = items[position]["Дата"].toString()
         holder.itemView.text3.text = items[position]["Время работы"].toString()
         holder.itemView.button.visibility=View.GONE

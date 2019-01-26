@@ -16,7 +16,7 @@ class RecylcerAdapterHistory(private val items: List<Map<String, Any>>, private 
             = SimpleViewHolder(LayoutInflater.from(context).inflate(layout_id, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.text1.text = items[position]["День недели"].toString()
+        holder.itemView.textViewFIO.text = items[position]["День недели"].toString()
     }
 
 }

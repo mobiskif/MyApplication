@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
+
     private lateinit var model: MyViewModel
     private lateinit var binding: ru.mobiskif.databinding.Fragment1Binding
 
@@ -46,9 +47,9 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerSpec!!.onItemSelectedListener = this
         })
 
-        recyclerDoctor.layoutManager = LinearLayoutManager(this.context)
+        recyclerDoctor.layoutManager = LinearLayoutManager(context)
         model.getDoctorList().observe(activity!!, Observer { hist ->
-            recyclerDoctor!!.adapter = RecylcerAdapterDoctor(model.getDoctorList().value!!, context!!, R.layout.card_doctor, model)
+            recyclerDoctor.adapter = RecylcerAdapterDoctor(model.getDoctorList())
         })
     }
 
@@ -68,11 +69,11 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 }
             }
             R.id.spinnerSpec -> {
-                if (model.pos_spec != position) {
-                    model.pos_spec = position
-                    Storage(context!!).saveModel(model)
-                    model.updateDocList()
-                }
+                //if (model.pos_spec != position) {
+                model.pos_spec = position
+                Storage(context!!).saveModel(model)
+                model.updateDocList()
+                //}
             }
         }
     }
