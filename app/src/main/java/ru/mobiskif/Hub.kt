@@ -2,7 +2,6 @@ package ru.mobiskif
 
 import android.database.MatrixCursor
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
@@ -118,7 +117,7 @@ class Hub {
         return ret.toMutableList()
     }
 
-    fun GetLpu(action: String, idDistrict: Int): List<String> {
+    fun GetLpu(action: String, idDistrict: Int): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
         val districtID = "17"
 
@@ -137,10 +136,12 @@ class Hub {
 
         val from = arrayOf("_ID", "column1", "column2", "column3")
         var event: Int
-        var text: String? = null
+        var text: String = ""
         val mc = MatrixCursor(from)
         val row = arrayOfNulls<Any>(from.size)
         //mc.addRow(row);
+        var result: MutableList<Map<String, String>> = mutableListOf()
+        var set: MutableMap<String, String> = mutableMapOf()
         try {
             event = myParser!!.getEventType()
             while (event != XmlPullParser.END_DOCUMENT) {
@@ -149,45 +150,32 @@ class Hub {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser!!.getText()
+                    XmlPullParser.TEXT -> text = myParser.getText()
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
-                            "Chief" -> {
+                            "Description" -> set["Description"] = text
+                            "District" -> set["District"] = text
+                            "IdLPU" -> set["IdLPU"] = text
+                            "LPUFullName" -> set["LPUFullName"] = text
+                            "LPUShortName" -> set["LPUShortName"] = text
+                            "LPUType" -> { set["LPUType"] = text
+                                result.add(set)
+                                set = mutableMapOf()
                             }
-                            "Contact" -> {
-                            }
-                            "Distric" -> {
-                            }
-                            "EMail" -> {
-                            }
-                            "IdLPU" -> row[0] = text
-                            "ID" -> {
-                            }
-                            "Org_Address" -> {
-                            }
-                            "LPUFullName" -> row[1] = text
-                            "LPUShortName" -> {
-                                row[2] = text
-                                if (row[0] != null) mc.addRow(row)
-                                ret.add(row[2].toString())
-                            }
-                            "WWW" -> {
-                            }
-                            else -> {
-                            }
+
                         }
-                        text = null
+                        text = ""
                     }
                 }
                 event = myParser!!.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
-            return listOf("err1", "err2")
+            return mutableListOf()
         }
 
-        return ret.toMutableList()
+        return result
     }
 
     fun GetSpec(action: String, idLPU: Int): List<String> {
@@ -294,7 +282,8 @@ class Hub {
                             "LastDate" -> set["LastDate"] = text
                             "Name" -> set["Name"] = text
                             "NearestDate" -> set["NearestDate"] = text
-                            "Snils" -> { set["Snils"] = text
+                            "Snils" -> {
+                                set["Snils"] = text
                                 result.add(set)
                                 set = mutableMapOf()
                             }
@@ -307,6 +296,71 @@ class Hub {
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
             return mutableListOf()
+        }
+
+        //return ret.toMutableList()
+        return result
+    }
+
+    fun CheckPat(action: String, IdLPU: Int, args: Array<String?>): MutableMap<String, String> {
+
+        val idPat = "502655"
+        val specID = 78
+        val idLPU = 174
+
+        val query =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\" xmlns:hub=\"http://schemas.datacontract.org/2004/07/HubService2\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:CheckPatient>" +
+                        "         <tem:pat>" +
+                        "           <hub:Birthday>" + args[3] + "</hub:Birthday>" +
+                        "            <hub:Name>" + args[0] + "</hub:Name>" +
+                        "            <hub:SecondName>" + args[2] + "</hub:SecondName>" +
+                        "            <hub:Surname>" + args[1] + "</hub:Surname>" +
+                        "         </tem:pat>" +
+                        "         <tem:idLpu>" + IdLPU + "</tem:idLpu>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "     </tem:CheckPatient>" +
+                        "   </soapenv:Body>" +
+                        "</soapenv:Envelope>"
+
+        val myParser = readSOAP(query, action)
+
+        var result: MutableMap<String, String> = mutableMapOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+        try {
+            event = myParser!!.getEventType()
+            //set= mutableMapOf()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                var name = myParser.getName()
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser.getText()
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "ErrorDescription" -> set["ErrorDescription"] = text
+                            "IdHistory" -> set["IdHistory"] = text
+                            "Success" -> set["Success"] = text
+                            "IdPat" -> { set["IdPat"] = text
+                                //result.add(set)
+                                result = set
+                                set = mutableMapOf()
+                            }
+                        }
+                        text = ""
+                    }
+                }
+                event = myParser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return mutableMapOf()
         }
 
         //return ret.toMutableList()

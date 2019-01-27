@@ -2,6 +2,7 @@ package ru.mobiskif
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +30,10 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
 
-        model.getLpulist().observe(activity!!, Observer<List<String>> { lpus ->
-            spinnerLPU!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lpus)
+        model.getLpulist().observe(activity!!, Observer { lpus ->
+            //lpus.toTypedArray()
+            //spinnerLPU!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lpus)
+            spinnerLPU!!.adapter = SpinnerAdapter(lpus, this.requireContext())
             spinnerLPU!!.setSelection(model.pos_lpu)
             spinnerLPU!!.onItemSelectedListener = this
         })
@@ -64,16 +67,19 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             R.id.spinnerLPU -> {
                 if (model.pos_lpu != position) {
                     model.pos_lpu = position
+                    var item = spinnerLPU.adapter.getItem(position) as Map<String,String>
+                    model.cIdLPU = item["IdLPU"]!!.toInt()
                     Storage(context!!).saveModel(model)
+                    model.checkPatient()
                     model.updateSpecList()
                 }
             }
             R.id.spinnerSpec -> {
-                //if (model.pos_spec != position) {
-                model.pos_spec = position
-                Storage(context!!).saveModel(model)
+                if (model.pos_spec != position) {
+                    model.pos_spec = position
+                    Storage(context!!).saveModel(model)
+                }
                 model.updateDocList()
-                //}
             }
         }
     }

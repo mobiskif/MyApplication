@@ -56,6 +56,7 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.cotch.value=editSurname.text.toString()
                 model.cdate.value=editBirstdate.text.toString()
                 Storage(context!!).saveModel(model)
+                model.checkPatient()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MyViewModel: ViewModel() {
+class MyViewModel : ViewModel() {
 
     var pos_distr = 1
     var pos_user = 1
@@ -13,16 +13,18 @@ class MyViewModel: ViewModel() {
 
     private lateinit var distrlist: MutableLiveData<List<String>>
     private lateinit var speclist: MutableLiveData<List<String>>
-    private lateinit var lpulist: MutableLiveData<List<String>>
+    private lateinit var lpulist: MutableLiveData<MutableList<Map<String, String>>>
     private lateinit var histlist: MutableLiveData<List<String>>
     private lateinit var talonlist: MutableLiveData<List<Map<String, Any>>>
     private lateinit var doclist: MutableLiveData<MutableList<Map<String, String>>>
     private lateinit var cuser: MutableLiveData<Int>
+    private lateinit var cpatient: MutableLiveData<Map<String, String>>
 
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
+    var cIdLPU = 175
 
     fun getUser(): LiveData<Int> {
         if (!::cuser.isInitialized) {
@@ -33,6 +35,7 @@ class MyViewModel: ViewModel() {
     }
 
     fun getDistrlist(): LiveData<List<String>> {
+        String
         if (!::distrlist.isInitialized) {
             distrlist = MutableLiveData()
             Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
@@ -40,28 +43,28 @@ class MyViewModel: ViewModel() {
         return distrlist
     }
 
-    fun getLpulist(): LiveData<List<String>> {
+    fun getLpulist(): MutableLiveData<MutableList<Map<String, String>>> {
         if (!::lpulist.isInitialized) {
             lpulist = MutableLiveData()
-            Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
+            Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
         }
         return lpulist
     }
 
     fun updateLpuList() {
-        Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList",pos_distr)) }).start()
+        Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     }
 
     fun getSpecList(): LiveData<List<String>> {
         if (!::speclist.isInitialized) {
             speclist = MutableLiveData()
-            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", pos_lpu)) }).start()
+            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cIdLPU)) }).start()
         }
         return speclist
     }
 
     fun updateSpecList() {
-        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList",pos_lpu)) }).start()
+        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cIdLPU)) }).start()
     }
 
     fun getHistoryList(): MutableLiveData<List<Map<String, Any>>> {
@@ -100,13 +103,23 @@ class MyViewModel: ViewModel() {
     fun getDoctorList(): MutableLiveData<MutableList<Map<String, String>>> {
         if (!::doclist.isInitialized) {
             doclist = MutableLiveData()
-            Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList", pos_lpu)) }).start()
+            Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList", cIdLPU)) }).start()
         }
         return doclist
     }
 
     fun updateDocList() {
-        Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", pos_spec)) }).start()
+        val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
+        Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", cIdLPU)) }).start()
+    }
+
+    fun checkPatient() {
+        if (!::cpatient.isInitialized) {
+            cpatient = MutableLiveData()
+        }
+        val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
+        Thread({ cpatient.postValue(Hub().CheckPat("CheckPatient", cIdLPU, args)) }).start()
+        //return cpatient
     }
 
 

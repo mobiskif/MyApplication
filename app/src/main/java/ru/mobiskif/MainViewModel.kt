@@ -39,9 +39,9 @@ class MainViewModel: ViewModel() {
         this.context=context
         loadUser(restorecurrent())
 
-        adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
-        adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
-        adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
+        //adapterDistrict = SpinnerAdapter(getDistrictList().value!!, context)
+        //adapterLPU = SpinnerAdapter(getLpuList().value!!, context)
+        //adapterSpec = SpinnerAdapter(getSpecialityList().value!!, context)
         //adapterHistory = RecylcerAdapterHistory(getHistory().value!!, context, R.layout.card_history, this)
         //adapterDoctor = RecylcerAdapterDoctor(getDoctorList().value!!, context, R.layout.card_doctor, this)
         adapterCalend = RecylcerAdapterCalend(getTalonList().value!!, context, R.layout.card_calend, this)
