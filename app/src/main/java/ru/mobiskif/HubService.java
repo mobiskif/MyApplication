@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Observable;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -883,7 +884,7 @@ class HubService extends Observable {
 
             //передача запроса
             DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-            BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
             outputStream.write(body);
             outputStream.flush();
             outputStream.close();

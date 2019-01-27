@@ -12,19 +12,20 @@ class MyViewModel : ViewModel() {
     var pos_spec = 1
 
     private lateinit var distrlist: MutableLiveData<List<String>>
-    private lateinit var speclist: MutableLiveData<List<String>>
     private lateinit var lpulist: MutableLiveData<MutableList<Map<String, String>>>
+    private lateinit var cpatient: MutableLiveData<Map<String, String>>
+    private lateinit var speclist: MutableLiveData<MutableList<Map<String, String>>>
+    private lateinit var doclist: MutableLiveData<MutableList<Map<String, String>>>
     private lateinit var histlist: MutableLiveData<List<String>>
     private lateinit var talonlist: MutableLiveData<List<Map<String, Any>>>
-    private lateinit var doclist: MutableLiveData<MutableList<Map<String, String>>>
     private lateinit var cuser: MutableLiveData<Int>
-    private lateinit var cpatient: MutableLiveData<Map<String, String>>
 
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
-    var cIdLPU = 175
+    var cidLPU = 175
+    var cidSpec = 23
 
     fun getUser(): LiveData<Int> {
         if (!::cuser.isInitialized) {
@@ -35,7 +36,6 @@ class MyViewModel : ViewModel() {
     }
 
     fun getDistrlist(): LiveData<List<String>> {
-        String
         if (!::distrlist.isInitialized) {
             distrlist = MutableLiveData()
             Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
@@ -55,16 +55,16 @@ class MyViewModel : ViewModel() {
         Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     }
 
-    fun getSpecList(): LiveData<List<String>> {
+    fun getSpecList(): LiveData<MutableList<Map<String, String>>> {
         if (!::speclist.isInitialized) {
             speclist = MutableLiveData()
-            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cIdLPU)) }).start()
+            Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLPU)) }).start()
         }
         return speclist
     }
 
     fun updateSpecList() {
-        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cIdLPU)) }).start()
+        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLPU)) }).start()
     }
 
     fun getHistoryList(): MutableLiveData<List<Map<String, Any>>> {
@@ -103,23 +103,34 @@ class MyViewModel : ViewModel() {
     fun getDoctorList(): MutableLiveData<MutableList<Map<String, String>>> {
         if (!::doclist.isInitialized) {
             doclist = MutableLiveData()
-            Thread({ doclist.postValue(Hub().GetDoc("GetSpesialityList", cIdLPU)) }).start()
+            if(getPatient().value!=null) {
+                val args = arrayOf(cidLPU, cidSpec, getPatient().value!!["IdPat"])
+                Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", args)) }).start()
+            }
         }
         return doclist
     }
 
     fun updateDocList() {
-        val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
-        Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", cIdLPU)) }).start()
+        val args = arrayOf(cidLPU, cidSpec, getPatient().value!!["IdPat"])
+        Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", args)) }).start()
+    }
+
+
+    fun getPatient(): MutableLiveData<Map<String, String>> {
+        if (!::cpatient.isInitialized) {
+            cpatient = MutableLiveData()
+            //var a = cpatient.value
+            //a.set("IdPat","22")
+            val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
+            Thread({ cpatient.postValue(Hub().CheckPat("CheckPatient", cidLPU, args)) }).start()
+        }
+        return cpatient
     }
 
     fun checkPatient() {
-        if (!::cpatient.isInitialized) {
-            cpatient = MutableLiveData()
-        }
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
-        Thread({ cpatient.postValue(Hub().CheckPat("CheckPatient", cIdLPU, args)) }).start()
-        //return cpatient
+        Thread({ cpatient.postValue(Hub().CheckPat("CheckPatient", cidLPU, args)) }).start()
     }
 
 

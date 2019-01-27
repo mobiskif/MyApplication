@@ -113,28 +113,28 @@ class MainViewModel: ViewModel() {
     private fun getDistrictList(): MutableLiveData<List<String>> {
         //if (!::districtList.isInitialized) districtList = MutableLiveData()
         var districtList = MutableLiveData<List<String>>()
-        districtList.value = context!!.resources.getStringArray(R.array.area).toMutableList()
+        districtList.value = context.resources.getStringArray(R.array.area).toMutableList()
         request("districtList")
         return districtList
     }
 
     fun getLpuList(): MutableLiveData<List<String>> {
         var lpuList = MutableLiveData<List<String>>()
-        lpuList.value = context!!.resources.getStringArray(R.array.lpu).toMutableList()
+        lpuList.value = context.resources.getStringArray(R.array.lpu).toMutableList()
         request("lpuList", cdistrict)
         return lpuList
     }
 
     fun getSpecialityList(): MutableLiveData<List<String>> {
         var specialityList = MutableLiveData<List<String>>()
-        specialityList.value = context!!.resources.getStringArray(R.array.spec).toMutableList()
+        specialityList.value = context.resources.getStringArray(R.array.spec).toMutableList()
         request("specialityList", clpu.value)
         return specialityList
     }
 
     fun getDoctorList(): MutableLiveData<List<String>> {
         var doctorList = MutableLiveData<List<String>>()
-        doctorList.value = context!!.resources.getStringArray(R.array.doc).toMutableList()
+        doctorList.value = context.resources.getStringArray(R.array.doc).toMutableList()
         request("doctorList", cspec.value)
         return doctorList
     }

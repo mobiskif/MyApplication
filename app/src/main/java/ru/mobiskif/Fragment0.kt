@@ -55,8 +55,11 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.cfam.value=editSecondname.text.toString()
                 model.cotch.value=editSurname.text.toString()
                 model.cdate.value=editBirstdate.text.toString()
+                //model.pos_lpu = 0
+                //model.pos_spec = 0
                 Storage(context!!).saveModel(model)
-                model.checkPatient()
+                //model.updateLpuList()
+                //model.checkPatient()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
@@ -77,8 +80,6 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (model.pos_distr != position) {
             model.pos_distr = position
-            model.pos_lpu = 1
-            model.updateLpuList()
         }
     }
 

@@ -26,11 +26,11 @@ class RecylcerAdapterCalend(private val items: List<Map<String, Any>>, private v
 
         (items[position]["Талоны"] as Map<String, String>).forEach { it ->
             val btn = Button(fragm)
-            btn.setText(it.value.subSequence(0, it.value.length))
+            btn.text = it.value.subSequence(0, it.value.length)
             btn.setOnClickListener { btn ->
                 model.ctalon.value = it.key
                 model.ctalonvalue.value = it.value
-                NavHostFragment.findNavController(model.cfragment!!).navigate(R.id.Fragment3)
+                NavHostFragment.findNavController(model.cfragment).navigate(R.id.Fragment3)
             }
             holder.itemView.lay01.addView(btn)
         }

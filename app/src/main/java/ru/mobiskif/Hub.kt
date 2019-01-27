@@ -29,7 +29,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            //Log.e("jop","Запрос= " + body.length + " bytes, " + body);
+            //Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -80,14 +80,14 @@ class Hub {
         val row = arrayOfNulls<Any>(from.size)
         //mc.addRow(row);
         try {
-            event = myParser!!.getEventType()
+            event = myParser!!.eventType
             while (event != XmlPullParser.END_DOCUMENT) {
-                val name = myParser.getName()
+                val name = myParser.name
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser!!.getText()
+                    XmlPullParser.TEXT -> text = myParser.text
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
@@ -143,14 +143,14 @@ class Hub {
         var result: MutableList<Map<String, String>> = mutableListOf()
         var set: MutableMap<String, String> = mutableMapOf()
         try {
-            event = myParser!!.getEventType()
+            event = myParser!!.eventType
             while (event != XmlPullParser.END_DOCUMENT) {
-                val name = myParser!!.getName()
+                val name = myParser.name
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser.getText()
+                    XmlPullParser.TEXT -> text = myParser.text
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
@@ -168,7 +168,7 @@ class Hub {
                         text = ""
                     }
                 }
-                event = myParser!!.next()
+                event = myParser.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
@@ -178,82 +178,90 @@ class Hub {
         return result
     }
 
-    fun GetSpec(action: String, idLPU: Int): List<String> {
+    fun GetSpec(action: String, idLPU: Int): MutableList<Map<String, String>>{
         var ret = arrayListOf<String>()
         val idPat = "452528"
 
         val query =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                        "   <soapenv:Header/>\n" +
-                        "   <soapenv:Body>\n" +
-                        "      <tem:GetSpesialityList>\n" +
-                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
-                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
-                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                        "      </tem:GetSpesialityList>\n" +
-                        "   </soapenv:Body>\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:GetSpesialityList>" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "      </tem:GetSpesialityList>" +
+                        "   </soapenv:Body>" +
                         "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
 
         val from = arrayOf("_ID", "column1", "column2", "column3")
-        var event: Int
-        var text: String? = null
+        //var event: Int
+        //var text: String? = null
         val mc = MatrixCursor(from)
         val row = arrayOfNulls<Any>(from.size)
         //mc.addRow(row);
+        var result: MutableList<Map<String, String>> = mutableListOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+
         try {
-            event = myParser!!.getEventType()
+            event = myParser!!.eventType
             while (event != XmlPullParser.END_DOCUMENT) {
-                val name = myParser!!.getName()
+                val name = myParser.name
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser!!.getText()
+                    XmlPullParser.TEXT -> text = myParser.text
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
-                            "CountFreeParticipantIE" -> row[2] = text
-                            "IdSpesiality" -> row[0] = text
+                            "CountFreeParticipantIE" -> set["CountFreeParticipantIE"] = text
+                            "IdSpesiality" -> set["IdSpesiality"] = text
                             "NameSpesiality" -> {
                                 row[1] = text
+                                set["NameSpesiality"] = text
                                 mc.addRow(row)
                                 ret.add(row[1].toString())
+                                result.add(set)
+                                set = mutableMapOf()
                             }
                             else -> {
                             }
                         }
-                        text = null
+                        text = ""
                     }
                 }
-                event = myParser!!.next()
+                event = myParser.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
-            return listOf("err1", "err2")
+            return mutableListOf()
         }
 
-        return ret.toMutableList()
+        return result
     }
 
-    fun GetDoc(action: String, id: Int): MutableList<Map<String, String>> {
+    fun GetDoc(action: String, args: Array<Any?>): MutableList<Map<String, String>> {
 
-        val idPat = "502655"
-        val specID = 78
-        val idLPU = 174
+        val idPat = args[2]
+        val specID = args[1]
+        val idLPU = args[0]
 
         val query =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                        "   <soapenv:Header/>\n" +
-                        "   <soapenv:Body>\n" +
-                        "      <tem:GetDoctorList>\n" +
-                        "         <tem:idSpesiality>" + specID + "</tem:idSpesiality>\n" +
-                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
-                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
-                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                        "      </tem:GetDoctorList>\n" +
-                        "   </soapenv:Body>\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:GetDoctorList>" +
+                        "         <tem:idSpesiality>" + specID + "</tem:idSpesiality>" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "      </tem:GetDoctorList>" +
+                        "   </soapenv:Body>" +
                         "</soapenv:Envelope>"
 
         val myParser = readSOAP(query, action)
@@ -263,15 +271,15 @@ class Hub {
         var text: String = ""
         var set: MutableMap<String, String> = mutableMapOf()
         try {
-            event = myParser!!.getEventType()
+            event = myParser!!.eventType
             //set= mutableMapOf()
             while (event != XmlPullParser.END_DOCUMENT) {
-                var name = myParser.getName()
+                var name = myParser.name
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser.getText()
+                    XmlPullParser.TEXT -> text = myParser.text
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
@@ -332,15 +340,15 @@ class Hub {
         var text: String = ""
         var set: MutableMap<String, String> = mutableMapOf()
         try {
-            event = myParser!!.getEventType()
+            event = myParser!!.eventType
             //set= mutableMapOf()
             while (event != XmlPullParser.END_DOCUMENT) {
-                var name = myParser.getName()
+                var name = myParser.name
                 when (event) {
                     XmlPullParser.START_TAG -> {
                     }
 
-                    XmlPullParser.TEXT -> text = myParser.getText()
+                    XmlPullParser.TEXT -> text = myParser.text
 
                     XmlPullParser.END_TAG -> {
                         when (name) {

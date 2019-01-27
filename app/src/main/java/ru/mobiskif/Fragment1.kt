@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,22 +38,30 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerLPU!!.setSelection(model.pos_lpu)
             spinnerLPU!!.onItemSelectedListener = this
         })
+        model.getPatient().observe(activity!!, Observer { pat ->
+            //Log.d("jop", pat["IdPat"])
+            activity!!.title = pat["IdPat"]
+            model.updateSpecList()
+        })
 
+/*
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerDoctor.layoutManager = GridLayoutManager(this.context, 2)
         else recyclerHistory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         model.getHistoryList().observe(activity!!, Observer { hist ->
-            recyclerHistory!!.adapter = RecylcerAdapterHistory(model.getHistoryList().value!!, context!!, R.layout.card_history, model)
-            recyclerHistory.smoothScrollBy(80, 0)
+            //recyclerHistory!!.adapter = RecylcerAdapterHistory(model.getHistoryList().value!!, context!!, R.layout.card_history, model)
+            //recyclerHistory.smoothScrollBy(80, 0)
         })
-
-        model.getSpecList().observe(activity!!, Observer<List<String>> { specs ->
-            spinnerSpec!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, specs)
+*/
+        model.getSpecList().observe(activity!!, Observer { specs ->
+            //spinnerSpec!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, specs)
+            spinnerSpec!!.adapter = SpinnerAdapterSpec(specs, this.requireContext())
             spinnerSpec!!.onItemSelectedListener = this
         })
 
         recyclerDoctor.layoutManager = LinearLayoutManager(context)
-        model.getDoctorList().observe(activity!!, Observer { hist ->
-            recyclerDoctor.adapter = RecylcerAdapterDoctor(model.getDoctorList())
+        model.getDoctorList().observe(activity!!, Observer { docs ->
+            //recyclerDoctor.adapter = RecylcerAdapterDoctor(model.getDoctorList())
+            recyclerDoctor.adapter = RecylcerAdapterDoctor(docs)
         })
     }
 
@@ -63,25 +72,25 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        var item = parent!!.adapter.getItem(position) as Map<String,String>
         when (parent!!.id) {
             R.id.spinnerLPU -> {
                 if (model.pos_lpu != position) {
                     model.pos_lpu = position
-                    var item = spinnerLPU.adapter.getItem(position) as Map<String,String>
-                    model.cIdLPU = item["IdLPU"]!!.toInt()
-                    Storage(context!!).saveModel(model)
+                    model.cidLPU = item["IdLPU"]!!.toInt()
+                    model.pos_spec = 0
                     model.checkPatient()
-                    model.updateSpecList()
                 }
             }
             R.id.spinnerSpec -> {
                 if (model.pos_spec != position) {
                     model.pos_spec = position
-                    Storage(context!!).saveModel(model)
+                    model.cidSpec = item["IdSpesiality"]!!.toInt()
                 }
                 model.updateDocList()
             }
         }
+        Storage(context!!).saveModel(model)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -91,6 +100,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         model.getLpulist().removeObservers(activity!!)
+        model.getPatient().removeObservers(activity!!)
         model.getHistoryList().removeObservers(activity!!)
         model.getSpecList().removeObservers(activity!!)
         model.getDoctorList().removeObservers(activity!!)
