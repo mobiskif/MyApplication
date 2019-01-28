@@ -12,7 +12,7 @@ class SpinnerAdapter(private val items: MutableList<Map<String, String>>, val co
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = if (convertView!=null) convertView as TextView
         else LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
-        view.text = items[position]["LPUShortName"]
+        view.text = items[position]["Name"]
 /*
         val view = if (convertView!=null) convertView as LinearLayout
         else LayoutInflater.from(context).inflate(android.R.layout.two_line_list_item, parent, false) as LinearLayout

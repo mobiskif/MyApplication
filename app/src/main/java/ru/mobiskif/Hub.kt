@@ -59,7 +59,7 @@ class Hub {
 
     }
 
-    fun GetDistr(action: String): List<String> {
+    fun GetDistr(action: String): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
         val query =
                 "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
@@ -75,10 +75,12 @@ class Hub {
 
         val from = arrayOf("_ID", "column1", "column2", "column3")
         var event: Int
-        var text: String? = null
+        var text: String =""
         val mc = MatrixCursor(from)
         val row = arrayOfNulls<Any>(from.size)
         //mc.addRow(row);
+        var result: MutableList<Map<String, String>> = mutableListOf()
+        var set: MutableMap<String, String> = mutableMapOf()
         try {
             event = myParser!!.eventType
             while (event != XmlPullParser.END_DOCUMENT) {
@@ -94,27 +96,31 @@ class Hub {
                             "DistrictName" -> {
                                 row[1] = text
                                 row[2] = "район"
+                                set["Name"] = text
                             }
                             "IdDistrict" -> {
                                 row[0] = text
                                 mc.addRow(row)
                                 ret.add(row[1].toString())
+                                set["IdDistrict"] = text
+                                result.add(set)
+                                set = mutableMapOf()
                                 //Log.d("jop", text)
                             }
                             else -> {
                             }
                         }
-                        text = null
+                        text = ""
                     }
                 }
                 event = myParser.next()
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
-            return listOf("err1", "err2")
+            return mutableListOf()
         }
 
-        return ret.toMutableList()
+        return result
     }
 
     fun GetLpu(action: String, idDistrict: Int): MutableList<Map<String, String>> {
@@ -158,7 +164,7 @@ class Hub {
                             "District" -> set["District"] = text
                             "IdLPU" -> set["IdLPU"] = text
                             "LPUFullName" -> set["LPUFullName"] = text
-                            "LPUShortName" -> set["LPUShortName"] = text
+                            "LPUShortName" -> set["Name"] = text
                             "LPUType" -> { set["LPUType"] = text
                                 result.add(set)
                                 set = mutableMapOf()
@@ -310,7 +316,7 @@ class Hub {
         return result
     }
 
-    fun CheckPat(action: String, IdLPU: Int, args: Array<String?>): MutableMap<String, String> {
+    fun GetPat(action: String, IdLPU: Int, args: Array<String?>): MutableMap<String, String> {
 
         val idPat = "502655"
         val specID = 78

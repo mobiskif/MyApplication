@@ -17,8 +17,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_0.*
+import kotlinx.android.synthetic.main.fragment_1.*
 
-class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
+class Fragment0 : Fragment() {
     private lateinit var model: MyViewModel
     private lateinit var binding: ru.mobiskif.databinding.Fragment0Binding
 
@@ -30,13 +31,12 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
 
-        model.getDistrlist().observe(activity!!, Observer<List<String>> { distr ->
-            spinnerDistrict.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, distr)
+        model.getDistrList().observe(activity!!, Observer { distr ->
+            spinnerDistrict.adapter = SpinnerAdapter(distr, requireContext())
             spinnerDistrict.setSelection(model.pos_distr)
-            spinnerDistrict.onItemSelectedListener = this
         })
 
-        model.getUser().observe(activity!!, Observer<Int> {
+        model.getUserID().observe(activity!!, Observer<Int> {
             val radioButton = radioGroup.getChildAt(model.pos_user) as RadioButton
             radioButton.isChecked = true
             radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
@@ -44,7 +44,6 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 Storage(activity!!).loadModel(model, position)
                 binding.invalidateAll()
                 spinnerDistrict.setSelection(model.pos_distr)
-                activity!!.title = model.cfam.value + ' ' + model.cname.value + ' ' + model.cdate.value
             }
         })
 
@@ -55,11 +54,11 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.cfam.value=editSecondname.text.toString()
                 model.cotch.value=editSurname.text.toString()
                 model.cdate.value=editBirstdate.text.toString()
-                //model.pos_lpu = 0
-                //model.pos_spec = 0
+                model.pos_distr = spinnerDistrict.selectedItemPosition
+                //model.cidLpu = (spinnerDistrict.selectedItem as Map<String, String>)["IdDistrict"]!!.toInt()
+
                 Storage(context!!).saveModel(model)
-                //model.updateLpuList()
-                //model.checkPatient()
+
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
             else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
@@ -73,19 +72,9 @@ class Fragment0 : Fragment(), AdapterView.OnItemSelectedListener {
         return binding.root
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (model.pos_distr != position) {
-            model.pos_distr = position
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        model.getDistrlist().removeObservers(activity!!)
-        model.getUser().removeObservers(activity!!)
+        model.getDistrList().removeObservers(activity!!)
+        model.getUserID().removeObservers(activity!!)
     }
 }

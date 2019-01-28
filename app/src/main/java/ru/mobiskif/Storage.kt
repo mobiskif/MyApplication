@@ -11,13 +11,15 @@ class Storage(val context: Context) {
         eddef.putInt("pos_user", model.pos_user)
         eddef.apply()
 
+        istore(model.pos_user, "pos_distr", model.pos_distr)
+        istore(model.pos_user, "pos_lpu", model.pos_lpu)
+        istore(model.pos_user, "pos_spec", model.pos_spec)
+        istore(model.pos_user, "cidLpu", model.cidLpu)
+        istore(model.pos_user, "cidSpec", model.cidSpec)
         sstore(model.pos_user, "cname", model.cname.value!!)
         sstore(model.pos_user, "cfam", model.cfam.value!!)
         sstore(model.pos_user, "cotch", model.cotch.value!!)
         sstore(model.pos_user, "cdate", model.cdate.value!!)
-        istore(model.pos_user, "pos_distr", model.pos_distr)
-        istore(model.pos_user, "pos_lpu", model.pos_lpu)
-        istore(model.pos_user, "pos_spec", model.pos_spec)
     }
 
     fun loadModel(model: MyViewModel, pos_user: Int) {
@@ -25,9 +27,11 @@ class Storage(val context: Context) {
         model.cfam.value = srestore(pos_user, "cfam")
         model.cotch.value = srestore(pos_user, "cotch")
         model.cdate.value = srestore(pos_user, "cdate")
-        model.pos_distr = irestore(pos_user, "pos_distr")
-        model.pos_lpu = irestore(pos_user, "pos_lpu")
+        model.cidLpu = irestore(pos_user, "cidLpu")
+        model.cidSpec = irestore(pos_user, "cidSpec")
         model.pos_spec = irestore(pos_user, "pos_spec")
+        model.pos_lpu = irestore(pos_user, "pos_lpu")
+        model.pos_distr = irestore(pos_user, "pos_distr")
         model.pos_user = pos_user
     }
 
