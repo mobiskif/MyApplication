@@ -1,5 +1,6 @@
 package ru.mobiskif
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
+
+        setSupportActionBar(toolbar2)
+        fab.setColorFilter(Color.WHITE);
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
