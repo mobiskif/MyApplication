@@ -1,4 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -8,133 +9,134 @@
             type="ru.mobiskif.MyViewModel" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/toplayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:checkedButton="@+id/radioButton1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="№" />
-
-            <RadioButton
-                android:id="@+id/radioButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2" />
-
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3" />
-
-            <RadioButton
-                android:id="@+id/radioButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4" />
-
-            <RadioButton
-                android:id="@+id/radioButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5" />
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/editSecondname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Фамилия"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:text="@{model0.cfam}"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Имя"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:text="@{model0.cname}"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/editSurname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Отчество"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:text="@{model0.cotch}"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/editBirstdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="1984-07-23"
-            android:importantForAutofill="no"
-            android:inputType="date"
-            android:text="@{model0.cdate}"
-            tools:targetApi="o" />
-
         <LinearLayout
+            android:id="@+id/toplayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:gravity="right"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Район" />
-
-            <Spinner
-                android:id="@+id/spinnerDistrict"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/area" />
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:checkedButton="@+id/radioButton1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="№" />
+
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3" />
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="4" />
+
+                <RadioButton
+                    android:id="@+id/radioButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editSecondname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Фамилия"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:text="@{model0.cfam}"
+                tools:targetApi="o" />
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Имя"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:text="@{model0.cname}"
+                tools:targetApi="o" />
+
+            <EditText
+                android:id="@+id/editSurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Отчество"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:text="@{model0.cotch}"
+                tools:targetApi="o" />
+
+            <EditText
+                android:id="@+id/editBirstdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="1984-07-23"
+                android:importantForAutofill="no"
+                android:inputType="date"
+                android:text="@{model0.cdate}"
+                tools:targetApi="o" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Район" />
+
+                <Spinner
+                    android:id="@+id/spinnerDistrict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/area" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Сохранить" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Сохранить" />
-
-    </LinearLayout>
 
 </layout>
 

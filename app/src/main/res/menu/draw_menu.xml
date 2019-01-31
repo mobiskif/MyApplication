@@ -8,8 +8,8 @@
         android:id="@+id/nav_menu0"
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="@string/menu0"
-        android:visible="false"
-        />
+        android:visible="true"
+        app:showAsAction="always" />
     <item
         android:id="@+id/nav_menu1"
         android:title="@string/menu1"

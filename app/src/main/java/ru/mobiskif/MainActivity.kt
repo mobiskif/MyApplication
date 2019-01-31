@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         //setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
-        fab.setColorFilter(Color.WHITE)
-        fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
+        setSupportActionBar(toolbar2)
+        //fab.setColorFilter(Color.WHITE)
+        //fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
 
         model.cfam.observe(this, Observer { fam ->
             binding.invalidateAll()

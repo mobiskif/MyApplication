@@ -24,8 +24,8 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.textViewFIO.text = items[position].get("Name")
         holder.itemView.textViewTalons.text = "${items[position].get("CountFreeTicket")} (${items[position].get("CountFreeParticipantIE")}) тал"
-        holder.itemView.textViewSpec.text = items[position].get("Snils")
-        holder.itemView.textViewUch.text = items[position].get("AriaNumber")
+        holder.itemView.textViewSpec.text = items[position].get("AriaNumber")
+        holder.itemView.textViewUch.text = ""
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.itemView.context, "Это RecyclerAdapter $position = ${R.layout.card_doctor}", Toast.LENGTH_SHORT).show()
             //NavHostFragment.findNavController(model.).navigate(R.id.Fragment2)
