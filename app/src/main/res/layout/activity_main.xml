@@ -4,7 +4,7 @@
 
         <variable
             name="modelmain"
-            type="ru.mobiskif.MainViewModel" />
+            type="ru.mobiskif.MyViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -74,18 +74,19 @@
             app:layout_anchor="@id/bottom_app_bar"
             app:srcCompat="@android:drawable/ic_dialog_email" />
 
-<!--
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_help"
-            android:visibility="invisible"
-            app:backgroundTint="@color/primaryColor"
-            app:tint="@color/primaryTextColor" />
--->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
+
+    <!--
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@android:drawable/ic_menu_help"
+                android:visibility="invisible"
+                app:backgroundTint="@color/primaryColor"
+                app:tint="@color/primaryTextColor" />
+    -->

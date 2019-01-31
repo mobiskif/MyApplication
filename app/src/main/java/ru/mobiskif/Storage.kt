@@ -2,6 +2,7 @@ package ru.mobiskif
 
 import android.content.Context
 import android.preference.PreferenceManager
+import android.util.Log
 
 class Storage(val context: Context) {
 
@@ -62,6 +63,17 @@ class Storage(val context: Context) {
         val ed = settings.edit()
         ed.putString(key, value)
         ed.apply()
+    }
+
+    fun showModel(model: MyViewModel) {
+        Log.d("jop", "model=\n" +
+                "pos_user= ${model.pos_user}\n"+
+                "pos_distr= ${model.pos_distr}\n"+
+                "pos_lpu= ${model.pos_lpu}\n"+
+                "pos_spec= ${model.pos_spec}\n"+
+                "cidLpu= ${model.cidLpu}\n"+
+                "cidSpec= ${model.cidSpec}\n"
+        )
     }
 
 
