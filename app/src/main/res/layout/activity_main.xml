@@ -1,4 +1,4 @@
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,10 +7,7 @@
             type="ru.mobiskif.MyViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/coordlay"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,19 +20,19 @@
                 android:id="@+id/toolbar2"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="sdfsdfdsf"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@{modelmain.cfam}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/fab_margin"
-            >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".MainActivity"
+            tools:showIn="@layout/activity_main">
+
 
             <fragment
                 android:id="@+id/nav_host_fragment"
@@ -45,15 +42,15 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/mobile_navigation" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:theme="@style/AppTheme.AppBarOverlay"
             android:backgroundTint="@color/primaryColor"
+            android:theme="@style/AppTheme.AppBarOverlay"
             app:fabAlignmentMode="end"
             app:navigationIcon="@android:drawable/ic_dialog_email">
 
@@ -61,8 +58,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="sdfsdfdsf"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="sdfsdfdsf" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -89,4 +86,13 @@
                 android:visibility="invisible"
                 app:backgroundTint="@color/primaryColor"
                 app:tint="@color/primaryTextColor" />
+    -->
+
+    <!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/fab_margin"
+                >
     -->

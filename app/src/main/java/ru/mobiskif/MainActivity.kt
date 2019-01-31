@@ -2,16 +2,14 @@ package ru.mobiskif
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import ru.mobiskif.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var model: MyViewModel
@@ -58,5 +56,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        model.cfam.observe(this, Observer { fam ->
+            binding.invalidateAll()
+        })
     }
 }
