@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
         Storage(this).loadModel(model, Storage(this).restoreuser())
-        //activity!!.title = model.cfam.value + ' ' + model.cname.value
-        //if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -30,9 +28,15 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         //setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar2)
-        fab.setColorFilter(Color.WHITE);
+        setSupportActionBar(toolbar)
+        fab.setColorFilter(Color.WHITE)
+        fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
 
+        model.cfam.observe(this, Observer { fam ->
+            binding.invalidateAll()
+        })
+
+        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,10 +62,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        model.cfam.observe(this, Observer { fam ->
-            binding.invalidateAll()
-        })
-    }
 }

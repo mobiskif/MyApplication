@@ -8,11 +8,13 @@
         android:id="@+id/nav_menu0"
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="@string/menu0"
-        app:showAsAction="ifRoom" />
+        android:visible="false"
+        />
     <item
         android:id="@+id/nav_menu1"
         android:title="@string/menu1"
-        android:visible="false" />
+        android:visible="false"
+        />
     <item
         android:id="@+id/nav_menu2"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"

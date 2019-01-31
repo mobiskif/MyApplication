@@ -44,7 +44,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         })
         model.getPatient().observe(activity!!, Observer { pat ->
             //Log.d("jop", pat["IdPat"])
-            activity!!.title = "Pat: "+pat["IdPat"]
+            //activity!!.title = "Pat: "+pat["IdPat"]
             //model.pos_spec = 0
             model.updateSpecList()
         })
@@ -83,7 +83,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         var item = parent!!.adapter.getItem(position) as Map<String,String>
-        when (parent!!.id) {
+        when (parent.id) {
             R.id.spinnerLPU -> {
                 if (model.pos_lpu != position) {
                     model.pos_lpu = position
