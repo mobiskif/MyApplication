@@ -48,11 +48,11 @@ class MyViewModel : ViewModel() {
 
 
 
-    fun getPatient(): MutableLiveData<String> {
+    fun setPatient() {//: MutableLiveData<String> {
         //cidPat = MutableLiveData()
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
         Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
-        return cidPat
+        //return cidPat
     }
 
     /*
@@ -103,10 +103,10 @@ class MyViewModel : ViewModel() {
     }
 
     fun updateDocList() {
-        if (getPatient().value != null) {
-            val args = arrayOf(cidLpu, cidSpec, getPatient().value)
+        //if (setPatient().value != null) {
+            val args = arrayOf(cidLpu, cidSpec, cidPat)
             Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", args)) }).start()
-        }
+        //}
     }
 
 }

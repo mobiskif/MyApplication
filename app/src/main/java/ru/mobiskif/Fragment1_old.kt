@@ -41,7 +41,7 @@ class Fragment1_old : Fragment(), AdapterView.OnItemSelectedListener {
 */
 
 /*
-        model.getPatient().observe(activity!!, Observer { pat ->
+        model.setPatient().observe(activity!!, Observer { pat ->
             //model.updateSpecList()
         })
 */
@@ -88,7 +88,7 @@ class Fragment1_old : Fragment(), AdapterView.OnItemSelectedListener {
             R.id.spinnerLPU -> {
                 model.pos_lpu = position
                 model.cidLpu = item["IdLPU"]!!.toInt()
-                model.getPatient()
+                model.setPatient()
             }
             /*
             R.id.spinnerSpec -> {
@@ -112,7 +112,7 @@ class Fragment1_old : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         //model.setLpulist().removeObservers(activity!!)
-        model.getPatient().removeObservers(activity!!)
+        //model.setPatient().removeObservers(activity!!)
         //model.getHistoryList().removeObservers(activity!!)
         //model.getSpecList().removeObservers(activity!!)
         model.getDocList().removeObservers(activity!!)

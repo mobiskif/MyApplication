@@ -20,26 +20,27 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        model.setLpulist()
     }
 
     override fun onResume() {
         super.onResume()
-        model.setLpulist()
 
-        model.position.observe(activity!!, Observer { items ->
+        model.cidPat.observe(activity!!, Observer { items ->
             binding.invalidateAll()
+            model.setSpecList()
         })
 
         model.lpulist.observe(activity!!, Observer { items ->
             spinnerLPU.adapter=SpinnerAdapter(items, requireContext())
             spinnerLPU.onItemSelectedListener=this
-            spinnerLPU.setSelection(model.pos_lpu)
+            if (spinnerLPU.adapter.count > model.pos_lpu) spinnerLPU.setSelection(model.pos_lpu)
         })
 
         model.speclist.observe(activity!!, Observer { items ->
             spinnerSpec.adapter=SpinnerAdapterSpec(items, requireContext())
             spinnerSpec.onItemSelectedListener=this
-            spinnerSpec.setSelection(model.pos_spec)
+            if (spinnerSpec.adapter.count > model.pos_spec) spinnerSpec.setSelection(model.pos_spec)
         })
     }
 
@@ -51,18 +52,16 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //var item = parent!!.adapter.getItem(position) as Map<String, String>
+        var item = parent!!.adapter.getItem(position) as Map<String, String>
         when (parent!!.id) {
             R.id.spinnerLPU -> {
-                Log.e("jop", position.toString() + " lpu")
                 model.pos_lpu = position
-                model.setPosition(position)
-                //model.cidLpu = item["IdLPU"]!!.toInt()
-                //model.getPatient()
-                model.setSpecList()
+                if (model.cidLpu!=item["IdLPU"]!!.toInt()) {
+                    model.cidLpu = item["IdLPU"]!!.toInt()
+                    model.setPatient()
+                }
             }
             R.id.spinnerSpec -> {
-                Log.e("jop", position.toString() + " spec")
                 model.pos_spec = position
             }
         }
@@ -77,7 +76,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onDestroyView()
         model.lpulist.removeObservers(activity!!)
         model.speclist.removeObservers(activity!!)
-        model.position.removeObservers(activity!!)
+        model.cidPat.removeObservers(activity!!)
     }
 
 }

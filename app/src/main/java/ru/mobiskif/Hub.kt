@@ -251,7 +251,7 @@ class Hub {
         return result
     }
 
-    fun GetDoc(action: String, args: Array<Any?>): MutableList<Map<String, String>> {
+    fun GetDoc(action: String, args: Array<Any>): MutableList<Map<String, String>> {
 
         val idPat = args[2]
         val specID = args[1]

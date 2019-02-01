@@ -22,12 +22,11 @@ class Fragment0 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        model.setDistrlist()
     }
 
     override fun onResume() {
         super.onResume()
-
-        model.setDistrlist()
 
         model.distrlist.observe(activity!!, Observer { items ->
             spinnerDistrict.adapter = SpinnerAdapter(items, requireContext())

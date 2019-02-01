@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
         Storer(this).loadModel(model, Storer(this).restoreuser())
 
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.modelmain = model
 
