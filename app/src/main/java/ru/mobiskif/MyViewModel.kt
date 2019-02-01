@@ -1,8 +1,6 @@
 package ru.mobiskif
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 
 class MyViewModel : ViewModel() {
 
@@ -11,11 +9,13 @@ class MyViewModel : ViewModel() {
     var pos_lpu = 1
     var pos_spec = 1
 
+    var position = MutableLiveData<Int>(4)
+
     private lateinit var cuser:     MutableLiveData<Int>
     private lateinit var distrlist: MutableLiveData<MutableList<Map<String, String>>>
-    private lateinit var lpulist:   MutableLiveData<MutableList<Map<String, String>>>
+    val lpulist = MutableLiveData<MutableList<Map<String, String>>>()
+    val speclist = MutableLiveData<MutableList<Map<String, String>>>()
     private lateinit var doclist:   MutableLiveData<MutableList<Map<String, String>>>
-    lateinit var speclist:  MutableLiveData<MutableList<Map<String, String>>>
 
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
@@ -25,6 +25,11 @@ class MyViewModel : ViewModel() {
     var cidLpu = 1
     var cidSpec = 1
 
+    fun setPosition(inp: Int) {
+        position.postValue(inp+1)
+    }
+
+
     fun getUserID(): LiveData<Int> {
         if (!::cuser.isInitialized) {
             cuser = MutableLiveData()
@@ -33,27 +38,24 @@ class MyViewModel : ViewModel() {
         return cuser
     }
 
-    fun getDistrList(): MutableLiveData<MutableList<Map<String, String>>> {
+    fun getDistrlist(): MutableLiveData<MutableList<Map<String, String>>> {
         if (!::distrlist.isInitialized) {
             distrlist = MutableLiveData()
-            updateDistrList()
+            Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
         }
         return distrlist
     }
 
-    fun updateDistrList() {
-        Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
+
+    fun setLpulist(){//: MutableLiveData<MutableList<Map<String, String>>> {
+        //if (!::lpulist.isInitialized) {
+            //lpulist = MutableLiveData()
+            Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
+        //}
+        //return lpulist
     }
 
-    fun getLpulist(): MutableLiveData<MutableList<Map<String, String>>> {
-        if (!::lpulist.isInitialized) {
-            lpulist = MutableLiveData()
-            updateLpuList()
-        }
-        return lpulist
-    }
-
-    fun updateLpuList() {
+    fun updateLpulist() {
         Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     }
 
@@ -102,16 +104,13 @@ class MyViewModel : ViewModel() {
         }
     */
 
-    fun getSpecList(): LiveData<MutableList<Map<String, String>>> {
-        if (!::speclist.isInitialized) {
-            speclist = MutableLiveData()
-            updateSpecList()
-        }
-        return speclist
+    fun setSpecList() {//: LiveData<MutableList<Map<String, String>>> {
+        //if (!::speclist.isInitialized) {
+            //speclist = MutableLiveData()
+        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLpu)) }).start()
     }
 
     fun updateSpecList() {
-        Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLpu)) }).start()
     }
 
     fun getDocList(): MutableLiveData<MutableList<Map<String, String>>> {

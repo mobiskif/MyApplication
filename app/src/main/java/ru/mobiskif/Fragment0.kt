@@ -1,12 +1,9 @@
 package ru.mobiskif
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
@@ -17,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_0.*
-import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment0 : Fragment() {
     private lateinit var model: MyViewModel
@@ -31,7 +27,7 @@ class Fragment0 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        model.getDistrList().observe(activity!!, Observer { distr ->
+        model.getDistrlist().observe(activity!!, Observer { distr ->
             spinnerDistrict.adapter = SpinnerAdapter(distr, requireContext())
             spinnerDistrict.setSelection(model.pos_distr)
         })
@@ -41,7 +37,7 @@ class Fragment0 : Fragment() {
             radioButton.isChecked = true
             radioGroup.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
                 val position = radioGroup.indexOfChild(radioGroup.findViewById<View>(i))
-                Storage(activity!!).loadModel(model, position)
+                Storer(activity!!).loadModel(model, position)
                 binding.invalidateAll()
                 spinnerDistrict.setSelection(model.pos_distr)
             }
@@ -57,7 +53,7 @@ class Fragment0 : Fragment() {
                 model.pos_distr = spinnerDistrict.selectedItemPosition
                 //model.cidLpu = (spinnerDistrict.selectedItem as Map<String, String>)["IdDistrict"]!!.toInt()
 
-                Storage(context!!).saveModel(model)
+                Storer(context!!).saveModel(model)
 
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
@@ -74,7 +70,7 @@ class Fragment0 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        model.getDistrList().removeObservers(activity!!)
+        model.getDistrlist().removeObservers(activity!!)
         model.getUserID().removeObservers(activity!!)
     }
 }

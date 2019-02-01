@@ -4,7 +4,7 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 
-class Storage(val context: Context) {
+public class Storer(val context: Context) {
 
     fun saveModel(model: MyViewModel) {
         val defsettings = PreferenceManager.getDefaultSharedPreferences(context)

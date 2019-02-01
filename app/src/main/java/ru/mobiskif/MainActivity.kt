@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
-        Storage(this).loadModel(model, Storage(this).restoreuser())
+        Storer(this).loadModel(model, Storer(this).restoreuser())
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
