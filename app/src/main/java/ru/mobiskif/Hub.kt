@@ -361,7 +361,9 @@ class Hub {
                             "ErrorDescription" -> set["ErrorDescription"] = text
                             "IdHistory" -> set["IdHistory"] = text
                             "Success" -> set["Success"] = text
-                            "IdPat" -> { set["IdPat"] = text
+                            "IdPat" -> {
+                                if (set["Success"]=="true") set["IdPat"] = text
+                                else set["IdPat"] = "нет в базе регистратуры"
                                 //result.add(set)
                                 result = set
                                 set = mutableMapOf()

@@ -11,17 +11,17 @@ class MyViewModel : ViewModel() {
     var pos_lpu = 1
     var pos_spec = 1
 
-    private lateinit var cuser: MutableLiveData<Int>
+    private lateinit var cuser:     MutableLiveData<Int>
     private lateinit var distrlist: MutableLiveData<MutableList<Map<String, String>>>
-    private lateinit var lpulist: MutableLiveData<MutableList<Map<String, String>>>
-    private lateinit var cpatient: MutableLiveData<Map<String, String>>
-    private lateinit var speclist: MutableLiveData<MutableList<Map<String, String>>>
-    private lateinit var doclist: MutableLiveData<MutableList<Map<String, String>>>
+    private lateinit var lpulist:   MutableLiveData<MutableList<Map<String, String>>>
+    private lateinit var doclist:   MutableLiveData<MutableList<Map<String, String>>>
+    lateinit var speclist:  MutableLiveData<MutableList<Map<String, String>>>
 
     var cname = MutableLiveData<String>()
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
+    var cidPat = MutableLiveData<String>()
     var cidLpu = 1
     var cidSpec = 1
 
@@ -57,17 +57,11 @@ class MyViewModel : ViewModel() {
         Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     }
 
-    fun getPatient(): MutableLiveData<Map<String, String>> {
-        if (!::cpatient.isInitialized) {
-            cpatient = MutableLiveData()
-            updatePatient()
-        }
-        return cpatient
-    }
-
-    fun updatePatient() {
+    fun getPatient(): MutableLiveData<String> {
+        //cidPat = MutableLiveData()
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
-        Thread({ cpatient.postValue(Hub().GetPat("CheckPatient", cidLpu, args)) }).start()
+        Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
+        return cidPat
     }
 
     /*
@@ -130,7 +124,7 @@ class MyViewModel : ViewModel() {
 
     fun updateDocList() {
         if (getPatient().value != null) {
-            val args = arrayOf(cidLpu, cidSpec, getPatient().value!!["IdPat"])
+            val args = arrayOf(cidLpu, cidSpec, getPatient().value)
             Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", args)) }).start()
         }
     }

@@ -28,15 +28,13 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         //setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar2)
-        //fab.setColorFilter(Color.WHITE)
-        //fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
+        setSupportActionBar(toolbar)
+        fab.setColorFilter(Color.WHITE)
+        fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
 
-        model.cfam.observe(this, Observer { fam ->
-            binding.invalidateAll()
-        })
+        model.cfam.observe(this, Observer { binding.invalidateAll() })
 
-        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
+        //if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

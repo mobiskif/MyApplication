@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -21,33 +22,34 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
-        Log.d("jop", "\n after load:\n" +
-                "pos_user= ${model.pos_user}\n"+
-                "pos_distr= ${model.pos_distr}\n"+
-                "pos_lpu= ${model.pos_lpu}\n"+
-                "pos_spec= ${model.pos_spec}\n"+
-                "cidLpu= ${model.cidLpu}\n"+
-                "cidSpec= ${model.cidSpec}\n"
-
-        )
     }
 
     override fun onResume() {
         super.onResume()
+        //spinnerLPU!!.adapter //= ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, context!!.resources.getStringArray(R.array.area).toMutableList())
 
         model.getLpulist().observe(activity!!, Observer { lpus ->
-            //lpus.toTypedArray()
             //spinnerLPU!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lpus)
-            spinnerLPU!!.adapter = SpinnerAdapter(lpus, this.requireContext())
-            spinnerLPU!!.setSelection(model.pos_lpu)
-            spinnerLPU!!.onItemSelectedListener = this
+            spinnerLPU.adapter = SpinnerAdapter(lpus, requireContext())
+            spinnerLPU.onItemSelectedListener = this
+            spinnerLPU.setSelection(model.pos_lpu)
         })
+
+        model.cidPat.observe(activity!!, Observer { pat ->
+            binding.invalidateAll()
+            //spinnerSpec.adapter //= SpinnerAdapterSpec(model.getSpecList().value!!, requireContext())
+        })
+
+        var a = model.getSpecList().value
+        //SpinnerAdapterSpec(a!!,requireContext())
+        //spinnerSpec!!.adapter = SpinnerAdapterSpec(a!!, requireContext())
+
+
+/*
         model.getPatient().observe(activity!!, Observer { pat ->
-            //Log.d("jop", pat["IdPat"])
-            //activity!!.title = "Pat: "+pat["IdPat"]
-            //model.pos_spec = 0
-            model.updateSpecList()
+            //model.updateSpecList()
         })
+*/
 
 /*
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) recyclerDoctor.layoutManager = GridLayoutManager(this.context, 2)
@@ -57,14 +59,15 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             //recyclerHistory.smoothScrollBy(80, 0)
         })
 */
+/*
         model.getSpecList().observe(activity!!, Observer { specs ->
             //spinnerSpec!!.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, specs)
-            spinnerSpec!!.adapter = SpinnerAdapterSpec(specs, this.requireContext())
+            spinnerSpec!!.adapter = SpinnerAdapterSpec(specs, requireContext())
             //spinnerSpec!!.setSelection(model.pos_spec)
-            spinnerSpec!!.onItemSelectedListener = this
+            //spinnerSpec!!.onItemSelectedListener = this
             //model.updateDocList()
-            model.cidSpec = specs[0]["IdSpesiality"]!!.toInt()
-            model.updateDocList()
+            //model.cidSpec = specs[0]["IdSpesiality"]!!.toInt()
+            //model.updateDocList()
 
         })
 
@@ -73,33 +76,36 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             //recyclerDoctor.adapter = RecylcerAdapterDoctor(model.getDocList())
             recyclerDoctor.adapter = RecylcerAdapterDoctor(docs)
         })
+        */
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = model
         return binding.root
+        //return inflater.inflate(R.layout.fragment_1, container, false);
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        var item = parent!!.adapter.getItem(position) as Map<String,String>
+
+        var item = parent!!.adapter.getItem(position) as Map<String, String>
         when (parent.id) {
             R.id.spinnerLPU -> {
-                if (model.pos_lpu != position) {
-                    model.pos_lpu = position
-                    model.cidLpu = item["IdLPU"]!!.toInt()
-                    model.updatePatient()
-                }
+                model.pos_lpu = position
+                model.cidLpu = item["IdLPU"]!!.toInt()
+                model.getPatient()
             }
             R.id.spinnerSpec -> {
                 if (model.pos_spec != position) {
                     model.pos_spec = position
                     model.cidSpec = item["IdSpesiality"]!!.toInt()
-                    model.updateDocList()
+
+                    recyclerDoctor.adapter = RecylcerAdapterDoctor(model.getDocList().value!!)
                 }
             }
         }
         Storage(context!!).saveModel(model)
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
