@@ -31,15 +31,12 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         })
 
         model.lpulist.observe(activity!!, Observer { items ->
-            //binding.invalidateAll()
             spinnerLPU.adapter=SpinnerAdapter(items, requireContext())
             spinnerLPU.onItemSelectedListener=this
             spinnerLPU.setSelection(model.pos_lpu)
         })
 
         model.speclist.observe(activity!!, Observer { items ->
-            //binding.invalidateAll()
-            //model.setLpulist()
             spinnerSpec.adapter=SpinnerAdapterSpec(items, requireContext())
             spinnerSpec.onItemSelectedListener=this
             spinnerSpec.setSelection(model.pos_spec)
@@ -69,10 +66,18 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.pos_spec = position
             }
         }
+        Storer(requireContext()).saveModel(model)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        model.lpulist.removeObservers(activity!!)
+        model.speclist.removeObservers(activity!!)
+        model.position.removeObservers(activity!!)
     }
 
 }

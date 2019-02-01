@@ -27,8 +27,10 @@ class Fragment0 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        model.getDistrlist().observe(activity!!, Observer { distr ->
-            spinnerDistrict.adapter = SpinnerAdapter(distr, requireContext())
+        model.setDistrlist()
+
+        model.distrlist.observe(activity!!, Observer { items ->
+            spinnerDistrict.adapter = SpinnerAdapter(items, requireContext())
             spinnerDistrict.setSelection(model.pos_distr)
         })
 
@@ -70,7 +72,7 @@ class Fragment0 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        model.getDistrlist().removeObservers(activity!!)
+        model.distrlist.removeObservers(activity!!)
         model.getUserID().removeObservers(activity!!)
     }
 }
