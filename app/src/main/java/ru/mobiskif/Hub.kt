@@ -29,7 +29,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            //Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
+            Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -251,7 +251,7 @@ class Hub {
         return result
     }
 
-    fun GetDoc(action: String, args: Array<Any>): MutableList<Map<String, String>> {
+    fun GetDoc(action: String, args: Array<Any?>): MutableList<Map<String, String>> {
 
         val idPat = args[2]
         val specID = args[1]

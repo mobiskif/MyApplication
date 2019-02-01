@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="?attr/listPreferredItemPaddingStart"
-            android:text='@{"Карточка №: "+model1.position}' />
+            />
 
         <Spinner
             android:id="@+id/spinnerSpec"

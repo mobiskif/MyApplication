@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
@@ -25,11 +26,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
-
-        model.cidPat.observe(activity!!, Observer { items ->
-            binding.invalidateAll()
-            model.setSpecList()
-        })
+        recyclerDoctor.layoutManager = LinearLayoutManager(context)
 
         model.lpulist.observe(activity!!, Observer { items ->
             spinnerLPU.adapter=SpinnerAdapter(items, requireContext())
@@ -37,14 +34,26 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             if (spinnerLPU.adapter.count > model.pos_lpu) spinnerLPU.setSelection(model.pos_lpu)
         })
 
+        model.cidPat.observe(activity!!, Observer { items ->
+            binding.invalidateAll()
+            model.setSpecList()
+        })
+
         model.speclist.observe(activity!!, Observer { items ->
             spinnerSpec.adapter=SpinnerAdapterSpec(items, requireContext())
             spinnerSpec.onItemSelectedListener=this
             if (spinnerSpec.adapter.count > model.pos_spec) spinnerSpec.setSelection(model.pos_spec)
+            model.setDocList()
         })
+
+        model.doclist.observe(activity!!, Observer { items ->
+            recyclerDoctor.adapter=RecylcerAdapterDoctor(items)
+        })
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //recyclerDoctor.layoutManager = LinearLayoutManager(context)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = model
         return binding.root
@@ -75,8 +84,9 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         model.lpulist.removeObservers(activity!!)
-        model.speclist.removeObservers(activity!!)
         model.cidPat.removeObservers(activity!!)
+        model.speclist.removeObservers(activity!!)
+        model.doclist.removeObservers(activity!!)
     }
 
 }

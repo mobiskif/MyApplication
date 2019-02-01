@@ -115,7 +115,7 @@ class Fragment1_old : Fragment(), AdapterView.OnItemSelectedListener {
         //model.setPatient().removeObservers(activity!!)
         //model.getHistoryList().removeObservers(activity!!)
         //model.getSpecList().removeObservers(activity!!)
-        model.getDocList().removeObservers(activity!!)
+        //model.getDocList().removeObservers(activity!!)
     }
 
 }
