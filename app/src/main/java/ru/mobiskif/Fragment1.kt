@@ -43,7 +43,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerSpec.adapter=SpinnerAdapterSpec(items, requireContext())
             spinnerSpec.onItemSelectedListener=this
             if (spinnerSpec.adapter.count > model.pos_spec) spinnerSpec.setSelection(model.pos_spec)
-            model.setDocList()
+            //model.setDocList()
         })
 
         model.doclist.observe(activity!!, Observer { items ->
@@ -68,13 +68,18 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 if (model.cidLpu!=item["IdLPU"]!!.toInt()) {
                     model.cidLpu = item["IdLPU"]!!.toInt()
                     model.setPatient()
+                    Storer(requireContext()).saveModel(model)
                 }
             }
             R.id.spinnerSpec -> {
                 model.pos_spec = position
+                //if (model.cidSpec!=item["IdSpesiality"]!!.toInt()) {
+                    model.cidSpec = item["IdSpesiality"]!!.toInt()
+                    model.setDocList()
+                    Storer(requireContext()).saveModel(model)
+                //}
             }
         }
-        Storer(requireContext()).saveModel(model)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
