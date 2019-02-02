@@ -426,7 +426,17 @@ class Hub {
                             "IdAppointment" -> set["IdAppointment"] = text
                             "VisitEnd" -> set["VisitEnd"] = text
                             "VisitStart" -> {
-                                set["VisitStart"] = text
+                                var loc = text.indexOf("T")
+                                val date = text.substring(0, loc)
+                                var time = text.substring(loc + 1)
+                                loc = time.lastIndexOf(":")
+                                time = time.substring(0, loc)
+                                //row[2] = text.split("T")[0] + "\n"+ text.split("T")[1];
+                                //row[2] = "$date $time"
+
+
+                                set["VisitStart"] = time
+                                set["VisitEnd"] = date
                                 result.add(set)
                                 set = mutableMapOf()
                             }

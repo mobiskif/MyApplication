@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_2.*
@@ -25,7 +26,9 @@ class Fragment2 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        //recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        recyclerTalon.layoutManager = GridLayoutManager(requireContext(), 2)
+
         model.talonlist.observe(activity!!, Observer { items ->
             recyclerTalon.adapter = RecylcerAdapterTalons(items, this)
         })

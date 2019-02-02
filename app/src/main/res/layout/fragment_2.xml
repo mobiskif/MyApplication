@@ -18,13 +18,15 @@
             android:id="@+id/textViewDoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{model2.cidDoc.get("Name")}' />
+            android:padding="@dimen/fab_margin"
+            android:text='@{"Талоны к врачу: " + model2.cidDoc.get("Name")}'
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTalon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/card_calend" />
+            tools:listitem="@layout/card_talon" />
 
     </LinearLayout>
 

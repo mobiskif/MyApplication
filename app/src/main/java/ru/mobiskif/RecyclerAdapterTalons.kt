@@ -3,7 +3,7 @@ package ru.mobiskif
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_calend.view.*
+import kotlinx.android.synthetic.main.card_talon.view.*
 
 
 class RecylcerAdapterTalons(private val items: MutableList<Map<String, String>>, val frag: Fragment2) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -13,11 +13,11 @@ class RecylcerAdapterTalons(private val items: MutableList<Map<String, String>>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            = SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_calend, parent, false))
+            = SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_talon, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.textViewFIO.text = items[position].get("Name")
-        holder.itemView.text2.text = "${items[position].get("VisitStart")} (${items[position].get("VisitEnd")})"
+        holder.itemView.text1.text = items[position].get("VisitStart")
+        holder.itemView.text2.text = "${items[position]["VisitEnd"]}"
         holder.itemView.text3.text = items[position].get("IdAppointment")
         holder.itemView.setOnClickListener {
             //Log.d("jop",""+items[position]["IdDoc"])
