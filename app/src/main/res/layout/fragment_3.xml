@@ -4,7 +4,7 @@
 
         <variable
             name="model3"
-            type="ru.mobiskif.MainViewModel" />
+            type="ru.mobiskif.MyViewModel" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{model3.ctalon}"
+                android:text="@{model3.cfam}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         </LinearLayout>
@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{model3.ctalonvalue}"
+                android:text="@{model3.cdate}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView

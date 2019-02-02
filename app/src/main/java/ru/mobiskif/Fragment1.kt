@@ -10,12 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var model: MyViewModel
+    lateinit var model: MyViewModel
     private lateinit var binding: ru.mobiskif.databinding.Fragment1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +49,12 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         })
 
         model.doclist.observe(activity!!, Observer { items ->
-            recyclerDoctor.adapter=RecylcerAdapterDoctor(items)
+            recyclerDoctor.adapter=RecylcerAdapterDoctor(items, this)
         })
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //recyclerDoctor.layoutManager = LinearLayoutManager(context)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_1, container, false)
         binding.model1 = model
         return binding.root

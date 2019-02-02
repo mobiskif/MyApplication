@@ -10,10 +10,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.NavHostFragment
 
 
-class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>, val frag: Fragment1) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
@@ -27,9 +30,15 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>)
         holder.itemView.textViewSpec.text = items[position].get("AriaNumber")
         holder.itemView.textViewUch.text = ""
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Это RecyclerAdapter $position = ${R.layout.card_doctor}", Toast.LENGTH_SHORT).show()
-            //NavHostFragment.findNavController(model.).navigate(R.id.Fragment2)
+            Log.d("jop",""+items[position]["IdDoc"])
+
+            frag.model.cidDoc.put("IdDoc", items[position]["IdDoc"].toString())
+            frag.model.cidDoc.put("Name", items[position]["Name"].toString())
+            //frag.model.setDocList()
+            //Storer(frag.requireContext()).saveModel(frag.model)
+            NavHostFragment.findNavController(frag).navigate(R.id.Fragment2)
         }
+
     }
 }
 

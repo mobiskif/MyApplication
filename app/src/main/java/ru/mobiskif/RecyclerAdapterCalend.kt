@@ -9,7 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_calend.view.*
 
-class RecylcerAdapterCalend(private val items: List<Map<String, Any>>, private val fragm: Context, private val layout_id: Int, private var model: MainViewModel ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapterCalend(private val items: List<Map<String, Any>>, private val fragm: Context, private val layout_id: Int, private var model: MyViewModel ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.count()
@@ -28,9 +28,9 @@ class RecylcerAdapterCalend(private val items: List<Map<String, Any>>, private v
             val btn = Button(fragm)
             btn.text = it.value.subSequence(0, it.value.length)
             btn.setOnClickListener { btn ->
-                model.ctalon.value = it.key
-                model.ctalonvalue.value = it.value
-                NavHostFragment.findNavController(model.cfragment).navigate(R.id.Fragment3)
+                //model.ctalon.value = it.key
+                //model.ctalonvalue.value = it.value
+                //NavHostFragment.findNavController(model.cfragment).navigate(R.id.Fragment3)
             }
             holder.itemView.lay01.addView(btn)
         }

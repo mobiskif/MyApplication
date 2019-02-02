@@ -1,20 +1,24 @@
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="model2"
-            type="ru.mobiskif.MainViewModel" />
+            type="ru.mobiskif.MyViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
+
+        <TextView
+            android:id="@+id/textViewDoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{model2.cidDoc.get("Name")}' />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTalon"

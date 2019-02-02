@@ -29,7 +29,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            //Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
+            Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -377,6 +377,68 @@ class Hub {
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
             return mutableMapOf()
+        }
+
+        //return ret.toMutableList()
+        return result
+    }
+
+    fun GetTalons(action: String, args: Array<Any?>): MutableList<Map<String, String>> {
+
+        val idPat = args[2]
+        val idDoc = args[1]
+        val idLPU = args[0]
+
+        val query = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <tem:GetAvaibleAppointments>\n" +
+                "         <tem:idDoc>" + idDoc + "</tem:idDoc>\n" +
+                "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                "         <tem:visitStart>2019-01-01</tem:visitStart>\n" +
+                "         <tem:visitEnd>2019-12-31</tem:visitEnd>\n" +
+                "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                "      </tem:GetAvaibleAppointments>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>"
+
+
+        val myParser = readSOAP(query, action)
+
+        var result: MutableList<Map<String, String>> = mutableListOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+        try {
+            event = myParser!!.eventType
+            //set= mutableMapOf()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                var name = myParser.name
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser.text
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "IdAppointment" -> set["IdAppointment"] = text
+                            "VisitEnd" -> set["VisitEnd"] = text
+                            "VisitStart" -> {
+                                set["VisitStart"] = text
+                                result.add(set)
+                                set = mutableMapOf()
+                            }
+                        }
+                        text = ""
+                    }
+                }
+                event = myParser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return mutableListOf()
         }
 
         //return ret.toMutableList()
