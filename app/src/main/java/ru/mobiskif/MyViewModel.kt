@@ -22,7 +22,7 @@ class MyViewModel : ViewModel() {
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
-    var cidPat = MutableLiveData<String>()
+    val cidPat = MutableLiveData<String>()
     var cidDoc = mutableMapOf<String, String>()
     var cidTalon = mutableMapOf<String, String>()
     var cidLpu = 1

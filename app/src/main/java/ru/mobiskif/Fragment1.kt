@@ -24,40 +24,47 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
         model.setLpulist()
+        //model.setHistList()
+        //model.setSpecList()
     }
 
     override fun onResume() {
         super.onResume()
         recyclerDoctor.layoutManager = LinearLayoutManager(context)
-        recyclerHist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+        recyclerHist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         model.lpulist.observe(activity!!, Observer { items ->
-            spinnerLPU.adapter=SpinnerAdapter(items, requireContext())
-            spinnerLPU.onItemSelectedListener=this
+            Log.d("jop", "lpu 1")
+            spinnerLPU.adapter = SpinnerAdapter(items, requireContext())
+            spinnerLPU.onItemSelectedListener = this
             if (spinnerLPU.adapter.count > model.pos_lpu) spinnerLPU.setSelection(model.pos_lpu)
         })
 
         model.cidPat.observe(activity!!, Observer { items ->
+            Log.d("jop", "pat 3")
             binding.invalidateAll()
-            model.setSpecList()
+            Storer(requireContext()).saveModel(model)
             model.setHistList()
         })
 
 
         model.histlist.observe(activity!!, Observer { items ->
-            recyclerHist.adapter=RecylcerAdapterHistory(items, this)
-            recyclerHist.smoothScrollBy(60, 0)
+            Log.d("jop", "hist 4")
+            recyclerHist.adapter = RecylcerAdapterHistory(items, this)
         })
 
         model.speclist.observe(activity!!, Observer { items ->
-            spinnerSpec.adapter=SpinnerAdapterSpec(items, requireContext())
-            spinnerSpec.onItemSelectedListener=this
+            Log.d("jop", "spec 5")
+            spinnerSpec.adapter = SpinnerAdapterSpec(items, requireContext())
+            spinnerSpec.onItemSelectedListener = this
             if (spinnerSpec.adapter.count > model.pos_spec) spinnerSpec.setSelection(model.pos_spec)
+            recyclerHist.smoothScrollBy(60, 0)
             //model.setDocList()
         })
 
         model.doclist.observe(activity!!, Observer { items ->
-            recyclerDoctor.adapter=RecylcerAdapterDoctor(items, this)
+            Log.d("jop", "doc 6")
+            recyclerDoctor.adapter = RecylcerAdapterDoctor(items, this)
         })
 
     }
@@ -73,21 +80,20 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         var item = parent!!.adapter.getItem(position) as Map<String, String>
         when (parent!!.id) {
             R.id.spinnerLPU -> {
+                Log.d("jop", "lpu 2")
                 model.pos_lpu = position
-                if (model.cidLpu!=item["IdLPU"]!!.toInt()) {
-                    model.cidLpu = item["IdLPU"]!!.toInt()
-                    model.setPatient()
-                    Storer(requireContext()).saveModel(model)
-                }
+                model.cidLpu = item["IdLPU"]!!.toInt()
+                Storer(requireContext()).saveModel(model)
+                model.setPatient()
+                model.setSpecList()
             }
             R.id.spinnerSpec -> {
+                Log.d("jop", "spec 2")
                 model.pos_spec = position
-                //if (model.cidSpec!=item["IdSpesiality"]!!.toInt()) {
-                    model.cidSpec = item["IdSpesiality"]!!.toInt()
-                    model.cidDoc.put("NameSpesiality", item["NameSpesiality"]!!.toLowerCase() )
-                    model.setDocList()
-                    Storer(requireContext()).saveModel(model)
-                //}
+                model.cidSpec = item["IdSpesiality"]!!.toInt()
+                model.cidDoc.put("NameSpesiality", item["NameSpesiality"]!!.toLowerCase())
+                Storer(requireContext()).saveModel(model)
+                model.setDocList()
             }
         }
     }
