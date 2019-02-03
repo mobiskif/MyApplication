@@ -29,6 +29,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
         recyclerDoctor.layoutManager = LinearLayoutManager(context)
+        recyclerHist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
 
         model.lpulist.observe(activity!!, Observer { items ->
             spinnerLPU.adapter=SpinnerAdapter(items, requireContext())
@@ -39,6 +40,13 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         model.cidPat.observe(activity!!, Observer { items ->
             binding.invalidateAll()
             model.setSpecList()
+            model.setHistList()
+        })
+
+
+        model.histlist.observe(activity!!, Observer { items ->
+            recyclerHist.adapter=RecylcerAdapterHistory(items, this)
+            recyclerHist.smoothScrollBy(60, 0)
         })
 
         model.speclist.observe(activity!!, Observer { items ->
@@ -94,6 +102,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
         model.cidPat.removeObservers(activity!!)
         model.speclist.removeObservers(activity!!)
         model.doclist.removeObservers(activity!!)
+        model.histlist.removeObservers(activity!!)
     }
 
 }

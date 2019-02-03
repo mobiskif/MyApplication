@@ -319,6 +319,69 @@ class Hub {
         return result
     }
 
+    fun GetHist(action: String, args: Array<Any?>): MutableList<Map<String, String>> {
+
+        val idPat = args[1]
+        val idLPU = args[0]
+
+        val query =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:GetPatientHistory>" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "      </tem:GetPatientHistory>" +
+                        "   </soapenv:Body>" +
+                        "</soapenv:Envelope>"
+
+        val myParser = readSOAP(query, action)
+
+        var result: MutableList<Map<String, String>> = mutableListOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+        try {
+            event = myParser!!.eventType
+            //set= mutableMapOf()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                var name = myParser.name
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser.text
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "AriaNumber" -> set["AriaNumber"] = text
+                            "CountFreeParticipantIE" -> set["CountFreeParticipantIE"] = text
+                            "CountFreeTicket" -> set["CountFreeTicket"] = text
+                            "IdDoc" -> set["IdDoc"] = text
+                            "LastDate" -> set["LastDate"] = text
+                            "Name" -> set["Name"] = text
+                            "NearestDate" -> set["NearestDate"] = text
+                            "Snils" -> {
+                                set["Snils"] = text
+                                result.add(set)
+                                set = mutableMapOf()
+                            }
+                        }
+                        text = ""
+                    }
+                }
+                event = myParser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return mutableListOf()
+        }
+
+        //return ret.toMutableList()
+        return result
+    }
+
     fun GetPat(action: String, IdLPU: Int, args: Array<String?>): MutableMap<String, String> {
 
         val idPat = "502655"

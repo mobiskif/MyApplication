@@ -1,20 +1,10 @@
 package ru.mobiskif
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_doctor.view.*
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavHost
-import androidx.navigation.fragment.NavHostFragment
-
 
 class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>, val frag: Fragment1) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,7 +12,8 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>,
         return items.count()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_doctor, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
+            = SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_doctor, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.textViewFIO.text = items[position].get("Name")

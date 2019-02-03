@@ -9,7 +9,6 @@
         <item>Пт</item>
         <item>Сб</item>
     </string-array>
-
     <string-array name="year">
         <item>Январь</item>
         <item>Февраль</item>
@@ -24,7 +23,6 @@
         <item>Ноябрь</item>
         <item>Декабрь</item>
     </string-array>
-
     <string-array name="lpu">
         <item>СПб ГБУЗ "Врачебно-физкультурный диспансер №3"</item>
         <item>СПб ГБУЗ "Городская больница №14"</item>
@@ -38,8 +36,8 @@
         <item>СПб ГБУЗ "Городская поликлиника №23" Женская консультация №36</item>
     </string-array>
     <string-array name="hist">
-        <item>Эндокринолог 2017-11-01 14:45</item>
-        <item>Хирург-травматолг 2018-01-02 14:45</item>
+        <item>Талон 1</item>
+        <item>Талон 2</item>
     </string-array>
     <string-array name="spec">
         <item>Терапевт</item>
@@ -49,7 +47,6 @@
         <item>Хирург-травматолг</item>
         <item>Гастроентеролог</item>
     </string-array>
-
     <string-array name="talons">
         <item>16:00</item>
         <item>16:30</item>

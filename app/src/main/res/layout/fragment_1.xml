@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:entries="@array/lpu" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerHist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/hist"
+            tools:listitem="@layout/card_talon" />
+
         <Spinner
             android:id="@+id/spinnerSpec"
             android:layout_width="match_parent"
@@ -36,14 +43,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerDoctor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/card_doctor"
-            />
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/card_doctor" />
 
     </LinearLayout>
 
 </layout>
 
+    <!--
+    -->
     <!--
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerHistory"
