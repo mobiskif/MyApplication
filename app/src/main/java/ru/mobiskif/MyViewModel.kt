@@ -9,7 +9,6 @@ class MyViewModel : ViewModel() {
     var pos_lpu = 1
     var pos_spec = 1
 
-    //var position = MutableLiveData<Int>(4)
     val distrlist = MutableLiveData<MutableList<Map<String, String>>>()
     val lpulist = MutableLiveData<MutableList<Map<String, String>>>()
     val speclist = MutableLiveData<MutableList<Map<String, String>>>()
