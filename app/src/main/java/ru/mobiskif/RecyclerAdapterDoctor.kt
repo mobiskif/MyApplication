@@ -30,12 +30,8 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>,
         holder.itemView.textViewSpec.text = items[position].get("AriaNumber")
         holder.itemView.textViewUch.text = ""
         holder.itemView.setOnClickListener {
-            Log.d("jop",""+items[position]["IdDoc"])
-
             frag.model.cidDoc.put("IdDoc", items[position]["IdDoc"].toString())
             frag.model.cidDoc.put("Name", items[position]["Name"].toString())
-            //frag.model.setDocList()
-            //Storer(frag.requireContext()).saveModel(frag.model)
             NavHostFragment.findNavController(frag).navigate(R.id.Fragment2)
         }
 

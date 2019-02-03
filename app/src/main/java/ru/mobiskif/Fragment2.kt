@@ -27,6 +27,7 @@ class Fragment2 : Fragment() {
     override fun onResume() {
         super.onResume()
         //recyclerTalon.layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+
         recyclerTalon.layoutManager = GridLayoutManager(requireContext(), 2)
 
         model.talonlist.observe(activity!!, Observer { items ->

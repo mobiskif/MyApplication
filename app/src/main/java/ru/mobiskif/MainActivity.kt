@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme)
+        //setContentView(R.layout.activity_main)
 
         model = ViewModelProviders.of(this).get(MyViewModel::class.java)
         Storer(this).loadModel(model, Storer(this).restoreuser())
@@ -24,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.modelmain = model
 
-        setTheme(R.style.AppTheme)
-        //setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
         fab.setColorFilter(Color.WHITE)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         model.cfam.observe(this, Observer { binding.invalidateAll() })
 
-        //if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
+        if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

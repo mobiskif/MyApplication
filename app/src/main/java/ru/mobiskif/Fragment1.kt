@@ -76,6 +76,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 model.pos_spec = position
                 //if (model.cidSpec!=item["IdSpesiality"]!!.toInt()) {
                     model.cidSpec = item["IdSpesiality"]!!.toInt()
+                    model.cidDoc.put("NameSpesiality", item["NameSpesiality"]!!.toLowerCase() )
                     model.setDocList()
                     Storer(requireContext()).saveModel(model)
                 //}

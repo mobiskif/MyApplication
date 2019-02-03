@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Талоны к врачу" />
+            android:text='@{"Талоны к " + model2.cidDoc.get("NameSpesiality")}' />
 
         <TextView
             android:id="@+id/textViewDoc"

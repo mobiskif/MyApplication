@@ -24,17 +24,19 @@ class MyViewModel : ViewModel() {
     var cdate = MutableLiveData<String>("")
     var cidPat = MutableLiveData<String>()
     var cidDoc = mutableMapOf<String, String>()
+    var cidTalon = mutableMapOf<String, String>()
     var cidLpu = 1
     var cidSpec = 1
 
     fun setDistrlist() = Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
+    fun setSpecList() = Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLpu)) }).start()
+
     fun setPatient() {
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
         Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
     }
 
-    fun setSpecList() = Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLpu)) }).start()
     fun setDocList() {
         val args = arrayOf(cidLpu, cidSpec, cidPat.value)
         Thread({ doclist.postValue(Hub().GetDoc("GetDoctorList", args)) }).start()
@@ -44,7 +46,6 @@ class MyViewModel : ViewModel() {
         val args = arrayOf(cidLpu, cidDoc["IdDoc"], cidPat.value)
         Thread({ talonlist.postValue(Hub().GetTalons("GetAvaibleAppointments", args)) }).start()
     }
-
 
     fun getUserID(): LiveData<Int> {
         if (!::cuser.isInitialized) {

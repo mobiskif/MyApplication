@@ -1,7 +1,9 @@
 package ru.mobiskif
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_talon.view.*
 
@@ -20,12 +22,11 @@ class RecylcerAdapterTalons(private val items: MutableList<Map<String, String>>,
         holder.itemView.text2.text = "${items[position]["VisitEnd"]}"
         holder.itemView.text3.text = items[position].get("IdAppointment")
         holder.itemView.setOnClickListener {
-            //Log.d("jop",""+items[position]["IdDoc"])
-            //frag.model.cidDoc.put("IdDoc", items[position]["IdDoc"].toString())
-            //frag.model.cidDoc.put("Name", items[position]["Name"].toString())
-            //frag.model.setDocList()
-            //Storer(frag.requireContext()).saveModel(frag.model)
-            //NavHostFragment.findNavController(frag).navigate(R.id.Fragment3)
+            Log.d("jop",""+items[position]["IdAppointment"])
+            frag.model.cidTalon.put("IdAppointment", items[position]["IdAppointment"].toString())
+            frag.model.cidTalon.put("VisitStart", items[position]["VisitStart"].toString())
+            frag.model.cidTalon.put("VisitEnd", items[position]["VisitEnd"].toString())
+            NavHostFragment.findNavController(frag).navigate(R.id.Fragment3)
         }
 
     }

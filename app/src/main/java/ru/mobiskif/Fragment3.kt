@@ -10,24 +10,19 @@ import androidx.lifecycle.ViewModelProviders
 
 class Fragment3 : Fragment() {
 
-    private lateinit var mModel: MyViewModel
+    lateinit var model: MyViewModel
+    private lateinit var binding: ru.mobiskif.databinding.Fragment3Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mModel = activity?.run { ViewModelProviders.of(this).get(MyViewModel::class.java) } ?: throw Exception("Invalid Activity")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //activity!!.title = mModel.cspecname.value + ' ' + mModel.cdoctorname.value
-        //mModel.cfragment=this
+        model = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ru.mobiskif.databinding.Fragment3Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_3, container, false)
-        //binding.model3 = mModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_3, container, false)
+        binding.model3 = model
         return binding.root
-        //return inflater.inflate(R.layout.fragment_2, container, false)
+        //return inflater.inflate(R.layout.fragment_1, container, false);
     }
 
 }
