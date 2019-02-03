@@ -6,6 +6,9 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
 import java.net.URL
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.net.ssl.HttpsURLConnection
 
 class Hub {
@@ -389,6 +392,8 @@ class Hub {
         val idDoc = args[1]
         val idLPU = args[0]
 
+        var s = SimpleDateFormat("yyyy-MM-dd").format(Date())
+
         val query = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
@@ -396,7 +401,7 @@ class Hub {
                 "         <tem:idDoc>" + idDoc + "</tem:idDoc>\n" +
                 "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
                 "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
-                "         <tem:visitStart>2019-01-01</tem:visitStart>\n" +
+                "         <tem:visitStart>$s</tem:visitStart>\n" +
                 "         <tem:visitEnd>2019-12-31</tem:visitEnd>\n" +
                 "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
                 "      </tem:GetAvaibleAppointments>\n" +

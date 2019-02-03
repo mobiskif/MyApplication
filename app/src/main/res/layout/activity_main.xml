@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:theme="@style/AppTheme.AppBarOverlay"
-                app:expanded="false"
                 app:layout_constraintTop_toTopOf="parent"
                 >
 

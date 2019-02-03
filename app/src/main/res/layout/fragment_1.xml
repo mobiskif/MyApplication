@@ -14,18 +14,18 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:id="@+id/textViewPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/fab_margin"
+            android:text='@{"Карточка №: "+model1.cidPat}' />
+
         <Spinner
             android:id="@+id/spinnerLPU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/lpu" />
-
-        <TextView
-            android:id="@+id/textViewPatient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="?attr/listPreferredItemPaddingStart"
-            android:text='@{"Карточка №: "+model1.cidPat}' />
 
         <Spinner
             android:id="@+id/spinnerSpec"

@@ -15,11 +15,15 @@
 
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Талоны к врачу" />
+
+        <TextView
             android:id="@+id/textViewDoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/fab_margin"
-            android:text='@{"Талоны к врачу: " + model2.cidDoc.get("Name")}'
+            android:text='@{model2.cidDoc.get("Name")}'
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.recyclerview.widget.RecyclerView

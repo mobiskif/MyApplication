@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="@dimen/fab_margin"
-    card_view:cardBackgroundColor="@color/secondaryLightColor"
-    card_view:cardCornerRadius="?attr/dialogCornerRadius"
+    card_view:cardBackgroundColor="@color/primaryLightColor"
+    card_view:cardCornerRadius="8dp"
     card_view:contentPadding="@dimen/fab_margin">
 
     <LinearLayout
