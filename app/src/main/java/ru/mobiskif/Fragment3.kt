@@ -24,14 +24,16 @@ class Fragment3 : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_3, container, false)
         binding.model3 = model
         binding.buttonYes.setOnClickListener(this)
+        binding.buttonNo.setOnClickListener(this)
         return binding.root
         //return inflater.inflate(R.layout.fragment_1, container, false);
     }
 
     override fun onClick(v: View?) {
         if (v!!.id==R.id.buttonYes) {
+            model.setAppointment(model.cidTalon)
             NavHostFragment.findNavController(this).navigate(R.id.Fragment1)
         }
-
+        else NavHostFragment.findNavController(this).navigateUp()
     }
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,15 +27,20 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.modelmain = model
 
-
         setSupportActionBar(toolbar)
         fab.setColorFilter(Color.WHITE)
         fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
 
         model.cfam.observe(this, Observer { binding.invalidateAll() })
+        model.cerror.observe(this, Observer {
+            Snackbar.make(constraintLayout, it, Snackbar.LENGTH_LONG).show()
+            //binding.invalidateAll()
+        })
 
         if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
+
+    override fun onSupportNavigateUp() = NavHostFragment.findNavController(nav_host_fragment).navigateUp()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)

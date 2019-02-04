@@ -32,7 +32,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            //Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
+            Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -73,7 +73,6 @@ class Hub {
                         "      </tem:GetDistrictList>\n" +
                         "   </soapenv:Body>\n" +
                         "</soapenv:Envelope>"
-
         val myParser = readSOAP(query, action)
 
         val from = arrayOf("_ID", "column1", "column2", "column3")
@@ -522,5 +521,72 @@ class Hub {
         //return ret.toMutableList()
         return result
     }
+
+    fun SetApp(action: String, args: Array<Any?>): MutableMap<String, String> {
+
+        val idPat = args[2]
+        val idAppoint = args[1]
+        val idLPU = args[0]
+
+        val query =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <tem:SetAppointment>\n" +
+                        "         <tem:idAppointment>" + idAppoint + "</tem:idAppointment>\n" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                        "      </tem:SetAppointment>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>"
+
+        val myParser = readSOAP(query, action)
+
+        var result: MutableMap<String, String> = mutableMapOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+        try {
+            Log.e("jops", query)
+            event = myParser!!.eventType
+            //set= mutableMapOf()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                var name = myParser.name
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser.text
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "ErrorDescription" -> {
+                                set["ErrorDescription"] = text
+                                Log.d("jops","ошибка="+text)
+                            }
+                            "Success" -> {
+                                Log.d("jops","успех="+ text)
+                                set["Success"]=text
+                                //if (text.equals("true")) set["Success"]="Талончик отложен успешно!"
+                                //else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
+                                result = set
+                                set = mutableMapOf()
+                            }
+                        }
+                        text = ""
+                    }
+                }
+                event = myParser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return mutableMapOf()
+        }
+
+        //return ret.toMutableList()
+        return result
+    }
+
 
 }
