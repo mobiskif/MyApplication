@@ -1,12 +1,9 @@
 package ru.mobiskif
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_doctor.view.*
 import kotlinx.android.synthetic.main.card_talon.view.*
 
 class RecylcerAdapterHistory(private var items: MutableList<Map<String, String>>, val frag: Fragment1) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,7 +58,7 @@ class RecylcerAdapterHistory(private var items: MutableList<Map<String, String>>
     }
 
     init {
-        items = getHistoryList()
+        //items = getHistoryList()
     }
 
     override fun getItemCount(): Int {
@@ -72,13 +69,14 @@ class RecylcerAdapterHistory(private var items: MutableList<Map<String, String>>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.text1.text = items[position].get("VisitStart")
-        holder.itemView.text2.text = "${items[position]["VisitEnd"]}"
-        holder.itemView.text3.text = items[position].get("IdAppointment")
+        holder.itemView.text2.text = items[position]["VisitEnd"]
+        holder.itemView.text3.text = items[position].get("NameSpesiality")
         holder.itemView.setOnClickListener {
             frag.model.cidTalon.put("IdAppointment", items[position]["IdAppointment"].toString())
             frag.model.cidTalon.put("VisitStart", items[position]["VisitStart"].toString())
             frag.model.cidTalon.put("VisitEnd", items[position]["VisitEnd"].toString())
-            NavHostFragment.findNavController(frag).navigate(R.id.Fragment3)
+            frag.model.cidTalon.put("NameSpesiality", items[position]["NameSpesiality"].toString())
+            NavHostFragment.findNavController(frag).navigate(R.id.Fragment4)
         }
     }
 

@@ -1,12 +1,12 @@
 package ru.mobiskif
 
+import android.database.Cursor
 import android.database.MatrixCursor
 import android.util.Log
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
 import java.net.URL
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.net.ssl.HttpsURLConnection
@@ -24,7 +24,7 @@ class Hub {
             conn.setRequestProperty("Content-Length", body.toByteArray().size.toString())
             conn.setRequestProperty("User-Agent", "Apache-HttpClient/4.1.1 (java 1.5)")
             //conn.doOutput = true
-            //conn.doInput = true
+            conn.doInput = true
 
             //передача запроса
             val out = DataOutputStream(conn.outputStream)
@@ -32,7 +32,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            Log.e("jop","==== Запрос= $action = " + body.length + " bytes, " + body);
+            Log.e("jop", "==== Запрос= $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -77,7 +77,7 @@ class Hub {
 
         val from = arrayOf("_ID", "column1", "column2", "column3")
         var event: Int
-        var text: String =""
+        var text: String = ""
         val mc = MatrixCursor(from)
         val row = arrayOfNulls<Any>(from.size)
         //mc.addRow(row);
@@ -167,7 +167,8 @@ class Hub {
                             "IdLPU" -> set["IdLPU"] = text
                             "LPUFullName" -> set["LPUFullName"] = text
                             "LPUShortName" -> set["Name"] = text
-                            "LPUType" -> { set["LPUType"] = text
+                            "LPUType" -> {
+                                set["LPUType"] = text
                                 result.add(set)
                                 set = mutableMapOf()
                             }
@@ -186,7 +187,7 @@ class Hub {
         return result
     }
 
-    fun GetSpec(action: String, idLPU: Int): MutableList<Map<String, String>>{
+    fun GetSpec(action: String, idLPU: Int): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
         val idPat = "452528"
 
@@ -354,15 +355,24 @@ class Hub {
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
+                            "DateCreatedAppointment" -> set["DateCreatedAppointment"] = text
                             "AriaNumber" -> set["AriaNumber"] = text
-                            "CountFreeParticipantIE" -> set["CountFreeParticipantIE"] = text
-                            "CountFreeTicket" -> set["CountFreeTicket"] = text
-                            "IdDoc" -> set["IdDoc"] = text
-                            "LastDate" -> set["LastDate"] = text
                             "Name" -> set["Name"] = text
-                            "NearestDate" -> set["NearestDate"] = text
-                            "Snils" -> {
-                                set["Snils"] = text
+                            "IdAppointment" -> set["IdAppointment"] = text
+                            "NameSpesiality" -> set["NameSpesiality"] = text
+                            "UserName" -> set["UserName"] = text
+                            "VisitStart" -> {
+                                var loc = text.indexOf("T")
+                                val date = text.substring(0, loc)
+                                var time = text.substring(loc + 1)
+                                loc = time.lastIndexOf(":")
+                                time = time.substring(0, loc)
+                                //row[2] = text.split("T")[0] + "\n"+ text.split("T")[1];
+                                //row[2] = "$date $time"
+
+
+                                set["VisitStart"] = time
+                                set["VisitEnd"] = date
                                 result.add(set)
                                 set = mutableMapOf()
                             }
@@ -427,7 +437,7 @@ class Hub {
                             "IdHistory" -> set["IdHistory"] = text
                             "Success" -> set["Success"] = text
                             "IdPat" -> {
-                                if (set["Success"]=="true") set["IdPat"] = text
+                                if (set["Success"] == "true") set["IdPat"] = text
                                 else set["IdPat"] = "нет в базе регистратуры"
                                 //result.add(set)
                                 result = set
@@ -563,13 +573,79 @@ class Hub {
                         when (name) {
                             "ErrorDescription" -> {
                                 set["ErrorDescription"] = text
-                                Log.d("jops","ошибка="+text)
+                                Log.d("jops", "ошибка=" + text)
                             }
                             "Success" -> {
-                                Log.d("jops","успех="+ text)
-                                set["Success"]=text
-                                //if (text.equals("true")) set["Success"]="Талончик отложен успешно!"
-                                //else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
+                                Log.d("jops", "успех=" + text)
+                                //set["Success"] = text
+                                if (text.equals("true")) set["Success"]="Талончик отложен успешно!"
+                                else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
+                                result = set
+                                set = mutableMapOf()
+                            }
+                        }
+                        text = ""
+                    }
+                }
+                event = myParser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
+            return mutableMapOf()
+        }
+
+        //return ret.toMutableList()
+        return result
+    }
+
+    fun RefApp(action: String, args: Array<Any?>): MutableMap<String, String> {
+
+        val idPat = args[2]
+        val idAppoint = args[1]
+        val idLPU = args[0]
+
+        val query =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <tem:CreateClaimForRefusal>\n" +
+                        "         <tem:idLpu>" + idLPU + "</tem:idLpu>\n" +
+                        "         <tem:idPat>" + idPat + "</tem:idPat>\n" +
+                        "         <tem:idAppointment>" + idAppoint + "</tem:idAppointment>\n" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
+                        "      </tem:CreateClaimForRefusal>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>"
+
+        val myParser = readSOAP(query, action)
+
+        var result: MutableMap<String, String> = mutableMapOf()
+        var event: Int
+        var text: String = ""
+        var set: MutableMap<String, String> = mutableMapOf()
+        try {
+            Log.e("jops", query)
+            event = myParser!!.eventType
+            //set= mutableMapOf()
+            while (event != XmlPullParser.END_DOCUMENT) {
+                var name = myParser.name
+                when (event) {
+                    XmlPullParser.START_TAG -> {
+                    }
+
+                    XmlPullParser.TEXT -> text = myParser.text
+
+                    XmlPullParser.END_TAG -> {
+                        when (name) {
+                            "ErrorDescription" -> {
+                                set["ErrorDescription"] = text
+                                Log.d("jops", "ошибка=" + text)
+                            }
+                            "Success" -> {
+                                Log.d("jops", "успех=" + text)
+                                //set["Success"] = text
+                                if (text.equals("true")) set["Success"]="Талончик отменен!"
+                                else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()
                             }

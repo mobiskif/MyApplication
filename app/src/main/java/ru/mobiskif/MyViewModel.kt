@@ -1,6 +1,5 @@
 package ru.mobiskif
 
-import android.util.Log
 import androidx.lifecycle.*
 
 class MyViewModel : ViewModel() {
@@ -64,9 +63,12 @@ class MyViewModel : ViewModel() {
 
     fun setAppointment(cidTalon: MutableMap<String, String>) {
         val args = arrayOf(cidLpu, cidTalon["IdAppointment"], cidPat.value)
-        //var r = Hub().SetApp("SetAppointment", args)["Success"]
-        //Thread({ doclist.postValue(Hub().SetApp("SetAppointment", args)) }).start()
-        cerror.postValue(Hub().SetApp("SetAppointment", args)["Success"])
+        Thread({ cerror.postValue(Hub().SetApp("SetAppointment", args)["Success"]) }).start()
+    }
+
+    fun refAppointment(cidTalon: MutableMap<String, String>) {
+        val args = arrayOf(cidLpu, cidTalon["IdAppointment"], cidPat.value)
+        Thread({ cerror.postValue(Hub().RefApp("CreateClaimForRefusal", args)["Success"]) }).start()
     }
 
 }

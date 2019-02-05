@@ -6,35 +6,37 @@
     app:startDestination="@id/Fragment1">
     <fragment
         android:id="@+id/Fragment1"
-        tools:layout="@layout/fragment_1"
-        android:name="ru.mobiskif.Fragment1" >
+        android:name="ru.mobiskif.Fragment1"
+        tools:layout="@layout/fragment_1">
         <action
             android:id="@+id/action_Fragment1_to_Fragment2"
             app:destination="@id/Fragment2" />
+        <action
+            android:id="@+id/action_Fragment1_to_fragment4"
+            app:destination="@id/Fragment4" />
     </fragment>
     <fragment
         android:id="@+id/Fragment0"
-        tools:layout="@layout/fragment_0"
-        android:name="ru.mobiskif.Fragment0" >
+        android:name="ru.mobiskif.Fragment0"
+        tools:layout="@layout/fragment_0">
         <action
             android:id="@+id/action_Fragment0_to_Fragment1"
             app:destination="@id/Fragment1" />
+        <action
+            android:id="@+id/action_Fragment0_to_help"
+            app:destination="@id/help" />
     </fragment>
     <activity
         android:id="@+id/activityMain"
         android:label="ActivityMain"
-        tools:layout="@layout/activity_main"
-        />
+        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/Fragment2"
-        tools:layout="@layout/fragment_2"
-        android:name="ru.mobiskif.Fragment2" >
+        android:name="ru.mobiskif.Fragment2"
+        tools:layout="@layout/fragment_2">
         <action
             android:id="@+id/action_Fragment2_to_fragment3"
             app:destination="@id/Fragment3" />
-        <action
-            android:id="@+id/action_Fragment2_to_help"
-            app:destination="@id/help" />
     </fragment>
     <activity
         android:id="@+id/help"
@@ -45,5 +47,9 @@
         android:id="@+id/Fragment3"
         android:name="ru.mobiskif.Fragment3"
         tools:layout="@layout/fragment_3" />
+    <fragment
+        android:id="@+id/Fragment4"
+        android:name="ru.mobiskif.Fragment4"
+        tools:layout="@layout/fragment_4" />
 
 </navigation>
