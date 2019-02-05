@@ -578,7 +578,7 @@ class Hub {
                             "Success" -> {
                                 Log.d("jops", "успех=" + text)
                                 //set["Success"] = text
-                                if (text.equals("true")) set["Success"]="Талончик отложен успешно!"
+                                if (text.equals("true")) set["Success"]="Операция выполнена успешно!"
                                 else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()
@@ -644,7 +644,7 @@ class Hub {
                             "Success" -> {
                                 Log.d("jops", "успех=" + text)
                                 //set["Success"] = text
-                                if (text.equals("true")) set["Success"]="Талончик отменен!"
+                                if (text.equals("true")) set["Success"]="Операция выполнена успешно!"
                                 else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()

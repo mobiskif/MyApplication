@@ -19,8 +19,8 @@ class RecylcerAdapterTalons(private val items: MutableList<Map<String, String>>,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.text1.text = items[position].get("VisitStart")
-        holder.itemView.text2.text = "${items[position]["VisitEnd"]}"
-        holder.itemView.text3.text = items[position].get("IdAppointment")
+        holder.itemView.text2.text = items[position]["VisitEnd"]
+        holder.itemView.text3.text = ""//items[position].get("IdAppointment")
         holder.itemView.setOnClickListener {
             Log.d("jop",""+items[position]["IdAppointment"])
             frag.model.cidTalon.put("IdAppointment", items[position]["IdAppointment"].toString())
