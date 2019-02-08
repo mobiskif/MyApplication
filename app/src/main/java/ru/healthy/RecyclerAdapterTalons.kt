@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.util.Log
 import android.view.LayoutInflater

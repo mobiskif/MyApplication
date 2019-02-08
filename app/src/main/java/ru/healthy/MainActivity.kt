@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var model: MyViewModel
-    private lateinit var binding: ru.mobiskif.databinding.ActivityMainBinding
+    private lateinit var binding: ru.healthy.databinding.ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

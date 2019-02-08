@@ -1,4 +1,4 @@
-package ru.mobiskif;
+package ru.healthy;
 
 import android.content.Context;
 import android.content.SharedPreferences;

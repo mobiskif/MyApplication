@@ -1,6 +1,5 @@
-package ru.mobiskif
+package ru.healthy
 
-import android.database.Cursor
 import android.database.MatrixCursor
 import android.util.Log
 import org.xmlpull.v1.XmlPullParser
