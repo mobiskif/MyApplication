@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.os.Bundle
 import android.util.Log
@@ -10,15 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_1.*
 
 class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
     lateinit var model: MyViewModel
-    private lateinit var binding: ru.mobiskif.databinding.Fragment1Binding
+    private lateinit var binding: ru.healthy.databinding.Fragment1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +57,6 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerSpec.onItemSelectedListener = this
             if (spinnerSpec.adapter.count > model.pos_spec) spinnerSpec.setSelection(model.pos_spec)
             recyclerHist.smoothScrollBy(60, 0)
-            //model.setDocList()
         })
 
         model.doclist.observe(activity!!, Observer { items ->

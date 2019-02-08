@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.app.Activity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_0.*
 
 class Fragment0 : Fragment() {
     private lateinit var model: MyViewModel
-    private lateinit var binding: ru.mobiskif.databinding.Fragment0Binding
+    private lateinit var binding: ru.healthy.databinding.Fragment0Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

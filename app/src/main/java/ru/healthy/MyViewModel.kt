@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import androidx.lifecycle.*
 

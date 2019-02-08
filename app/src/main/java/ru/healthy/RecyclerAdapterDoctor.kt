@@ -1,4 +1,4 @@
-package ru.mobiskif
+package ru.healthy
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.textViewFIO.text = items[position].get("Name")
-        holder.itemView.textViewTalons.text = "${items[position].get("CountFreeTicket")} (${items[position].get("CountFreeParticipantIE")}) тал"
+        holder.itemView.textViewTalons.text = "${items[position].get("CountFreeParticipantIE")}  тал" //(${items[position].get("CountFreeTicket")})
         holder.itemView.textViewSpec.text = items[position].get("AriaNumber")
         holder.itemView.textViewUch.text = ""
         holder.itemView.setOnClickListener {
