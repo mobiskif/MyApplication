@@ -10,25 +10,11 @@ android {
         applicationId "ru.healthy"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 52
-        versionName "52.0"
+        versionCode 53
+        versionName "53.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        release2 {
-            storeFile file('C:\\Users\\user\\AndroidSDK\\key\\keystore.jks')
-            storePassword System.getenv('router1966')
-            keyAlias = 'key0'
-            keyPassword System.getenv('router1966')
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release2
-        }
-    }
+
     dataBinding {
         enabled = true
     }

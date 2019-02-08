@@ -53,12 +53,10 @@ class Fragment0 : Fragment() {
                 model.cdate.value=editBirstdate.text.toString()
                 model.pos_distr = spinnerDistrict.selectedItemPosition
                 //model.cidLpu = (spinnerDistrict.selectedItem as Map<String, String>)["IdDistrict"]!!.toInt()
-
-                Storer(context!!).saveModel(model)
-
+                Storer(requireContext()).saveModel(model)
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
             }
-            else Snackbar.make(this.view!!, "Дата рождения должна быть вида '1984-07-23'", Snackbar.LENGTH_LONG).show()
+            else model.cerror.postValue("Дата рождения должна быть вида '1984-07-23'")
         }
     }
 

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/fab_margin"
-            android:text='@{"Карточка №: "+model1.cidPat}' />
+            android:text='@{"Карточка №: "+model1.cidPat + " " + model1.cidPatError }' />
 
         <Spinner
             android:id="@+id/spinnerLPU"

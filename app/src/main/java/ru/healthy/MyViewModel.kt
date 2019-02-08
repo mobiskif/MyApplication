@@ -5,9 +5,9 @@ import androidx.lifecycle.*
 class MyViewModel : ViewModel() {
 
     var pos_user = 1
-    var pos_distr = 1
-    var pos_lpu = 1
-    var pos_spec = 1
+    var pos_distr = 0
+    var pos_lpu = 0
+    var pos_spec = 0
 
     val distrlist = MutableLiveData<MutableList<Map<String, String>>>()
     val lpulist = MutableLiveData<MutableList<Map<String, String>>>()
@@ -23,11 +23,12 @@ class MyViewModel : ViewModel() {
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
     val cidPat = MutableLiveData<String>()
+    val cidPatError = MutableLiveData<String>()
     val cerror = MutableLiveData<String>()
     var cidDoc = mutableMapOf<String, String>()
     var cidTalon = mutableMapOf<String, String>()
     var cidLpu = 1
-    var cidSpec = 1
+    var cidSpec = 23
 
     fun setDistrlist() = Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
@@ -36,6 +37,7 @@ class MyViewModel : ViewModel() {
     fun setPatient() {
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
         Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
+        Thread({ cidPatError.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["ErrorDescription"]) }).start()
     }
 
     fun setDocList() {

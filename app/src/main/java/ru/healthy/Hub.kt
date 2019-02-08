@@ -31,7 +31,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            Log.e("jop", "==== Запрос= $action = " + body.length + " bytes, " + body);
+            Log.e("jop", "== Запрос == $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -46,7 +46,7 @@ class Hub {
             }
             isr.close()
             reader.close()
-            Log.e("jop", "$action= " + sb.length + " bytes, " + sb)
+            Log.e("jop", "== Ответ == $action = " + sb.length + " bytes, " + sb)
 
             //препарсинг
             var factory = XmlPullParserFactory.newInstance()
@@ -188,7 +188,7 @@ class Hub {
 
     fun GetSpec(action: String, idLPU: Int): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
-        val idPat = "452528"
+        val idPat = "22"
 
         val query =
                 "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
@@ -432,12 +432,18 @@ class Hub {
 
                     XmlPullParser.END_TAG -> {
                         when (name) {
-                            "ErrorDescription" -> set["ErrorDescription"] = text
+                            "ErrorDescription" -> {
+                                if (text.equals("null")) set["ErrorDescription"] = " "
+                                else set["ErrorDescription"] = text
+                            }
                             "IdHistory" -> set["IdHistory"] = text
                             "Success" -> set["Success"] = text
                             "IdPat" -> {
-                                if (set["Success"] == "true") set["IdPat"] = text
-                                else set["IdPat"] = "нет в базе регистратуры"
+                                if (set["Success"] == "true") {
+                                    set["IdPat"] = text
+                                    set["ErrorDescription"] = " "
+                                }
+                                else set["IdPat"] = ""
                                 //result.add(set)
                                 result = set
                                 set = mutableMapOf()
@@ -578,7 +584,7 @@ class Hub {
                                 Log.d("jops", "успех=" + text)
                                 //set["Success"] = text
                                 if (text.equals("true")) set["Success"]="Операция выполнена успешно!"
-                                else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
+                                else set["Success"] = "В записи отказано! "+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()
                             }
