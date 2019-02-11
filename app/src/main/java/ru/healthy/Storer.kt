@@ -15,9 +15,9 @@ public class Storer(val context: Context) {
         istore(model.pos_user, "pos_distr", model.pos_distr)
         istore(model.pos_user, "pos_lpu", model.pos_lpu)
         istore(model.pos_user, "pos_spec", model.pos_spec)
-        istore(model.pos_user, "cidLpu", model.cidLpu)
-        istore(model.pos_user, "cidSpec", model.cidSpec)
-        sstore(model.pos_user, "cidPat", model.cidPat.value!!)
+        //istore(model.pos_user, "cidLpu", model.cidLpu)
+        //istore(model.pos_user, "cidSpec", model.cidSpec)
+        //sstore(model.pos_user, "cidPat", model.cidPat.value!!)
         sstore(model.pos_user, "cname", model.cname.value!!)
         sstore(model.pos_user, "cfam", model.cfam.value!!)
         sstore(model.pos_user, "cotch", model.cotch.value!!)
@@ -29,13 +29,13 @@ public class Storer(val context: Context) {
         model.cfam.value = srestore(pos_user, "cfam")
         model.cotch.value = srestore(pos_user, "cotch")
         model.cdate.value = srestore(pos_user, "cdate")
-        model.cidPat.value = srestore(pos_user, "cidPat")
-        model.cidLpu = irestore(pos_user, "cidLpu")
-        model.cidSpec = irestore(pos_user, "cidSpec")
+        //model.cidPat.value = srestore(pos_user, "cidPat")
+        //model.cidLpu = irestore(pos_user, "cidLpu")
+        //model.cidSpec = irestore(pos_user, "cidSpec")
         model.pos_spec = irestore(pos_user, "pos_spec")
         model.pos_lpu = irestore(pos_user, "pos_lpu")
         model.pos_distr = irestore(pos_user, "pos_distr")
-        model.pos_user = pos_user
+        //model.pos_user = pos_user
     }
 
     fun restoreuser(): Int {

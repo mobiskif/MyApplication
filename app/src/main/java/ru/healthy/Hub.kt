@@ -31,7 +31,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            Log.e("jop", "== Запрос == $action = " + body.length + " bytes, " + body);
+            //Log.e("jop", "== Запрос == $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()

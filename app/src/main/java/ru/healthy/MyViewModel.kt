@@ -1,5 +1,6 @@
 package ru.healthy
 
+import android.widget.ArrayAdapter
 import androidx.lifecycle.*
 
 class MyViewModel : ViewModel() {
@@ -22,13 +23,14 @@ class MyViewModel : ViewModel() {
     var cfam = MutableLiveData<String>()
     var cotch = MutableLiveData<String>()
     var cdate = MutableLiveData<String>("")
-    val cidPat = MutableLiveData<String>()
-    val cidPatError = MutableLiveData<String>()
+    val cidPat = MutableLiveData<String>("")
+    val cidPatError = MutableLiveData<String>("")
     val cerror = MutableLiveData<String>()
     var cidDoc = mutableMapOf<String, String>()
     var cidTalon = mutableMapOf<String, String>()
     var cidLpu = 1
     var cidSpec = 23
+    var from0 = false
 
     fun setDistrlist() = Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
@@ -36,8 +38,13 @@ class MyViewModel : ViewModel() {
 
     fun setPatient() {
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)
-        Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
-        Thread({ cidPatError.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["ErrorDescription"]) }).start()
+        Thread ({
+            val pat = Hub().GetPat("CheckPatient", cidLpu, args)
+            cidPat.postValue(pat["IdPat"])
+            cidPatError.postValue(pat["ErrorDescription"])
+        }).start()
+        //Thread({ cidPat.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["IdPat"]) }).start()
+        //Thread({ cidPatError.postValue(Hub().GetPat("CheckPatient", cidLpu, args)["ErrorDescription"]) }).start()
     }
 
     fun setDocList() {

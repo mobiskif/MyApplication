@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class SpinnerAdapterSpec(private val items: MutableList<Map<String, String>>, val context: Context) : BaseAdapter() {
+class SpinnerAdapterSpec(private val items: MutableList<Map<String, String>>?, val context: Context) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = if (convertView!=null) convertView as TextView
         else LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
-        view.text = items[position]["NameSpesiality"] + " (" + items[position]["CountFreeParticipantIE"] + ")"
+        if (items!=null) view.text = items[position]["NameSpesiality"] + " (" + items[position]["CountFreeParticipantIE"] + ")"
         return view
     }
 
+
     override fun getItem(position: Int): Any {
-        return items[position]
+        if (items!=null) return items[position]
+        else return emptyMap<String, String>()
     }
 
     override fun getItemId(position: Int): Long {
@@ -25,7 +27,8 @@ class SpinnerAdapterSpec(private val items: MutableList<Map<String, String>>, va
     }
 
     override fun getCount(): Int {
-        return items.count()
+        if (items!=null) return items.count()
+        else return 0
     }
 
 }

@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_talon.view.*
 
-class RecylcerAdapterHistory(private var items: MutableList<Map<String, String>>, val frag: Fragment1) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecylcerAdapterHistory(private val items: MutableList<Map<String, String>>?, val frag: Fragment1) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun getHistoryList(): MutableList<Map<String, String>> {
         var talonlist = mutableListOf<Map<String, String>>()
@@ -62,21 +62,24 @@ class RecylcerAdapterHistory(private var items: MutableList<Map<String, String>>
     }
 
     override fun getItemCount(): Int {
-        return items!!.count()
+        if (items!=null) return items.count()
+        else return 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_talon, parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.text1.text = items[position].get("VisitStart")
-        holder.itemView.text2.text = items[position]["VisitEnd"]
-        holder.itemView.text3.text = items[position].get("NameSpesiality")
-        holder.itemView.setOnClickListener {
-            frag.model.cidTalon.put("IdAppointment", items[position]["IdAppointment"].toString())
-            frag.model.cidTalon.put("VisitStart", items[position]["VisitStart"].toString())
-            frag.model.cidTalon.put("VisitEnd", items[position]["VisitEnd"].toString())
-            frag.model.cidTalon.put("NameSpesiality", items[position]["NameSpesiality"].toString())
-            NavHostFragment.findNavController(frag).navigate(R.id.Fragment4)
+        if (items!=null) {
+            holder.itemView.text1.text = items[position].get("VisitStart")
+            holder.itemView.text2.text = items[position]["VisitEnd"]
+            holder.itemView.text3.text = items[position].get("NameSpesiality")
+            holder.itemView.setOnClickListener {
+                frag.model.cidTalon.put("IdAppointment", items[position]["IdAppointment"].toString())
+                frag.model.cidTalon.put("VisitStart", items[position]["VisitStart"].toString())
+                frag.model.cidTalon.put("VisitEnd", items[position]["VisitEnd"].toString())
+                frag.model.cidTalon.put("NameSpesiality", items[position]["NameSpesiality"].toString())
+                NavHostFragment.findNavController(frag).navigate(R.id.Fragment4)
+            }
         }
     }
 
