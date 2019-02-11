@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding.modelmain = model
 
         setSupportActionBar(toolbar)
-        fab.setColorFilter(Color.WHITE)
-        fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
+        //fab.setColorFilter(Color.WHITE)
+        //fab.setOnClickListener { NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0) }
 
         model.cfam.observe(this, Observer { binding.invalidateAll() })
         model.cerror.observe(this, Observer {

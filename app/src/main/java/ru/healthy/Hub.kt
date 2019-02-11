@@ -64,13 +64,13 @@ class Hub {
     fun GetDistr(action: String): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
         val query =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\n" +
-                        "   <soapenv:Header/>\n" +
-                        "   <soapenv:Body>\n" +
-                        "      <tem:GetDistrictList>\n" +
-                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>\n" +
-                        "      </tem:GetDistrictList>\n" +
-                        "   </soapenv:Body>\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                        "   <soapenv:Header/>" +
+                        "   <soapenv:Body>" +
+                        "      <tem:GetDistrictList>" +
+                        "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
+                        "      </tem:GetDistrictList>" +
+                        "   </soapenv:Body>" +
                         "</soapenv:Envelope>"
         val myParser = readSOAP(query, action)
 
