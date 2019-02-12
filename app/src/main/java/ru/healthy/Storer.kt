@@ -45,7 +45,7 @@ public class Storer(val context: Context) {
 
     private fun irestore(id: Int, key: String): Int {
         val settings = context.getSharedPreferences(id.toString(), 0)
-        return settings.getInt(key, 1)
+        return settings.getInt(key, 0)
     }
 
     private fun srestore(id: Int, key: String): String {

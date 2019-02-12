@@ -25,6 +25,7 @@ class RecylcerAdapterDoctor(private val items: MutableList<Map<String, String>>?
             holder.itemView.setOnClickListener {
                 frag.model.cidDoc.put("IdDoc", items[position]["IdDoc"].toString())
                 frag.model.cidDoc.put("Name", items[position]["Name"].toString())
+                //frag.model.cidDoc.put("NameSpesiality", items[position]["NameSpesiality"].toString())
                 NavHostFragment.findNavController(frag).navigate(R.id.Fragment2)
             }
         }

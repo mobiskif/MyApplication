@@ -1,6 +1,5 @@
 package ru.healthy
 
-import android.widget.ArrayAdapter
 import androidx.lifecycle.*
 
 class MyViewModel : ViewModel() {
@@ -27,14 +26,18 @@ class MyViewModel : ViewModel() {
     val cidPatError = MutableLiveData<String>("")
     val cerror = MutableLiveData<String>()
     var cidDoc = mutableMapOf<String, String>()
+    var cidSpeciality = mutableMapOf<String, String>()
     var cidTalon = mutableMapOf<String, String>()
-    var cidLpu = 1
+    var cidLpu = 0
     var cidSpec = 23
     var from0 = false
 
     fun setDistrlist() = Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
-    fun setSpecList() = Thread({ speclist.postValue(Hub().GetSpec("GetSpesialityList", cidLpu)) }).start()
+    fun setSpecList() = Thread({
+        val args = arrayOf(cidLpu, cidPat.value!!)
+        speclist.postValue(Hub().GetSpec("GetSpesialityList", args))
+    }).start()
 
     fun setPatient() {
         val args = arrayOf(cname.value, cfam.value, cotch.value, cdate.value)

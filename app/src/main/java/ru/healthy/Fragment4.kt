@@ -29,6 +29,7 @@ class Fragment4 : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        //model.from0=true
         if (v!!.id==R.id.buttonYes) {
             model.refAppointment(model.cidTalon)
             NavHostFragment.findNavController(this).navigate(R.id.Fragment1)

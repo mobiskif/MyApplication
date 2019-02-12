@@ -31,7 +31,7 @@ class Hub {
             outputStream.write(body)
             outputStream.flush()
             outputStream.close()
-            //Log.e("jop", "== Запрос == $action = " + body.length + " bytes, " + body);
+            Log.e("jop", "== Запрос == $action = " + body.length + " bytes, " + body);
 
             //чтение ответа
             conn.connect()
@@ -186,9 +186,10 @@ class Hub {
         return result
     }
 
-    fun GetSpec(action: String, idLPU: Int): MutableList<Map<String, String>> {
+    fun GetSpec(action: String, args: Array<Any>): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
-        val idPat = "22"
+        val idPat = args[1] as String
+        val idLPU = args[0] as Int
 
         val query =
                 "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
@@ -583,8 +584,8 @@ class Hub {
                             "Success" -> {
                                 Log.d("jops", "успех=" + text)
                                 //set["Success"] = text
-                                if (text.equals("true")) set["Success"]="Операция выполнена успешно!"
-                                else set["Success"] = "В записи отказано! "+set["ErrorDescription"]
+                                if (text.equals("true")) set["Success"]="Талон отложен!"
+                                else set["Success"] = "Отказано! "+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()
                             }
@@ -649,7 +650,7 @@ class Hub {
                             "Success" -> {
                                 Log.d("jops", "успех=" + text)
                                 //set["Success"] = text
-                                if (text.equals("true")) set["Success"]="Операция выполнена успешно!"
+                                if (text.equals("true")) set["Success"]="Талон отменен!"
                                 else set["Success"] = "Ошибка!\n"+set["ErrorDescription"]
                                 result = set
                                 set = mutableMapOf()

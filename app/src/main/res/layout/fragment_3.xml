@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text='@{model3.cidDoc.get("NameSpesiality") + "\n" + model3.cidDoc.get("Name") + "\n" + model3.cidTalon.get("VisitEnd") + "\n" + model3.cidTalon.get("VisitStart")}'
+                android:text='@{model3.cidSpeciality.get("NameSpesiality") + "\n" + model3.cidDoc.get("Name") + "\n" + model3.cidTalon.get("VisitEnd") + "\n" + model3.cidTalon.get("VisitStart")}'
                 />
 
             <TextView

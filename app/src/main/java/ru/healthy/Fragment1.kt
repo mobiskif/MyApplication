@@ -38,13 +38,15 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
 
         model.cidPat.observe(activity!!, Observer { items ->
             //if (model.from0) {
-                //Log.d("jop", "pat 3 ${model.from0}")
+                Log.d("jop", "pat 3 ${model.from0}")
                 binding.invalidateAll()
                 //Storer(requireContext()).saveModel(model)
                 if (!model.from0 && model.cidPat.value!="") {
                     model.setHistList()
                     model.setSpecList()
                 }
+            else model.from0=false
+
             //}
         })
 
@@ -101,6 +103,7 @@ class Fragment1 : Fragment(), AdapterView.OnItemSelectedListener {
                 //Log.d("jop", "spec 2")
                 model.pos_spec = position
                 model.cidSpec = item["IdSpesiality"]!!.toInt()
+                model.cidSpeciality.put("NameSpesiality", ""+item["NameSpesiality"])
                 if (!model.from0) model.setDocList()
                 model.from0=false
                 //model.cidDoc.put("NameSpesiality", item["NameSpesiality"]!!.toLowerCase())

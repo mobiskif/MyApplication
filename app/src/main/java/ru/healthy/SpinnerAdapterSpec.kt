@@ -12,7 +12,9 @@ class SpinnerAdapterSpec(private val items: MutableList<Map<String, String>>?, v
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = if (convertView!=null) convertView as TextView
         else LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
-        if (items!=null) view.text = items[position]["NameSpesiality"] + " (" + items[position]["CountFreeParticipantIE"] + ")"
+        if (items!=null) {
+            view.text = items[position]["NameSpesiality"] + " (" + items[position]["CountFreeParticipantIE"] + ")"
+        }
         return view
     }
 

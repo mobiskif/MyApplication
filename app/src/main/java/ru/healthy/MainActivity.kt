@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
     }
 
-    //override fun onSupportNavigateUp() = NavHostFragment.findNavController(nav_host_fragment).navigateUp()
+    override fun onSupportNavigateUp() = NavHostFragment.findNavController(nav_host_fragment).navigateUp()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.draw_menu, menu)
