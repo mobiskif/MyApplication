@@ -53,6 +53,7 @@ class Fragment0 : Fragment() {
                 model.cdate.value=editBirstdate.text.toString()
                 model.pos_distr = spinnerDistrict.selectedItemPosition
                 model.from0=true
+                model.cidPatError.value=""
                 //model.cidLpu = (spinnerDistrict.selectedItem as Map<String, String>)["IdDistrict"]!!.toInt()
                 Storer(requireContext()).saveModel(model)
                 NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)

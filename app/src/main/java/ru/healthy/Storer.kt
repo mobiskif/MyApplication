@@ -35,7 +35,7 @@ public class Storer(val context: Context) {
         model.pos_spec = irestore(pos_user, "pos_spec")
         model.pos_lpu = irestore(pos_user, "pos_lpu")
         model.pos_distr = irestore(pos_user, "pos_distr")
-        //model.pos_user = pos_user
+        model.pos_user = pos_user
     }
 
     fun restoreuser(): Int {
