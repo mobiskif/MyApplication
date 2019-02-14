@@ -2,6 +2,7 @@ package ru.healthy
 
 import android.database.MatrixCursor
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
@@ -188,7 +189,7 @@ class Hub {
 
     fun GetSpec(action: String, args: Array<Any>): MutableList<Map<String, String>> {
         var ret = arrayListOf<String>()
-        val idPat = args[1] as String
+        val idPat = args[1] as MutableLiveData<String>
         val idLPU = args[0] as Int
 
         val query =
@@ -197,7 +198,7 @@ class Hub {
                         "   <soapenv:Body>" +
                         "      <tem:GetSpesialityList>" +
                         "         <tem:idLpu>" + idLPU + "</tem:idLpu>" +
-                        "         <tem:idPat>" + idPat + "</tem:idPat>" +
+                        "         <tem:idPat>" + idPat.value + "</tem:idPat>" +
                         "         <tem:guid>6b2158a1-56e0-4c09-b70b-139b14ffee14</tem:guid>" +
                         "      </tem:GetSpesialityList>" +
                         "   </soapenv:Body>" +
@@ -457,7 +458,10 @@ class Hub {
             }
         } catch (e: Exception) {
             Log.e("jop", "Ошибка парсинга SOAP " + e.toString())
-            return mutableMapOf()
+            set = mutableMapOf()
+            set["IdPat"] = ""
+            set["ErrorDescription"] = " Проверьте формат Даты рождения"
+            return set
         }
 
         //return ret.toMutableList()
