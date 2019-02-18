@@ -37,6 +37,7 @@ class MyViewModel : ViewModel() {
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     fun setSpecList() = Thread({
         //if (cidPat.value==null) cidPat.postValue("22")
+
         val args = arrayOf(cidLpu, cidPat)
         speclist.postValue(Hub().GetSpec("GetSpesialityList", args))
     }).start()
