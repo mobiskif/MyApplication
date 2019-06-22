@@ -4,19 +4,22 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * The configuration screen for the [myWidget] AppWidget.
  */
-class myWidgetConfigureActivity : Activity() {
+class ConfigActivity : AppCompatActivity() {
+
     internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     internal lateinit var mAppWidgetText: EditText
+
+
     internal var mOnClickListener: View.OnClickListener = View.OnClickListener {
-        val context = this@myWidgetConfigureActivity
+        val context = this
 
         // When the button is clicked, store the string locally
         val widgetText = mAppWidgetText.text.toString()
@@ -31,16 +34,17 @@ class myWidgetConfigureActivity : Activity() {
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
         setResult(Activity.RESULT_OK, resultValue)
         finish()
+
     }
 
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
+        setContentView(R.layout.my_widget_configure)
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
         setResult(Activity.RESULT_CANCELED)
 
-        setContentView(R.layout.my_widget_configure)
         mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
         findViewById<View>(R.id.add_button).setOnClickListener(mOnClickListener)
 
@@ -49,7 +53,8 @@ class myWidgetConfigureActivity : Activity() {
         val extras = intent.extras
         if (extras != null) {
             mAppWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID
+            )
         }
 
         // If this activity was started with an intent without an app widget ID, finish with an error.
@@ -58,12 +63,16 @@ class myWidgetConfigureActivity : Activity() {
             return
         }
 
-        mAppWidgetText.setText(loadTitlePref(this@myWidgetConfigureActivity, mAppWidgetId))
+        mAppWidgetText.setText(loadTitlePref(this@ConfigActivity, mAppWidgetId))
+
     }
+
 
     companion object {
 
-        private val PREFS_NAME = "ru.healthy.myWidget"
+        internal val WIDGET_COUNT = "widget_count_"
+
+        val PREFS_NAME = "ru.healthy.myWidget"
         private val PREF_PREFIX_KEY = "appwidget_"
 
         // Write the prefix to the SharedPreferences object for this widget
@@ -87,5 +96,6 @@ class myWidgetConfigureActivity : Activity() {
             prefs.apply()
         }
     }
+
 }
 

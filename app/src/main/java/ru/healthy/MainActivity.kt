@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Intent
+
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var model: MyViewModel
@@ -48,7 +51,9 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.nav_menu1 -> {
-                NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment1)
+                //NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.activity2)
+                val intent = Intent(this, ConfigActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.nav_menu2 -> {

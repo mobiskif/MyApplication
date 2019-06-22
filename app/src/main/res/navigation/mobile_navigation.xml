@@ -52,8 +52,10 @@
         android:name="ru.healthy.Fragment4"
         tools:layout="@layout/fragment_4" />
     <activity
-        android:id="@+id/myWidgetConfigureActivity"
-        android:name="ru.healthy.myWidgetConfigureActivity"
-        android:label="myWidgetConfigureActivity" />
+        android:id="@+id/ConfigActivity"
+        android:name="ru.healthy.ConfigActivity"
+        tools:layout="@layout/my_widget_configure"
+        android:label="ConfigActivity" />
+
 
 </navigation>
