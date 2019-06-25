@@ -1,23 +1,18 @@
 package ru.healthy
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.os.AsyncTask
 import android.util.Log
 import android.widget.RemoteViews
-import org.ksoap2.SoapEnvelope
-import org.ksoap2.serialization.PropertyInfo
-import org.ksoap2.serialization.SoapObject
-import org.ksoap2.serialization.SoapSerializationEnvelope
-import org.ksoap2.transport.HttpTransportSE
-import ru.healthy.R
-import java.text.SimpleDateFormat
 import java.util.*
+import android.content.SharedPreferences
+
+
+
+
+
+
 
 
 /**
@@ -25,6 +20,55 @@ import java.util.*
  * App Widget Configuration implemented in [ConfigActivity]
  */
 class myWidget : AppWidgetProvider() {
+    val LOG_TAG = "jop"
+
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        Log.d(LOG_TAG, "onEnabled")
+    }
+
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        Log.d(LOG_TAG, "onUpdate " + Arrays.toString(appWidgetIds))
+        //val sp = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE)
+        for (id in appWidgetIds) {
+            loadPrefs(context, appWidgetManager, id)
+        }
+    }
+
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        super.onDeleted(context, appWidgetIds)
+        Log.d(LOG_TAG, "onDeleted " + Arrays.toString(appWidgetIds))
+    }
+
+    override fun onDisabled(context: Context) {
+        super.onDisabled(context)
+        Log.d(LOG_TAG, "onDisabled")
+    }
+
+
+    companion object {
+        val LOG_TAG = "jop"
+        fun loadPrefs(context: Context, appWidgetManager: AppWidgetManager, widgetID: Int) {
+            Log.d(LOG_TAG, "loadPrefs $widgetID")
+            val sp = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE)
+            // Читаем параметры Preferences
+            val widgetTitle = sp.getString(ConfigActivity.WIDGET_TITLE + widgetID, null) ?: return
+            val widgetCount = sp.getString(ConfigActivity.WIDGET_COUNT + widgetID, null) ?: "0"
+
+            // Настраиваем внешний вид виджета
+            val widgetView = RemoteViews(context.packageName, R.layout.my_widget)
+            widgetView.setTextViewText(R.id.widget_title, widgetTitle)
+            widgetView.setTextViewText(R.id.widget_count, widgetCount)
+
+            // Обновляем виджет
+            appWidgetManager.updateAppWidget(widgetID, widgetView)
+        }
+
+    }
+}
+
+/*
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -57,7 +101,7 @@ class myWidget : AppWidgetProvider() {
         )
         val pIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),75000, pIntent)
+        alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),5000, pIntent)
         Log.d("jop","alarmStarted")
     }
 
@@ -135,7 +179,6 @@ class myWidget : AppWidgetProvider() {
         internal fun reciveEvent(context: Context, intent: Intent) {
             // Проверяем, что это intent от нажатия на третью зону
             if (intent.getAction().equals(ACTION_CHANGE, true)) {
-
                 // извлекаем ID экземпляра
                 var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
                 val extras = intent.getExtras()
@@ -162,6 +205,7 @@ class myWidget : AppWidgetProvider() {
 
             if (intent.action.equals(UPDATE_ALL_WIDGETS, true)) {
                 Log.d("jop", "alarm")
+                /*
                 var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
                 val extras = intent.getExtras()
                 if (extras != null) {
@@ -175,6 +219,9 @@ class myWidget : AppWidgetProvider() {
                 if (mAppWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
                     Log.d("jop", cnt.toString())
                 }
+                // Обновляем виджет
+                updateAppWidget(context, AppWidgetManager.getInstance(context), mAppWidgetId)
+
 /*
                 // Обновляем виджет
                 val thisAppWidget = ComponentName(context.packageName, this.javaClass.name)
@@ -188,8 +235,10 @@ class myWidget : AppWidgetProvider() {
                     updateAppWidget(context, AppWidgetManager.getInstance(context), mAppWidgetId)
                 }
                 Log.d("jop", cnt.toString())
+*/
 
- */
+*/
+
             }
         }
 
@@ -246,3 +295,4 @@ class myWidget : AppWidgetProvider() {
     }
 }
 
+*/

@@ -10,6 +10,7 @@
         <item name="android:buttonTint">@color/primaryColor</item>
     </style>
 <!--
+        <item name="android:textColor">@color/primaryColor</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 -->

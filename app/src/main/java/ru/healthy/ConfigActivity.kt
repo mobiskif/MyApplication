@@ -26,8 +26,10 @@ class ConfigActivity : AppCompatActivity() {
         saveTitlePref(context, mAppWidgetId, widgetText)
 
         // It is the responsibility of the configuration activity to update the app widget
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-        myWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        myWidget.loadPrefs(context, appWidgetManager, mAppWidgetId)
+        //val appWidgetManager = AppWidgetManager.getInstance(context)
+        //myWidget.loadPrefs(context, appWidgetManager, mAppWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
@@ -41,8 +43,7 @@ class ConfigActivity : AppCompatActivity() {
         super.onCreate(icicle)
         setContentView(R.layout.my_widget_configure)
 
-        // Set the result to CANCELED.  This will cause the widget host to cancel
-        // out of the widget placement if the user presses the back button.
+        // Set the result to CANCELED.  This will cause the widget host to cancel out of the widget placement if the user presses the back button.
         setResult(Activity.RESULT_CANCELED)
 
         mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
@@ -70,15 +71,15 @@ class ConfigActivity : AppCompatActivity() {
 
     companion object {
 
-        internal val WIDGET_COUNT = "widget_count_"
-
-        val PREFS_NAME = "ru.healthy.myWidget"
-        private val PREF_PREFIX_KEY = "appwidget_"
+        val WIDGET_COUNT = "count_"
+        val PREFS_NAME = "myWidget"
+        val WIDGET_TITLE = "title_"
 
         // Write the prefix to the SharedPreferences object for this widget
         internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-            prefs.putString(PREF_PREFIX_KEY + appWidgetId, text)
+            prefs.putString(WIDGET_TITLE + appWidgetId, text)
+            prefs.putString(WIDGET_COUNT + appWidgetId, text)
             prefs.apply()
         }
 
@@ -86,13 +87,20 @@ class ConfigActivity : AppCompatActivity() {
         // If there is no preference saved, get the default from a resource
         internal fun loadTitlePref(context: Context, appWidgetId: Int): String {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-            val titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null)
+            val titleValue = prefs.getString(WIDGET_TITLE + appWidgetId, null)
             return titleValue ?: context.getString(R.string.appwidget_text)
         }
 
-        internal fun deleteTitlePref(context: Context, appWidgetId: Int) {
+        internal fun loadCountPref(context: Context, appWidgetId: Int): String {
+            val prefs = context.getSharedPreferences(PREFS_NAME, 0)
+            val countValue = prefs.getString(WIDGET_COUNT + appWidgetId, null)
+            return countValue ?: "0"
+        }
+
+        internal fun deletePref(context: Context, appWidgetId: Int) {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-            prefs.remove(PREF_PREFIX_KEY + appWidgetId)
+            prefs.remove(WIDGET_TITLE + appWidgetId)
+            prefs.remove(WIDGET_COUNT + appWidgetId)
             prefs.apply()
         }
     }
