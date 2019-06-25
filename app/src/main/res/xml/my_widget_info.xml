@@ -4,7 +4,7 @@
     android:initialKeyguardLayout="@layout/my_widget"
     android:initialLayout="@layout/my_widget"
     android:minWidth="110dp"
-    android:minHeight="150dp"
+    android:minHeight="110dp"
     android:previewImage="@drawable/redcross_small"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"

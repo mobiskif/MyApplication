@@ -7,13 +7,11 @@ import android.util.Log
 import android.widget.RemoteViews
 import java.util.*
 import android.content.SharedPreferences
-
-
-
-
-
-
-
+import android.R.id.edit
+import android.app.PendingIntent
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import android.content.Intent
+import android.os.Bundle
 
 /**
  * Implementation of App Widget functionality.
@@ -30,15 +28,21 @@ class myWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         Log.d(LOG_TAG, "onUpdate " + Arrays.toString(appWidgetIds))
-        //val sp = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE)
-        for (id in appWidgetIds) {
-            loadPrefs(context, appWidgetManager, id)
+        for (widgetID in appWidgetIds) {
+            loadPrefs(context, appWidgetManager, widgetID)
         }
+
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         Log.d(LOG_TAG, "onDeleted " + Arrays.toString(appWidgetIds))
+        val editor = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE).edit()
+        for (widgetID in appWidgetIds) {
+            editor.remove(ConfigActivity.WIDGET_COUNT + widgetID)
+            editor.remove(ConfigActivity.WIDGET_TITLE + widgetID)
+        }
+        editor.commit()
     }
 
     override fun onDisabled(context: Context) {
@@ -46,20 +50,55 @@ class myWidget : AppWidgetProvider() {
         Log.d(LOG_TAG, "onDisabled")
     }
 
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        Log.d(LOG_TAG, intent.getAction())
+        if (intent.getAction().equals(ACTION_CHANGE)) {
+            // извлекаем ID экземпляра
+            var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+            val extras = intent.getExtras()
+            if (extras != null) {
+                mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+            }
+            if (mAppWidgetId !== AppWidgetManager.INVALID_APPWIDGET_ID) {
+                // Читаем значение счетчика, увеличиваем на 1 и записываем
+                val sp = context.getSharedPreferences(ConfigActivity.WIDGET_COUNT, Context.MODE_PRIVATE)
+                var cnt = sp.getInt(ConfigActivity.WIDGET_COUNT + mAppWidgetId, 0)
+                sp.edit().putInt(ConfigActivity.WIDGET_COUNT + mAppWidgetId, ++cnt).commit()
+
+                // Обновляем виджет
+                loadPrefs(context, AppWidgetManager.getInstance(context), mAppWidgetId)
+            }
+        }
+    }
 
     companion object {
         val LOG_TAG = "jop"
+        val ACTION_CHANGE = "ru.healthy.myWidget.ACTION_CHANGE"
+
         fun loadPrefs(context: Context, appWidgetManager: AppWidgetManager, widgetID: Int) {
             Log.d(LOG_TAG, "loadPrefs $widgetID")
-            val sp = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE)
+
             // Читаем параметры Preferences
-            val widgetTitle = sp.getString(ConfigActivity.WIDGET_TITLE + widgetID, null) ?: return
-            val widgetCount = sp.getString(ConfigActivity.WIDGET_COUNT + widgetID, null) ?: "0"
+            //val sp = context.getSharedPreferences(ConfigActivity.PREFS_NAME, Context.MODE_PRIVATE)
+            //val widgetTitle = sp.getString(ConfigActivity.WIDGET_TITLE + widgetID, null)
+            //val widgetCount = sp.getInt(ConfigActivity.WIDGET_COUNT + widgetID, 0)
+
+            val widgetTitle = ConfigActivity.loadTitlePref(context, widgetID)
+            val widgetCount = ConfigActivity.loadCountPref(context, widgetID)
 
             // Настраиваем внешний вид виджета
             val widgetView = RemoteViews(context.packageName, R.layout.my_widget)
             widgetView.setTextViewText(R.id.widget_title, widgetTitle)
-            widgetView.setTextViewText(R.id.widget_count, widgetCount)
+            widgetView.setTextViewText(R.id.widget_count, widgetCount.toString())
+
+
+            // Счетчик нажатий
+            val countIntent = Intent(context, myWidget::class.java)
+            countIntent.setAction(ACTION_CHANGE)
+            countIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID)
+            val pIntent = PendingIntent.getBroadcast(context, widgetID, countIntent, 0)
+            widgetView.setOnClickPendingIntent(R.id.widget_press, pIntent)
 
             // Обновляем виджет
             appWidgetManager.updateAppWidget(widgetID, widgetView)

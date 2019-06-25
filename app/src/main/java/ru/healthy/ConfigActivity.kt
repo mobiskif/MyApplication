@@ -23,7 +23,7 @@ class ConfigActivity : AppCompatActivity() {
 
         // When the button is clicked, store the string locally
         val widgetText = mAppWidgetText.text.toString()
-        saveTitlePref(context, mAppWidgetId, widgetText)
+        savePref(context, mAppWidgetId, widgetText)
 
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(this)
@@ -46,7 +46,6 @@ class ConfigActivity : AppCompatActivity() {
         // Set the result to CANCELED.  This will cause the widget host to cancel out of the widget placement if the user presses the back button.
         setResult(Activity.RESULT_CANCELED)
 
-        mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
         findViewById<View>(R.id.add_button).setOnClickListener(mOnClickListener)
 
         // Find the widget id from the intent.
@@ -64,6 +63,7 @@ class ConfigActivity : AppCompatActivity() {
             return
         }
 
+        mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
         mAppWidgetText.setText(loadTitlePref(this@ConfigActivity, mAppWidgetId))
 
     }
@@ -76,7 +76,7 @@ class ConfigActivity : AppCompatActivity() {
         val WIDGET_TITLE = "title_"
 
         // Write the prefix to the SharedPreferences object for this widget
-        internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {
+        internal fun savePref(context: Context, appWidgetId: Int, text: String) {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
             prefs.putString(WIDGET_TITLE + appWidgetId, text)
             prefs.putString(WIDGET_COUNT + appWidgetId, text)
@@ -85,16 +85,16 @@ class ConfigActivity : AppCompatActivity() {
 
         // Read the prefix from the SharedPreferences object for this widget.
         // If there is no preference saved, get the default from a resource
-        internal fun loadTitlePref(context: Context, appWidgetId: Int): String {
+        internal fun loadTitlePref(context: Context, appWidgetId: Int): String? {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0)
             val titleValue = prefs.getString(WIDGET_TITLE + appWidgetId, null)
-            return titleValue ?: context.getString(R.string.appwidget_text)
+            return titleValue
         }
 
-        internal fun loadCountPref(context: Context, appWidgetId: Int): String {
+        internal fun loadCountPref(context: Context, appWidgetId: Int): Int {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-            val countValue = prefs.getString(WIDGET_COUNT + appWidgetId, null)
-            return countValue ?: "0"
+            val countValue = prefs.getInt(WIDGET_COUNT + appWidgetId, 0)
+            return countValue
         }
 
         internal fun deletePref(context: Context, appWidgetId: Int) {
