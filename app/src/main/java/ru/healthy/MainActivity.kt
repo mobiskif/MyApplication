@@ -12,7 +12,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
-
+import android.os.AsyncTask
+import android.util.Log
+import org.ksoap2.SoapEnvelope
+import org.ksoap2.serialization.PropertyInfo
+import org.ksoap2.serialization.SoapObject
+import org.ksoap2.serialization.SoapSerializationEnvelope
+import org.ksoap2.transport.HttpTransportSE
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         model.cfam.observe(this, Observer { binding.invalidateAll() })
         model.cerror.observe(this, Observer { Snackbar.make(constraintLayout, it, Snackbar.LENGTH_LONG).show() })
         if (model.cdate.value!!.length <= 8) NavHostFragment.findNavController(nav_host_fragment).navigate(R.id.Fragment0)
+
+        //DataLoader().execute()
     }
 
     override fun onSupportNavigateUp() = NavHostFragment.findNavController(nav_host_fragment).navigateUp()
@@ -63,5 +71,65 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
+    inner class DataLoader : AsyncTask<Void, Void, String>() {
+        var SOAP_URL = "https://api.gorzdrav.spb.ru/Service/HubService.svc?wsdl"
+        var SOAP_NAMESPACE = "http://tempuri.org/"
+        //var SOAP_METHOD_NAME = "GetDistrictList"
+        //var SOAP_METHOD_NAME = "GetLPUList"
+        var SOAP_METHOD_NAME = "GetSpesialityList"
+        var SOAP_ACTION = "http://tempuri.org/IHubService/$SOAP_METHOD_NAME"
+
+        fun process(po: Any, pi: PropertyInfo) {
+            if (po is SoapObject) {
+                Log.d("jop", "${pi.name} ....")
+                for (i in 0 until po.propertyCount) process(po.getProperty(i), po.getPropertyInfo(i))
+            } else {
+                Log.d("jop", "$pi")
+            }
+        }
+
+        override fun doInBackground(vararg params: Void): String {
+            var strresult = ""
+            val request = SoapObject(SOAP_NAMESPACE, SOAP_METHOD_NAME)
+            request.addProperty("IdDistrict", 4)
+            request.addProperty("idLpu", 27)
+            //request.addProperty("idLpu", 565)
+            //request.addProperty("idPat", 0)
+            request.addProperty("guid", "6b2158a1-56e0-4c09-b70b-139b14ffee14")
+            //request.addProperty("idHistory", 0)
+
+            val envelope = SoapSerializationEnvelope(SoapEnvelope.VER10)
+            envelope.bodyOut = request
+            envelope.implicitTypes = true
+            envelope.setOutputSoapObject(request)
+            envelope.dotNet = true
+
+            //envelope.bodyOut = request
+            //MarshalBase64().register(envelope)
+            //envelope.isAddAdornments = false
+            //envelope.headerOut = arrayOfNulls(1)
+
+            val androidHttpTransport = HttpTransportSE(SOAP_URL)
+
+            try {
+                androidHttpTransport.debug = true
+                androidHttpTransport.call(SOAP_ACTION, envelope)
+                Log.d("jop", "request: " + androidHttpTransport.requestDump)
+                Log.d("jop", "response: " + androidHttpTransport.responseDump)
+
+                val soapObject = envelope.response as SoapObject
+                for (i in 0 until soapObject.propertyCount) process(soapObject.getProperty(i), soapObject.getPropertyInfo(i))
+
+            } catch (e: Exception) {
+                Log.e("jop", "requestError: " + androidHttpTransport.requestDump)
+                Log.e("jop", "responseEror: " + androidHttpTransport.responseDump)
+                Log.e("jop", e.toString())
+            }
+            return strresult;
+        }
+    }
+
 
 }

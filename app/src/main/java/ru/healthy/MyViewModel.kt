@@ -33,7 +33,7 @@ class MyViewModel : ViewModel() {
     //var cidPat =""
     var from0 = false
 
-    fun setDistrlist() = Thread({ distrlist.postValue(Hub().GetDistr("GetDistrictList")) }).start()
+    fun setDistrlist() = Thread({ distrlist.postValue(HubSOAP().GetDistr("GetDistrictList")) }).start()
     fun setLpulist() = Thread({ lpulist.postValue(Hub().GetLpu("GetLPUList", pos_distr)) }).start()
     fun setSpecList() = Thread({
         //if (cidPat.value==null) cidPat.postValue("22")
