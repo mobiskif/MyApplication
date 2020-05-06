@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.*
+import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,13 +16,14 @@ class Hub {
 
     private fun readSOAP(body: String, action: String): XmlPullParser? {
         try {
-            val url = URL("https://api.gorzdrav.spb.ru/Service/HubService.svc")
+            val url = URL("https://api.gorzdrav.spb.ru/Proxy/HubService.svc")
             var conn = url.openConnection() as HttpsURLConnection
             conn.requestMethod = "POST"
             conn.setRequestProperty("Accept-Encoding", "gzip,deflate")
             conn.setRequestProperty("Content-Type", "text/xml;charset=UTF-8")
             conn.setRequestProperty("SOAPAction", "http://tempuri.org/IHubService/$action")
             conn.setRequestProperty("Content-Length", body.toByteArray().size.toString())
+            conn.setRequestProperty("Host", "api.gorzdrav.spb.ru")
             conn.setRequestProperty("User-Agent", "Apache-HttpClient/4.1.1 (java 1.5)")
             //conn.doOutput = true
             conn.doInput = true
